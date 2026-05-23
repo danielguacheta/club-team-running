@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club de Atletismo Team Running</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+header{background:#16213e;border-bottom:3px solid #d4a017;padding:14px 16px;display:flex;align-items:center;gap:12px}
+header h1{font-size:1rem;font-weight:700;color:#fff;line-height:1.3}
+header p{font-size:.72rem;color:#a0aec0}
+.nav{display:flex;gap:6px;padding:12px 16px;flex-wrap:wrap;background:#0f1117}
+.nav button{padding:9px 16px;border-radius:8px;border:1px solid #2d3748;background:#1a1f2e;color:#a0aec0;cursor:pointer;font-size:.85rem}
+.nav button.active{background:#e53e3e;border-color:#e53e3e;color:#fff;font-weight:600}
+.wrap{padding:0 16px 40px}
+.panel{display:none}.panel.active{display:block}
+.card{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:480px){.g2{grid-template-columns:1fr}}
+label{font-size:.78rem;color:#a0aec0;display:block;margin-bottom:3px}
+input,select{width:100%;padding:10px;border-radius:7px;border:1px solid #2d3748;background:#0f1117;color:#e2e8f0;font-size:.9rem;outline:none}
+input:focus,select:focus{border-color:#e53e3e}
+.btnr{background:#e53e3e;color:#fff;border:none;padding:11px 20px;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;flex:1}
+.btng{background:#2d3748;color:#e2e8f0;border:none;padding:11px 20px;border-radius:8px;cursor:pointer;font-size:.9rem;flex:1}
+.brow{display:flex;gap:8px;margin-top:12px}
+.msg{margin-top:8px;font-size:.85rem}
+.ath-item{background:#16213e;border:1px solid #2d3748;border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;cursor:pointer}
+.ath-item:hover{border-color:#e53e3e}
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
+@media(min-width:600px){.sg{grid-template-columns:repeat(5,1fr)}}
+.sb{background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:10px;text-align:center}
+.sb .v{font-size:1rem;font-weight:700;color:#fff}
+.sb .l{font-size:.7rem;color:#a0aec0;margin-top:2px}
+.sb.g .v{color:#48bb78}.sb.r .v{color:#fc8181}
+.dp{color:#48bb78;font-weight:700}.dn{color:#fc8181;font-weight:700}
+.cw{height:240px;position:relative;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{text-align:left;padding:7px 9px;color:#a0aec0;border-bottom:1px solid #2d3748;white-space:nowrap}
+td{padding:7px 9px;border-bottom:1px solid #1e2535;vertical-align:middle}
+.tw{overflow-x:auto}
+.bg{display:inline-block;padding:2px 7px;border-radius:10px;font-size:.72rem;font-weight:600}
+.bg.test{background:#1a365d;color:#90cdf4;border:1px solid #3182ce}
+.bg.entrenamiento{background:#1c4532;color:#9ae6b4;border:1px solid #38a169}
+.bg.competencia{background:#3d2c00;color:#fbd38d;border:1px solid #d69e2e}
+.empty{text-align:center;padding:28px;color:#4a5568}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+@media(min-width:600px){.fr{grid-template-columns:repeat(3,1fr)}}
+.bdel{background:none;border:1px solid #fc8181;color:#fc8181;padding:4px 9px;border-radius:5px;cursor:pointer;font-size:.78rem}
+.iabtn{background:linear-gradient(135deg,#6b46c1,#9f7aea);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:10px}
+.iabtn:disabled{opacity:.5}
+.iabox{background:#1a1040;border:1px solid #6b46c1;border-radius:10px;padding:14px;font-size:.85rem;color:#e2e8f0;line-height:1.6}
+.iat{color:#d6bcfa;font-weight:700;margin:8px 0 3px}
+#conn{position:fixed;top:0;right:0;padding:3px 8px;font-size:.68rem;z-index:999;border-radius:0 0 0 6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Club de Atletismo <span style="color:#d4a017">Team Running</span></h1>
+    <p>Registro y analisis de rendimiento deportivo</p>
+  </div>
+</header>
+
+<div id="conn"></div>
+
+<div class="nav">
+  <button id="btn0" class="active" onclick="cambiarTab(0)">+ Registrar</button>
+  <button id="btn1" onclick="cambiarTab(1)">Atletas</button>
+  <button id="btn2" onclick="cambiarTab(2)">Analisis</button>
+  <button id="btn3" onclick="cambiarTab(3)">Historial</button>
+</div>
+
+<div class="wrap">
+  <div id="panel0" class="panel active">
+    <div class="card">
+      <h2>Nuevo resultado</h2>
+      <div class="g2">
+        <div><label>Deportista existente</label><select id="r-dep"><option value="">Seleccionar</option></select></div>
+        <div><label>O nuevo deportista</label><input id="r-nvo" type="text" placeholder="Nombre completo"></div>
+        <div><label>Prueba existente</label><select id="r-pru"><option value="">Seleccionar</option></select></div>
+        <div><label>O nueva prueba</label><input id="r-pnv" type="text" placeholder="Ej: 600m, 2km..."></div>
+        <div><label>Tipo</label><select id="r-tip"><option value="test">Test</option><option value="entrenamiento">Entrenamiento</option><option value="competencia">Competencia</option></select></div>
+        <div><label>Fecha</label><input id="r-fec" type="date"></div>
+      </div>
+      <div style="margin-top:10px"><label>Tiempo (min : seg . centesimas)</label>
+        <div class="g3" style="margin-top:5px">
+          <div><input id="r-min" type="number" min="0" max="99" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.72rem">min</label></div>
+          <div><input id="r-seg" type="number" min="0" max="59" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.72rem">seg</label></div>
+          <div><input id="r-cen" type="number" min="0" max="99" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.72rem">cent</label></div>
+        </div>
+      </div>
+      <div class="g2" style="margin-top:10px">
+        <div><label>Lugar</label><input id="r-lug" type="text" placeholder="Ej: Estadio El Campin"></div>
+        <div><label>Notas</label><input id="r-not" type="text" placeholder="Observaciones..."></div>
+      </div>
+      <div class="brow">
+        <button class="btnr" id="btnGuardar">Guardar</button>
+        <button class="btng" id="btnLimpiar">Limpiar</button>
+      </div>
+      <div id="msg" class="msg"></div>
+    </div>
+  </div>
+
+  <div id="panel1" class="panel">
+    <div class="card">
+      <h2>Atletas registrados</h2>
+      <div id="lst-atl"><div class="empty">Cargando...</div></div>
+    </div>
+  </div>
+
+  <div id="panel2" class="panel">
+    <div class="card">
+      <h2>Analisis</h2>
+      <div class="fr">
+        <div><label>Deportista</label><select id="a-dep"><option value="">Todos</option></select></div>
+        <div><label>Prueba</label><select id="a-pru"><option value="">Todas</option></select></div>
+      </div>
+      <div id="stats" class="sg"></div>
+      <div class="cw"><canvas id="chart"></canvas></div>
+      <div id="delta"></div>
+      <div id="iazone" style="margin-top:12px;display:none">
+        <button class="iabtn" id="iabtn">Analisis con IA</button>
+        <div id="iaout"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel3" class="panel">
+    <div class="card">
+      <h2>Historial</h2>
+      <div class="fr">
+        <div><label>Deportista</label><select id="h-dep"><option value="">Todos</option></select></div>
+        <div><label>Prueba</label><select id="h-pru"><option value="">Todas</option></select></div>
+        <div><label>Tipo</label><select id="h-tip"><option value="">Todos</option><option value="test">Test</option><option value="entrenamiento">Entrenamiento</option><option value="competencia">Competencia</option></select></div>
+      </div>
+      <div id="tbl-hist"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+
+// ============ VARIABLES GLOBALES ============
+var RS = [];
+var DEPS = [];
+var PRUS = [];
+var CHT = null;
+var IARS = [];
+var tabActual = 0;
+var DB = null;
+
+// ============ TABS ============
+function cambiarTab(n) {
+  for (var i = 0; i < 4; i++) {
+    document.getElementById('panel' + i).classList.remove('active');
+    document.getElementById('btn' + i).classList.remove('active');
+  }
+  document.getElementById('panel' + n).classList.add('active');
+  document.getElementById('btn' + n).classList.add('active');
+  tabActual = n;
+  if (n === 1) mostrarAtletas();
+  if (n === 2) mostrarAnalisis();
+  if (n === 3) mostrarHistorial();
+}
+
+// ============ HELPERS ============
+function toStr(segundos) {
+  var m = Math.floor(segundos / 60);
+  var s = Math.floor(segundos % 60);
+  var c = Math.round((segundos % 1) * 100);
+  var sm = m > 0 ? m + ':' : '';
+  var ss = (s < 10 ? '0' : '') + s;
+  var sc = '.' + (c < 10 ? '0' : '') + c;
+  return sm + ss + sc;
+}
+
+function mostrarConn(ok) {
+  var e = document.getElementById('conn');
+  if (ok) {
+    e.textContent = 'En linea';
+    e.style.cssText = 'position:fixed;top:0;right:0;padding:3px 8px;font-size:.68rem;z-index:999;border-radius:0 0 0 6px;background:#1c4532;color:#68d391';
+  } else {
+    e.textContent = 'Sin conexion';
+    e.style.cssText = 'position:fixed;top:0;right:0;padding:3px 8px;font-size:.68rem;z-index:999;border-radius:0 0 0 6px;background:#3d0a0a;color:#fc8181';
+  }
+}
+
+function llenarSelect(id, items, texto) {
+  var sel = document.getElementById(id);
+  if (!sel) return;
+  var actual = sel.value;
+  sel.innerHTML = '<option value="">' + texto + '</option>';
+  for (var i = 0; i < items.length; i++) {
+    var op = document.createElement('option');
+    op.value = items[i];
+    op.textContent = items[i];
+    sel.appendChild(op);
+  }
+  if (actual) sel.value = actual;
+}
+
+function actualizarSelects() {
+  var deps = [];
+  var prus = ['100m','200m','400m','800m','1500m','3000m','5000m','10000m'];
+  
+  for (var i = 0; i < RS.length; i++) {
+    if (deps.indexOf(RS[i].deportista) < 0) deps.push(RS[i].deportista);
+    if (prus.indexOf(RS[i].prueba) < 0) prus.push(RS[i].prueba);
+  }
+  for (var i = 0; i < DEPS.length; i++) {
+    if (deps.indexOf(DEPS[i]) < 0) deps.push(DEPS[i]);
+  }
+  for (var i = 0; i < PRUS.length; i++) {
+    if (prus.indexOf(PRUS[i]) < 0) prus.push(PRUS[i]);
+  }
+  deps.sort();
+  prus.sort();
+
+  llenarSelect('r-dep', deps, 'Seleccionar');
+  llenarSelect('r-pru', prus, 'Seleccionar');
+  llenarSelect('a-dep', deps, 'Todos');
+  llenarSelect('a-pru', prus, 'Todas');
+  llenarSelect('h-dep', deps, 'Todos');
+  llenarSelect('h-pru', prus, 'Todas');
+}
+
+// ============ FIREBASE ============
+function iniciarFirebase() {
+  try {
+    firebase.initializeApp({
+      apiKey: "AIzaSyBleRJWaDIwy4W1WOwPDY97xKYFVhD5Os8",
+      authDomain: "club-team-running.firebaseapp.com",
+      projectId: "club-team-running",
+      storageBucket: "club-team-running.firebasestorage.app",
+      messagingSenderId: "547439458357",
+      appId: "1:547439458357:web:476d4bf7483a8fc814d97c"
+    });
+  } catch(e) {
+    // ya inicializado
+  }
+
+  DB = firebase.firestore();
+
+  DB.collection('resultados').onSnapshot(function(snap) {
+    RS = [];
+    snap.forEach(function(doc) {
+      var d = doc.data();
+      d.fid = doc.id;
+      RS.push(d);
+    });
+    actualizarSelects();
+    mostrarConn(true);
+    if (tabActual === 1) mostrarAtletas();
+    if (tabActual === 2) mostrarAnalisis();
+    if (tabActual === 3) mostrarHistorial();
+  }, function(err) {
+    mostrarConn(false);
+    console.log('Error Firebase:', err);
+  });
+
+  DB.collection('meta').doc('config').onSnapshot(function(snap) {
+    if (snap.exists) {
+      var d = snap.data();
+      DEPS = d.deportistas || [];
+      PRUS = d.pruebas || [];
+      actualizarSelects();
+    }
+  });
+}
+
+// ============ GUARDAR ============
+function guardar() {
+  var dep = document.getElementById('r-nvo').value.trim() || document.getElementById('r-dep').value;
+  var pru = document.getElementById('r-pnv').value.trim() || document.getElementById('r-pru').value;
+  var tipo = document.getElementById('r-tip').value;
+  var fecha = document.getElementById('r-fec').value;
+  var min = parseFloat(document.getElementById('r-min').value) || 0;
+  var seg = parseFloat(document.getElementById('r-seg').value) || 0;
+  var cen = parseFloat(document.getElementById('r-cen').value) || 0;
+  var lugar = document.getElementById('r-lug').value.trim();
+  var notas = document.getElementById('r-not').value.trim();
+  var msg = document.getElementById('msg');
+
+  if (!dep) { msg.innerHTML = '<span style="color:#fc8181">Indica el deportista.</span>'; return; }
+  if (!pru) { msg.innerHTML = '<span style="color:#fc8181">Indica la prueba.</span>'; return; }
+  if (!fecha) { msg.innerHTML = '<span style="color:#fc8181">Selecciona la fecha.</span>'; return; }
+  if (min === 0 && seg === 0 && cen === 0) { msg.innerHTML = '<span style="color:#fc8181">Ingresa el tiempo.</span>'; return; }
+  if (!DB) { msg.innerHTML = '<span style="color:#fc8181">Sin conexion Firebase.</span>'; return; }
+
+  var t = min * 60 + seg + cen / 100;
+  msg.innerHTML = '<span style="color:#9f7aea">Guardando...</span>';
+
+  DB.collection('resultados').add({
+    deportista: dep,
+    prueba: pru,
+    tipo: tipo,
+    fecha: fecha,
+    tiempoSeg: t,
+    lugar: lugar,
+    notas: notas
+  }).then(function() {
+    var nd = DEPS.slice();
+    if (nd.indexOf(dep) < 0) nd.push(dep);
+    var np = PRUS.slice();
+    var custom = document.getElementById('r-pnv').value.trim();
+    if (custom && np.indexOf(custom) < 0) np.push(custom);
+    return DB.collection('meta').doc('config').set({ deportistas: nd, pruebas: np });
+  }).then(function() {
+    msg.innerHTML = '<span style="color:#48bb78">Guardado: ' + dep + ' - ' + pru + ' - ' + toStr(t) + '</span>';
+    limpiar(true);
+  }).catch(function(e) {
+    msg.innerHTML = '<span style="color:#fc8181">Error: ' + e.message + '</span>';
+  });
+}
+
+function limpiar(mantenerMsg) {
+  document.getElementById('r-nvo').value = '';
+  document.getElementById('r-pnv').value = '';
+  document.getElementById('r-lug').value = '';
+  document.getElementById('r-not').value = '';
+  document.getElementById('r-min').value = '';
+  document.getElementById('r-seg').value = '';
+  document.getElementById('r-cen').value = '';
+  document.getElementById('r-dep').value = '';
+  document.getElementById('r-pru').value = '';
+  document.getElementById('r-tip').value = 'test';
+  document.getElementById('r-fec').value = new Date().toISOString().split('T')[0];
+  if (!mantenerMsg) document.getElementById('msg').innerHTML = '';
+}
+
+// ============ ATLETAS ============
+function mostrarAtletas() {
+  var deps = [];
+  for (var i = 0; i < RS.length; i++) {
+    if (deps.indexOf(RS[i].deportista) < 0) deps.push(RS[i].deportista);
+  }
+  for (var i = 0; i < DEPS.length; i++) {
+    if (deps.indexOf(DEPS[i]) < 0) deps.push(DEPS[i]);
+  }
+  deps.sort();
+
+  var c = document.getElementById('lst-atl');
+  if (!deps.length) { c.innerHTML = '<div class="empty">No hay atletas aun.</div>'; return; }
+
+  var h = '';
+  for (var i = 0; i < deps.length; i++) {
+    var dep = deps[i];
+    var rs = [];
+    var ps = [];
+    for (var j = 0; j < RS.length; j++) {
+      if (RS[j].deportista === dep) {
+        rs.push(RS[j]);
+        if (ps.indexOf(RS[j].prueba) < 0) ps.push(RS[j].prueba);
+      }
+    }
+    var psStr = ps.length ? ps.join(' - ') : 'Sin resultados';
+    var nRes = rs.length;
+    h += '<div class="ath-item" data-dep="' + dep + '">';
+    h += '<div><div style="font-weight:600">' + dep + '</div>';
+    h += '<div style="font-size:.76rem;color:#a0aec0;margin-top:2px">' + psStr + '</div></div>';
+    h += '<div style="font-size:.8rem;color:#a0aec0">' + nRes + ' resultado(s)</div></div>';
+  }
+  c.innerHTML = h;
+
+  // Agregar eventos click
+  var items = c.querySelectorAll('.ath-item');
+  for (var i = 0; i < items.length; i++) {
+    items[i].addEventListener('click', function() {
+      var dep = this.getAttribute('data-dep');
+      document.getElementById('a-dep').value = dep;
+      cambiarTab(2);
+    });
+  }
+}
+
+// ============ ANALISIS ============
+function mostrarAnalisis() {
+  var df = document.getElementById('a-dep').value;
+  var pf = document.getElementById('a-pru').value;
+
+  var rs = [];
+  for (var i = 0; i < RS.length; i++) {
+    var r = RS[i];
+    if ((!df || r.deportista === df) && (!pf || r.prueba === pf)) {
+      rs.push(r);
+    }
+  }
+  rs.sort(function(a, b) { return a.fecha.localeCompare(b.fecha); });
+
+  var sd = document.getElementById('stats');
+  var dd = document.getElementById('delta');
+  var iz = document.getElementById('iazone');
+  iz.style.display = 'none';
+
+  if (!rs.length) {
+    sd.innerHTML = '';
+    dd.innerHTML = '<div class="empty">Sin datos. Selecciona deportista y prueba.</div>';
+    if (CHT) { CHT.destroy(); CHT = null; }
+    return;
+  }
+
+  var tms = rs.map(function(r) { return r.tiempoSeg; });
+  var mejor = Math.min.apply(null, tms);
+  var peor = Math.max.apply(null, tms);
+  var suma = 0;
+  for (var i = 0; i < tms.length; i++) suma += tms[i];
+  var prom = suma / tms.length;
+  var dif = tms[0] - tms[tms.length - 1];
+
+  sd.innerHTML = '<div class="sb g"><div class="v">' + toStr(mejor) + '</div><div class="l">Mejor</div></div>'
+    + '<div class="sb r"><div class="v">' + toStr(peor) + '</div><div class="l">Peor</div></div>'
+    + '<div class="sb"><div class="v">' + toStr(prom) + '</div><div class="l">Promedio</div></div>'
+    + '<div class="sb ' + (dif > 0 ? 'g' : dif < 0 ? 'r' : '') + '"><div class="v">' + (dif > 0 ? '-' : '+') + toStr(Math.abs(dif)) + '</div><div class="l">' + (dif > 0 ? 'Mejora' : 'Variacion') + '</div></div>'
+    + '<div class="sb"><div class="v">' + rs.length + '</div><div class="l">Registros</div></div>';
+
+  if (CHT) { CHT.destroy(); CHT = null; }
+
+  var labels = rs.map(function(r) { return r.fecha; });
+  var datos = tms;
+
+  CHT = new Chart(document.getElementById('chart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Tiempo',
+        data: datos,
+        borderColor: '#e53e3e',
+        backgroundColor: 'rgba(229,62,62,.1)',
+        borderWidth: 2.5,
+        pointRadius: 6,
+        tension: .3,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#a0aec0' }, grid: { color: '#2d3748' } },
+        y: { reverse: true, ticks: { color: '#a0aec0', callback: function(v) { return toStr(v); } }, grid: { color: '#2d3748' } }
+      }
+    }
+  });
+
+  if (rs.length < 2) {
+    dd.innerHTML = '<div class="empty">Necesitas al menos 2 registros para el comparativo.</div>';
+    IARS = rs;
+    iz.style.display = 'block';
+    return;
+  }
+
+  var rows = '';
+  for (var i = 1; i < rs.length; i++) {
+    var prev = rs[i - 1];
+    var cur = rs[i];
+    var d2 = prev.tiempoSeg - cur.tiempoSeg;
+    var pct = ((Math.abs(d2) / prev.tiempoSeg) * 100).toFixed(2);
+    var cl = d2 > 0 ? 'dp' : d2 < 0 ? 'dn' : '';
+    rows += '<tr>'
+      + '<td>' + prev.fecha + '</td><td>' + cur.fecha + '</td>'
+      + '<td><span class="bg ' + prev.tipo + '">' + prev.tipo + '</span></td>'
+      + '<td><span class="bg ' + cur.tipo + '">' + cur.tipo + '</span></td>'
+      + '<td><b>' + toStr(prev.tiempoSeg) + '</b></td>'
+      + '<td><b>' + toStr(cur.tiempoSeg) + '</b></td>'
+      + '<td class="' + cl + '">' + (d2 > 0 ? '-' : '+') + toStr(Math.abs(d2)) + '</td>'
+      + '<td class="' + cl + '">' + pct + '%</td>'
+      + '<td class="' + cl + '">' + (d2 > 0 ? 'Mejora' : d2 < 0 ? 'Retroceso' : 'Igual') + '</td>'
+      + '</tr>';
+  }
+
+  dd.innerHTML = '<p style="font-size:.82rem;color:#a0aec0;margin-bottom:7px">Delta entre registros</p>'
+    + '<div class="tw"><table><thead><tr><th>Desde</th><th>Hasta</th><th>Tipo ant.</th><th>Tipo nvo.</th><th>T. anterior</th><th>T. nuevo</th><th>Diferencia</th><th>%</th><th>Resultado</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+
+  IARS = rs;
+  iz.style.display = 'block';
+  document.getElementById('iaout').innerHTML = '';
+  document.getElementById('iabtn').textContent = 'Analisis con IA';
+}
+
+// ============ IA ============
+function iaAnalisis() {
+  if (!IARS.length) return;
+  var btn = document.getElementById('iabtn');
+  var out = document.getElementById('iaout');
+  btn.disabled = true;
+  btn.textContent = 'Analizando...';
+  out.innerHTML = '<div style="color:#9f7aea;padding:14px">Consultando IA...</div>';
+
+  var dep = IARS[0].deportista;
+  var pru = IARS[0].prueba;
+  var tms = IARS.map(function(r) { return r.tiempoSeg; });
+  var mejor = Math.min.apply(null, tms);
+  var tend = tms[tms.length - 1] < tms[0] ? 'mejora' : 'retroceso';
+
+  var filas = '';
+  for (var i = 0; i < IARS.length; i++) {
+    var r = IARS[i];
+    var prev = i > 0 ? IARS[i - 1] : null;
+    var d = prev ? (prev.tiempoSeg - r.tiempoSeg).toFixed(2) : '-';
+    filas += (i + 1) + '. ' + r.fecha + ' | ' + r.tipo + ' | ' + toStr(r.tiempoSeg) + (d !== '-' ? ' | D ' + d + 's' : '') + '\n';
+  }
+
+  var prompt = 'Eres experto en atletismo. Informe BREVE al entrenador.\nAtleta: ' + dep + ' | Prueba: ' + pru + ' | Mejor: ' + toStr(mejor) + ' | Tendencia: ' + tend + '\n' + filas + '\nResponde en espanol, exactamente 5 lineas:\nEVOLUCION: [frase]\nFORTALEZA: [frase]\nMEJORAR: [frase]\nCONSEJO: [frase]\nPROYECCION: [frase]\nMax 15 palabras por linea.';
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 400,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  }).then(function(r) {
+    return r.json();
+  }).then(function(data) {
+    var txt = data.content && data.content[0] && data.content[0].text || '';
+    if (!txt) throw new Error('Sin respuesta');
+    var h = '<div class="iabox">';
+    var lineas = txt.split('\n');
+    for (var i = 0; i < lineas.length; i++) {
+      var l = lineas[i].trim();
+      if (!l) continue;
+      h += '<div class="iat">' + l + '</div>';
+    }
+    h += '<div style="margin-top:8px;font-size:.7rem;color:#4a5568">IA - ' + IARS.length + ' registros - Orientativo</div></div>';
+    out.innerHTML = h;
+  }).catch(function(e) {
+    out.innerHTML = '<div class="iabox" style="border-color:#e53e3e;color:#fc8181">Error: ' + e.message + '</div>';
+  }).finally(function() {
+    btn.disabled = false;
+    btn.textContent = 'Regenerar analisis';
+  });
+}
+
+// ============ HISTORIAL ============
+function mostrarHistorial() {
+  var df = document.getElementById('h-dep').value;
+  var pf = document.getElementById('h-pru').value;
+  var tf = document.getElementById('h-tip').value;
+
+  var rs = [];
+  for (var i = 0; i < RS.length; i++) {
+    var r = RS[i];
+    if ((!df || r.deportista === df) && (!pf || r.prueba === pf) && (!tf || r.tipo === tf)) {
+      rs.push(r);
+    }
+  }
+  rs.sort(function(a, b) { return b.fecha.localeCompare(a.fecha); });
+
+  var c = document.getElementById('tbl-hist');
+  if (!rs.length) { c.innerHTML = '<div class="empty">No hay resultados.</div>'; return; }
+
+  var rows = '';
+  for (var i = 0; i < rs.length; i++) {
+    var r = rs[i];
+    rows += '<tr>'
+      + '<td>' + r.fecha + '</td>'
+      + '<td><b>' + r.deportista + '</b></td>'
+      + '<td>' + r.prueba + '</td>'
+      + '<td><span class="bg ' + r.tipo + '">' + r.tipo + '</span></td>'
+      + '<td><b>' + toStr(r.tiempoSeg) + '</b></td>'
+      + '<td style="color:#a0aec0">' + (r.lugar || '-') + '</td>'
+      + '<td style="color:#718096;font-size:.78rem">' + (r.notas || '-') + '</td>'
+      + '<td><button class="bdel" data-fid="' + r.fid + '">Eliminar</button></td>'
+      + '</tr>';
+  }
+
+  c.innerHTML = '<div class="tw"><table><thead><tr><th>Fecha</th><th>Atleta</th><th>Prueba</th><th>Tipo</th><th>Tiempo</th><th>Lugar</th><th>Notas</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+
+  var btns = c.querySelectorAll('.bdel');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function() {
+      var fid = this.getAttribute('data-fid');
+      eliminar(fid);
+    });
+  }
+}
+
+function eliminar(fid) {
+  if (!confirm('Eliminar este registro?')) return;
+  if (!DB) { alert('Sin conexion.'); return; }
+  DB.collection('resultados').doc(fid).delete().catch(function(e) { alert('Error: ' + e.message); });
+}
+
+// ============ EVENTOS ============
+document.getElementById('btnGuardar').addEventListener('click', guardar);
+document.getElementById('btnLimpiar').addEventListener('click', function() { limpiar(false); });
+document.getElementById('iabtn').addEventListener('click', iaAnalisis);
+document.getElementById('a-dep').addEventListener('change', mostrarAnalisis);
+document.getElementById('a-pru').addEventListener('change', mostrarAnalisis);
+document.getElementById('h-dep').addEventListener('change', mostrarHistorial);
+document.getElementById('h-pru').addEventListener('change', mostrarHistorial);
+document.getElementById('h-tip').addEventListener('change', mostrarHistorial);
+
+// ============ INICIO ============
+document.getElementById('r-fec').value = new Date().toISOString().split('T')[0];
+actualizarSelects();
+iniciarFirebase();
+
+</script>
+</body>
+</html>
