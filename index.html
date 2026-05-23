@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Club de Atletismo Team Running</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyBleRJWaDIwy4W1WOwPDY97xKYFVhD5Os8",
     authDomain: "club-team-running.firebaseapp.com",
@@ -17,24 +16,8 @@
     messagingSenderId: "547439458357",
     appId: "1:547439458357:web:476d4bf7483a8fc814d97c"
   };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // ── Firebase helpers ─────────────────────────────────────────
-  window.fbDb = db;
-  window.fbCol = collection;
-  window.fbAddDoc = addDoc;
-  window.fbGetDocs = getDocs;
-  window.fbDeleteDoc = deleteDoc;
-  window.fbDoc = doc;
-  window.fbOnSnapshot = onSnapshot;
-  window.fbSetDoc = setDoc;
-
-  // Listen for real-time changes
-  window.addEventListener('load', () => {
-    iniciarEscucha();
-  });
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 </script>
 
 <style>
@@ -405,8 +388,8 @@ tr:hover td { background: #16213e; }
   function guardar(d) {
     DATA = d;
     // Sync meta (deportistas y pruebas) to Firestore
-    if (window.fbDb) {
-      window.fbSetDoc(window.fbDoc(window.fbDb, 'meta', 'config'), {
+    if (db) {
+      db.collection('meta').doc('config').set({
         deportistas: d.deportistas || [],
         pruebas: d.pruebas || []
       }).catch(e => console.error('Error guardando meta:', e));
@@ -414,25 +397,25 @@ tr:hover td { background: #16213e; }
   }
 
   async function guardarResultadoFirebase(resultado) {
-    if (!window.fbDb) return;
+    if (!db) return;
     try {
-      await window.fbAddDoc(window.fbCol(window.fbDb, 'resultados'), resultado);
+      await db.collection('resultados').add(resultado);
     } catch(e) { console.error('Error guardando resultado:', e); }
   }
 
   async function eliminarResultadoFirebase(firebaseId) {
-    if (!window.fbDb) return;
+    if (!db) return;
     try {
-      await window.fbDeleteDoc(window.fbDoc(window.fbDb, 'resultados', firebaseId));
+      await fbDeleteDoc(fbDoc(db, 'resultados', firebaseId));
     } catch(e) { console.error('Error eliminando:', e); }
   }
 
   window.iniciarEscucha = function() {
-    if (escuchaActiva || !window.fbDb) return;
+    if (escuchaActiva || !db) return;
     escuchaActiva = true;
 
     // Escuchar resultados en tiempo real
-    window.fbOnSnapshot(window.fbCol(window.fbDb, 'resultados'), (snapshot) => {
+    db.collection('resultados').onSnapshot((snapshot) => {
       DATA.resultados = snapshot.docs.map(d => ({ ...d.data(), firebaseId: d.id }));
       // Reconstruir IDs locales
       DATA.resultados.forEach((r, i) => { if (!r.id) r.id = i + 1; });
@@ -452,7 +435,7 @@ tr:hover td { background: #16213e; }
     });
 
     // Escuchar meta (deportistas y pruebas personalizadas)
-    window.fbOnSnapshot(window.fbDoc(window.fbDb, 'meta', 'config'), (doc) => {
+    fbOnSnapshot(fbDoc(db, 'meta', 'config'), (doc) => {
       if (doc.exists()) {
         const data = doc.data();
         DATA.deportistas = data.deportistas || [];
@@ -475,14 +458,7 @@ tr:hover td { background: #16213e; }
     el.style.color = ok ? '#68d391' : '#fc8181';
   }
 
-const PRUEBAS_BASE = [
-  '100m planos','200m planos','400m planos','800m planos','1500m planos',
-  '3000m','5000m','10000m','Maratón','Medio maratón',
-  '110m vallas','400m vallas','3000m obstáculos',
-  'Salto largo','Salto triple','Salto alto','Salto con pértiga',
-  'Lanzamiento de disco','Lanzamiento de bala','Lanzamiento de martillo','Lanzamiento de jabalina',
-  'Posta 4x100m','Posta 4x400m'
-];
+
 
 function cargar() {
   try { return JSON.parse(localStorage.getItem(KEY)) || { deportistas: [], pruebas: [], resultados: [] }; }
@@ -493,6 +469,10 @@ function guardar(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 // Inicializar data vacía (Firebase trae los datos en tiempo real)
 function inicializar() {
   DATA = { deportistas: [], pruebas: [], resultados: [] };
+  // Start Firebase listener
+  setTimeout(() => {
+    if (typeof db !== 'undefined') window.iniciarEscucha();
+  }, 500);
 }
 inicializar();
 
