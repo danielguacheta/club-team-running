@@ -12,36 +12,36 @@ header img{height:52px;width:52px;object-fit:contain;border-radius:8px}
 header h1{font-size:1rem;font-weight:700;color:#fff;line-height:1.3}
 header p{font-size:.72rem;color:#a0aec0}
 .nav{display:flex;gap:6px;padding:12px 16px;flex-wrap:wrap;background:#0f1117}
-.nav button{padding:9px 16px;border-radius:8px;border:1px solid #2d3748;background:#1a1f2e;color:#a0aec0;cursor:pointer;font-size:.85rem}
+.nav button{padding:8px 14px;border-radius:8px;border:1px solid #2d3748;background:#1a1f2e;color:#a0aec0;cursor:pointer;font-size:.82rem}
 .nav button.active{background:#e53e3e;border-color:#e53e3e;color:#fff;font-weight:600}
-.btnexcel{background:#1c4532 !important;border-color:#38a169 !important;color:#9ae6b4 !important}
-.wrap{padding:0 16px 40px}
-.panel{display:none}
-.panel.active{display:block}
+.btn-excel{background:#1c4532!important;border-color:#38a169!important;color:#9ae6b4!important}
+.btn-plan{background:#2c2060!important;border-color:#6b46c1!important;color:#d6bcfa!important}
+.wrap{padding:0 16px 60px}
+.panel{display:none}.panel.active{display:block}
 .card{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:16px;margin-bottom:14px}
 .card h2{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:12px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-@media(max-width:480px){.g2{grid-template-columns:1fr}}
+@media(max-width:500px){.g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr}}
 label{font-size:.78rem;color:#a0aec0;display:block;margin-bottom:3px}
-input,select{width:100%;padding:10px;border-radius:7px;border:1px solid #2d3748;background:#0f1117;color:#e2e8f0;font-size:.9rem;outline:none}
-input:focus,select:focus{border-color:#e53e3e}
-.btnr{background:#e53e3e;color:#fff;border:none;padding:11px 20px;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;flex:1}
-.btng{background:#2d3748;color:#e2e8f0;border:none;padding:11px 20px;border-radius:8px;cursor:pointer;font-size:.9rem;flex:1}
+input,select,textarea{width:100%;padding:10px;border-radius:7px;border:1px solid #2d3748;background:#0f1117;color:#e2e8f0;font-size:.88rem;outline:none;font-family:Arial,sans-serif}
+input:focus,select:focus,textarea:focus{border-color:#e53e3e}
+textarea{resize:vertical;min-height:64px}
+.btnr{background:#e53e3e;color:#fff;border:none;padding:11px 18px;border-radius:8px;cursor:pointer;font-size:.88rem;font-weight:600;flex:1}
+.btng{background:#2d3748;color:#e2e8f0;border:none;padding:11px 18px;border-radius:8px;cursor:pointer;font-size:.88rem;flex:1}
+.btnv{background:linear-gradient(135deg,#2c2060,#44337a);color:#d6bcfa;border:1px solid #6b46c1;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:.88rem;font-weight:600}
+.btnv:disabled{opacity:.5;cursor:not-allowed}
 .brow{display:flex;gap:8px;margin-top:12px}
 .msg{margin-top:8px;font-size:.85rem}
 .ath-item{background:#16213e;border:1px solid #2d3748;border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer}
 .ath-item:hover{border-color:#e53e3e}
-.ath-header{display:flex;justify-content:space-between;align-items:flex-start}
 .sg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
 @media(min-width:600px){.sg{grid-template-columns:repeat(5,1fr)}}
 .sb{background:#16213e;border:1px solid #2d3748;border-radius:8px;padding:10px;text-align:center}
 .sb .v{font-size:1rem;font-weight:700;color:#fff}
 .sb .l{font-size:.7rem;color:#a0aec0;margin-top:2px}
-.sb.g .v{color:#48bb78}
-.sb.r .v{color:#fc8181}
-.dp{color:#48bb78;font-weight:700}
-.dn{color:#fc8181;font-weight:700}
+.sb.g .v{color:#48bb78}.sb.r .v{color:#fc8181}
+.dp{color:#48bb78;font-weight:700}.dn{color:#fc8181;font-weight:700}
 .cw{height:240px;position:relative;margin-bottom:14px}
 table{width:100%;border-collapse:collapse;font-size:.82rem}
 th{text-align:left;padding:7px 9px;color:#a0aec0;border-bottom:1px solid #2d3748;white-space:nowrap}
@@ -58,20 +58,39 @@ td{padding:7px 9px;border-bottom:1px solid #1e2535;vertical-align:middle}
 .bdel{background:none;border:1px solid #fc8181;color:#fc8181;padding:4px 9px;border-radius:5px;cursor:pointer;font-size:.78rem}
 .iabtn{background:linear-gradient(135deg,#1a365d,#2c5282);color:#fff;border:2px solid #d4a017;border-radius:8px;padding:9px 16px;font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:10px}
 .iabtn:disabled{opacity:.5;cursor:not-allowed}
-.iabox{background:#0f1a2e;border:1px solid #d4a017;border-radius:10px;padding:16px;font-size:.88rem;color:#e2e8f0;line-height:1.7}
-.ia-titulo{color:#d4a017;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-top:12px;margin-bottom:3px}
+.iabox{background:#0f1a2e;border:1px solid #d4a017;border-radius:10px;padding:16px;font-size:.87rem;color:#e2e8f0;line-height:1.75}
+.ia-titulo{color:#d4a017;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-top:14px;margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid #2d3748}
 .ia-titulo:first-child{margin-top:0}
-.ia-texto{color:#e2e8f0;margin-bottom:4px}
+.ia-texto{margin-bottom:5px}
 .ia-bien{display:inline-block;background:#1c4532;color:#68d391;border-radius:4px;padding:1px 6px;font-size:.72rem;margin-right:4px}
 .ia-mal{display:inline-block;background:#3d0a0a;color:#fc8181;border-radius:4px;padding:1px 6px;font-size:.72rem;margin-right:4px}
 #conn{position:fixed;top:0;right:0;padding:3px 8px;font-size:.68rem;z-index:999;border-radius:0 0 0 6px}
-.badge-unidad{display:inline-block;background:#2c5282;color:#90cdf4;border-radius:6px;padding:3px 10px;font-size:.75rem;font-weight:600;margin-left:8px;vertical-align:middle}
+.badge-u{display:inline-block;background:#2c5282;color:#90cdf4;border-radius:6px;padding:3px 10px;font-size:.75rem;font-weight:600;margin-left:8px}
 .perfil-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
 @media(min-width:500px){.perfil-stats{grid-template-columns:repeat(4,1fr)}}
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:1000;display:flex;align-items:center;justify-content:center}
-.modal{background:#1a1f2e;border:1px solid #2d3748;border-radius:14px;padding:20px;width:90%;max-width:480px;max-height:90vh;overflow-y:auto}
+.modal-ov{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:center;justify-content:center}
+.modal{background:#1a1f2e;border:1px solid #2d3748;border-radius:14px;padding:20px;width:92%;max-width:500px;max-height:92vh;overflow-y:auto}
 .modal h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:14px}
-.modal-close{float:right;background:none;border:none;color:#a0aec0;font-size:1.2rem;cursor:pointer;margin-top:-4px}
+.modal-x{float:right;background:none;border:none;color:#a0aec0;font-size:1.3rem;cursor:pointer;margin-top:-4px}
+/* PLAN */
+.dia-box{background:#16213e;border:1px solid #2d3748;border-radius:10px;margin-bottom:10px;overflow:hidden}
+.dia-hdr{padding:11px 14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.dia-hdr:hover{background:#1e2a3a}
+.dia-nombre{font-weight:700;font-size:.9rem;color:#d4a017}
+.dia-body{padding:14px;border-top:1px solid #2d3748;display:none}
+.dia-body.open{display:block}
+.campo label{font-size:.74rem;color:#d4a017;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.campo{margin-bottom:10px}
+.tipo-pill{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.72rem;font-weight:600;background:#2d3748;color:#a0aec0}
+.meta-row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:10px}
+.meta-row>div{flex:1;min-width:70px}
+.meta-item{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:#0f1117;border-radius:7px;margin-bottom:6px}
+.prog-bar{height:5px;background:#2d3748;border-radius:3px;margin-top:8px;overflow:hidden;display:none}
+.prog-fill{height:100%;background:linear-gradient(90deg,#6b46c1,#d4a017);border-radius:3px;transition:width .4s}
+.img-zona{border:2px dashed #2d3748;border-radius:10px;padding:20px;text-align:center;cursor:pointer;margin-bottom:12px}
+.img-zona:hover{border-color:#6b46c1}
+.img-zona input{display:none}
+#pl-preview{max-width:100%;border-radius:8px;margin-top:10px;display:none}
 </style>
 </head>
 <body>
@@ -84,155 +103,341 @@ td{padding:7px 9px;border-bottom:1px solid #1e2535;vertical-align:middle}
 </header>
 <div id="conn"></div>
 <div class="nav">
-  <button id="btn0" class="active" onclick="cambiarTab(0)">+ Registrar</button>
-  <button id="btn1" onclick="cambiarTab(1)">Atletas</button>
-  <button id="btn2" onclick="cambiarTab(2)">Analisis</button>
-  <button id="btn3" onclick="cambiarTab(3)">Historial</button>
-  <button id="btnExcel" class="btnexcel" onclick="exportarCSV()">Exportar Excel</button>
+  <button id="btn0" class="active" onclick="tab(0)">+ Registrar</button>
+  <button id="btn1" onclick="tab(1)">Atletas</button>
+  <button id="btn2" onclick="tab(2)">Analisis</button>
+  <button id="btn3" onclick="tab(3)">Historial</button>
+  <button id="btn4" class="btn-plan" onclick="tab(4)">Plan</button>
+  <button id="btnXL" class="btn-excel" onclick="exportCSV()">Exportar Excel</button>
 </div>
 <div class="wrap">
-  <div id="panel0" class="panel active">
-    <div class="card">
-      <h2>Nuevo resultado</h2>
-      <div class="g2">
-        <div><label>Deportista existente</label><select id="r-dep"><option value="">Seleccionar</option></select></div>
-        <div><label>O nuevo deportista</label><input id="r-nvo" type="text" placeholder="Nombre completo"></div>
-        <div><label>Prueba existente</label><select id="r-pru" onchange="actualizarUnidad()"><option value="">Seleccionar</option></select></div>
-        <div><label>O nueva prueba</label><input id="r-pnv" type="text" placeholder="Ej: 600m, Disco..." onchange="actualizarUnidad()"></div>
-        <div><label>Tipo</label><select id="r-tip"><option value="test">Test</option><option value="entrenamiento">Entrenamiento</option><option value="competencia">Competencia</option></select></div>
-        <div><label>Fecha</label><input id="r-fec" type="date"></div>
-      </div>
-      <div id="bloque-tiempo" style="margin-top:10px">
-        <label>Tiempo (min : seg . centesimas)</label>
-        <div class="g3" style="margin-top:5px">
-          <div><input id="r-min" type="number" min="0" max="99" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.72rem">min</label></div>
-          <div><input id="r-seg" type="number" min="0" max="59" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.72rem">seg</label></div>
-          <div><input id="r-cen" type="number" min="0" max="99" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.72rem">cent</label></div>
-        </div>
-      </div>
-      <div id="bloque-distancia" style="margin-top:10px;display:none">
-        <label>Resultado <span class="badge-unidad">metros</span></label>
-        <div style="margin-top:5px;display:flex;gap:8px;align-items:center">
-          <input id="r-metros" type="number" min="0" step="0.01" placeholder="Ej: 45.30" style="max-width:200px">
-          <span style="color:#a0aec0;font-size:.85rem">metros</span>
-        </div>
-      </div>
-      <div class="g2" style="margin-top:10px">
-        <div><label>Lugar</label><input id="r-lug" type="text" placeholder="Ej: Estadio El Campin"></div>
-        <div><label>Notas</label><input id="r-not" type="text" placeholder="Observaciones..."></div>
-      </div>
-      <div class="brow">
-        <button class="btnr" id="btnGuardar">Guardar</button>
-        <button class="btng" id="btnLimpiar">Limpiar</button>
-      </div>
-      <div id="msg" class="msg"></div>
-    </div>
-  </div>
-  <div id="panel1" class="panel">
-    <div class="card">
-      <h2>Atletas registrados</h2>
-      <div id="lst-atl"><div class="empty">Cargando...</div></div>
-    </div>
-  </div>
-  <div id="panel2" class="panel">
-    <div class="card">
-      <h2>Analisis</h2>
-      <div class="fr">
-        <div><label>Deportista</label><select id="a-dep"><option value="">Todos</option></select></div>
-        <div><label>Prueba</label><select id="a-pru"><option value="">Todas</option></select></div>
-      </div>
-      <div id="stats" class="sg"></div>
-      <div class="cw"><canvas id="chart"></canvas></div>
-      <div id="delta"></div>
-      <div id="iazone" style="margin-top:16px;display:none">
-        <button class="iabtn" id="iabtn">Generar informe del entrenador</button>
-        <div id="iaout"></div>
-      </div>
-    </div>
-  </div>
-  <div id="panel3" class="panel">
-    <div class="card">
-      <h2>Historial</h2>
-      <div class="fr">
-        <div><label>Deportista</label><select id="h-dep"><option value="">Todos</option></select></div>
-        <div><label>Prueba</label><select id="h-pru"><option value="">Todas</option></select></div>
-        <div><label>Tipo</label><select id="h-tip"><option value="">Todos</option><option value="test">Test</option><option value="entrenamiento">Entrenamiento</option><option value="competencia">Competencia</option></select></div>
-      </div>
-      <div id="tbl-hist"></div>
-    </div>
+
+<!-- REGISTRAR -->
+<div id="panel0" class="panel active">
+<div class="card"><h2>Nuevo resultado</h2>
+<div class="g2">
+  <div><label>Deportista existente</label><select id="r-dep"><option value="">Seleccionar</option></select></div>
+  <div><label>O nuevo deportista</label><input id="r-nvo" placeholder="Nombre completo"></div>
+  <div><label>Prueba existente</label><select id="r-pru" onchange="updUnidad()"><option value="">Seleccionar</option></select></div>
+  <div><label>O nueva prueba</label><input id="r-pnv" placeholder="Ej: 600m, Disco..." onchange="updUnidad()"></div>
+  <div><label>Tipo</label><select id="r-tip"><option value="test">Test</option><option value="entrenamiento">Entrenamiento</option><option value="competencia">Competencia</option></select></div>
+  <div><label>Fecha</label><input id="r-fec" type="date"></div>
+</div>
+<div id="bl-tiempo" style="margin-top:10px">
+  <label>Tiempo (min : seg . centesimas)</label>
+  <div class="g3" style="margin-top:5px">
+    <div><input id="r-min" type="number" min="0" max="99" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.7rem">min</label></div>
+    <div><input id="r-seg" type="number" min="0" max="59" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.7rem">seg</label></div>
+    <div><input id="r-cen" type="number" min="0" max="99" placeholder="00"><label style="text-align:center;margin-top:2px;font-size:.7rem">cent</label></div>
   </div>
 </div>
-<div id="modal-perfil" class="modal-overlay" style="display:none">
-  <div class="modal">
-    <h3><span id="mp-nombre"></span><button class="modal-close" onclick="cerrarModal()">x</button></h3>
-    <div id="mp-info" class="perfil-stats" style="margin-bottom:14px"></div>
-    <div style="border-top:1px solid #2d3748;padding-top:14px">
-      <div style="font-size:.82rem;font-weight:600;color:#d4a017;margin-bottom:10px">Actualizar datos del atleta</div>
-      <div class="g2">
-        <div><label>Fecha de nacimiento</label><input id="mp-fnac" type="date" onchange="calcularCategoria()"></div>
-        <div><label>Categoria</label><input id="mp-cat" type="text" readonly style="background:#0f1117;color:#90cdf4;font-weight:700"></div>
-        <div><label>Estatura (cm)</label><input id="mp-est" type="number" min="50" max="250" placeholder="Ej: 175" onchange="calcularIMC()"></div>
-        <div><label>Peso (kg)</label><input id="mp-pes" type="number" min="20" max="200" step="0.1" placeholder="Ej: 65.5" onchange="calcularIMC()"></div>
-      </div>
-      <div id="mp-imc-resultado" style="margin-top:10px;padding:10px;background:#0f1117;border-radius:8px;display:none">
-        <div style="font-size:.78rem;color:#a0aec0;margin-bottom:4px">IMC calculado</div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <span id="mp-imc-val" style="font-size:1.4rem;font-weight:700"></span>
-          <div><div id="mp-imc-cat" style="font-size:.85rem;font-weight:600"></div><div id="mp-imc-desc" style="font-size:.72rem;color:#a0aec0;margin-top:2px"></div></div>
-        </div>
-      </div>
-      <div style="margin-top:10px"><label>Fecha de la medicion</label><input id="mp-fecha" type="date"></div>
-      <button class="btnr" style="margin-top:10px;width:100%" onclick="guardarPerfil()">Guardar datos</button>
-      <div id="mp-msg" style="margin-top:6px;font-size:.82rem"></div>
-    </div>
-    <div id="mp-historial" style="margin-top:14px;border-top:1px solid #2d3748;padding-top:14px"></div>
+<div id="bl-dist" style="margin-top:10px;display:none">
+  <label>Resultado <span class="badge-u">metros</span></label>
+  <div style="display:flex;gap:8px;align-items:center;margin-top:5px">
+    <input id="r-met" type="number" min="0" step="0.01" placeholder="Ej: 45.30" style="max-width:180px">
+    <span style="color:#a0aec0;font-size:.85rem">metros</span>
   </div>
 </div>
+<div class="g2" style="margin-top:10px">
+  <div><label>Lugar</label><input id="r-lug" placeholder="Ej: Estadio El Campin"></div>
+  <div><label>Notas</label><input id="r-not" placeholder="Observaciones..."></div>
+</div>
+<div class="brow">
+  <button class="btnr" id="btnG">Guardar</button>
+  <button class="btng" id="btnL">Limpiar</button>
+</div>
+<div id="msg" class="msg"></div>
+</div></div>
+
+<!-- ATLETAS -->
+<div id="panel1" class="panel">
+<div class="card"><h2>Atletas registrados</h2>
+<div id="lst-atl"><div class="empty">Cargando...</div></div>
+</div></div>
+
+<!-- ANALISIS -->
+<div id="panel2" class="panel">
+<div class="card"><h2>Analisis</h2>
+<div class="fr">
+  <div><label>Deportista</label><select id="a-dep"><option value="">Todos</option></select></div>
+  <div><label>Prueba</label><select id="a-pru"><option value="">Todas</option></select></div>
+</div>
+<div id="stats" class="sg"></div>
+<div class="cw"><canvas id="chart"></canvas></div>
+<div id="delta"></div>
+<div id="iazone" style="margin-top:16px;display:none">
+  <button class="iabtn" id="iabtn">Generar informe del entrenador</button>
+  <div id="iaout"></div>
+</div>
+</div></div>
+
+<!-- HISTORIAL -->
+<div id="panel3" class="panel">
+<div class="card"><h2>Historial</h2>
+<div class="fr">
+  <div><label>Deportista</label><select id="h-dep"><option value="">Todos</option></select></div>
+  <div><label>Prueba</label><select id="h-pru"><option value="">Todas</option></select></div>
+  <div><label>Tipo</label><select id="h-tip"><option value="">Todos</option><option value="test">Test</option><option value="entrenamiento">Entrenamiento</option><option value="competencia">Competencia</option></select></div>
+</div>
+<div id="tbl-hist"></div>
+</div></div>
+
+<!-- PLAN -->
+<div id="panel4" class="panel">
+
+<div class="card">
+<h2>Plan de Entrenamiento</h2>
+<div class="g2" style="margin-bottom:12px">
+  <div><label>Atleta</label><select id="pl-dep" onchange="plCargarAtleta()"><option value="">Seleccionar atleta</option></select></div>
+  <div><label>Semana (lunes de la semana)</label><input id="pl-sem" type="date" onchange="plCambiarSemana()"></div>
+</div>
+<div><label>Fecha competencia (opcional)</label><input id="pl-comp" type="date" style="max-width:220px"></div>
+</div>
+
+<div id="pl-metas-sec" style="display:none">
+<div class="card" style="border-color:#d4a017">
+<h2 style="color:#d4a017">Metas del atleta</h2>
+<div id="pl-metas-lista"></div>
+<div class="meta-row">
+  <div><label>Prueba</label><select id="pl-mpru"><option value="">Seleccionar</option></select></div>
+  <div><label>Min</label><input id="pl-mmin" type="number" min="0" max="99" placeholder="0"></div>
+  <div><label>Seg</label><input id="pl-mseg" type="number" min="0" max="59" placeholder="00"></div>
+  <div><label>Cent</label><input id="pl-mcen" type="number" min="0" max="99" placeholder="00"></div>
+  <div><label>O metros</label><input id="pl-mmet" type="number" min="0" step="0.01" placeholder="45.30"></div>
+  <div style="display:flex;align-items:flex-end"><button class="btnr" onclick="plGuardarMeta()" style="white-space:nowrap">+ Meta</button></div>
+</div>
+<div id="pl-meta-msg" style="font-size:.8rem;margin-top:6px"></div>
+</div>
+</div>
+
+<div id="pl-semana-sec" style="display:none">
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+  <h2 id="pl-titulo">Semana</h2>
+  <div style="display:flex;gap:8px">
+    <button class="btng" onclick="plSemAnt()" style="padding:7px 12px">Anterior</button>
+    <button class="btng" onclick="plSemSig()" style="padding:7px 12px">Siguiente</button>
+  </div>
+</div>
+<div id="pl-dias"></div>
+<div class="brow" style="margin-top:14px">
+  <button class="btnr" onclick="plGuardar()">Guardar plan</button>
+  <button class="btng" onclick="plLimpiar()">Limpiar semana</button>
+</div>
+<div id="pl-msg" style="margin-top:8px;font-size:.85rem"></div>
+</div>
+
+<div class="card">
+<h2>Cargar imagen del plan</h2>
+<p style="font-size:.8rem;color:#a0aec0;margin-bottom:12px">Sube una foto del plan escrito en papel o en Excel para que la IA lo analice junto con el historial del atleta.</p>
+<div class="img-zona" onclick="document.getElementById('pl-img-inp').click()">
+  <input type="file" id="pl-img-inp" accept="image/*" onchange="plPreviewImg(event)">
+  <div style="color:#a0aec0;font-size:.85rem">Toca aqui para subir imagen del plan<br><span style="font-size:.72rem;color:#4a5568">JPG, PNG, WEBP</span></div>
+  <img id="pl-preview">
+</div>
+</div>
+
+<div class="card">
+<h2>Analisis IA del plan</h2>
+<div style="margin-bottom:12px">
+  <label>Contexto adicional para la IA (lesiones, doble jornada, etc.)</label>
+  <textarea id="pl-ctx" placeholder="Ej: atleta tuvo molestia en rodilla la semana pasada, competencia importante el 20 de julio..."></textarea>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+  <button class="btnv" id="pl-btn-plan" onclick="plAnalizarIA(false)">Analizar plan escrito con IA</button>
+  <button class="btnv" id="pl-btn-img" onclick="plAnalizarIA(true)" style="display:none;background:linear-gradient(135deg,#1c4532,#276749);border-color:#38a169;color:#9ae6b4">Analizar imagen con IA</button>
+</div>
+<div class="prog-bar" id="pl-prog"><div class="prog-fill" id="pl-prog-fill" style="width:0%"></div></div>
+<div id="pl-ia-out"></div>
+</div>
+</div>
+
+</div><!-- fin panel4 -->
+
+</div><!-- fin wrap -->
+
+<!-- MODAL PERFIL -->
+<div id="modal-perfil" class="modal-ov" style="display:none">
+<div class="modal">
+  <h3><span id="mp-nom"></span><button class="modal-x" onclick="cerrarModal()">&#10005;</button></h3>
+  <div id="mp-info" class="perfil-stats" style="margin-bottom:14px"></div>
+  <div style="border-top:1px solid #2d3748;padding-top:14px">
+    <div style="font-size:.82rem;font-weight:600;color:#d4a017;margin-bottom:10px">Actualizar datos del atleta</div>
+    <div class="g2">
+      <div><label>Fecha de nacimiento</label><input id="mp-fnac" type="date" onchange="calcCat()"></div>
+      <div><label>Categoria</label><input id="mp-cat" readonly style="background:#0f1117;color:#90cdf4;font-weight:700"></div>
+      <div><label>Estatura (cm)</label><input id="mp-est" type="number" min="50" max="250" placeholder="175" onchange="calcIMC()"></div>
+      <div><label>Peso (kg)</label><input id="mp-pes" type="number" min="20" max="200" step="0.1" placeholder="65.5" onchange="calcIMC()"></div>
+    </div>
+    <div id="mp-imc-box" style="margin-top:10px;padding:10px;background:#0f1117;border-radius:8px;display:none">
+      <div style="font-size:.75rem;color:#a0aec0;margin-bottom:4px">IMC calculado</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span id="mp-imc-v" style="font-size:1.4rem;font-weight:700"></span>
+        <div><div id="mp-imc-c" style="font-size:.85rem;font-weight:600"></div><div id="mp-imc-d" style="font-size:.72rem;color:#a0aec0;margin-top:2px"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:10px"><label>Fecha de la medicion</label><input id="mp-fecha" type="date"></div>
+    <button class="btnr" style="margin-top:10px;width:100%" onclick="guardarPerfil()">Guardar datos</button>
+    <div id="mp-msg" style="margin-top:6px;font-size:.82rem"></div>
+  </div>
+  <div id="mp-hist" style="margin-top:14px;border-top:1px solid #2d3748;padding-top:14px"></div>
+</div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
-var RS=[],DEPS=[],PRUS=[],PERFILES={},CHT=null,IARS=[],tabActual=0,DB=null,atletaActivo='';
-var PRUEBAS_LISTA=['100m planos','200m planos','400m planos','800m planos','1500m planos','3000m','5000m','10000m','Medio maraton','Maraton','110m vallas','400m vallas','3000m obstaculos','Salto largo','Salto triple','Salto alto','Salto con pertiga','Lanzamiento de disco','Lanzamiento de bala','Lanzamiento de martillo','Lanzamiento de jabalina','Posta 4x100m','Posta 4x400m'];
+// ====== ESTADO GLOBAL ======
+var RS=[],DEPS=[],PRUS=[],PERF={},DB=null,CHT=null,IARS=[],tabN=0,atletaM='';
+var plAtleta='',plSemana='',plPlan={},plMetas={},plImg='';
+var DIAS=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var TIPOS=['Descanso','Rodaje suave','Series','Umbral','Fuerza','Tecnica','Pliometria','Competencia','Evaluacion','Otro'];
+var PRUEBAS=['100m planos','200m planos','400m planos','800m planos','1500m planos','3000m','5000m','10000m','Medio maraton','Maraton','110m vallas','400m vallas','3000m obstaculos','Salto largo','Salto triple','Salto alto','Salto con pertiga','Lanzamiento de disco','Lanzamiento de bala','Lanzamiento de martillo','Lanzamiento de jabalina','Posta 4x100m','Posta 4x400m'];
 
+// ====== UTILS ======
 function esCampo(p){if(!p)return false;var n=p.toLowerCase();return n.indexOf('salto')>=0||n.indexOf('lanzamiento')>=0||n.indexOf('disco')>=0||n.indexOf('bala')>=0||n.indexOf('martillo')>=0||n.indexOf('jabalina')>=0||n.indexOf('pertiga')>=0;}
-function actualizarUnidad(){var p=document.getElementById('r-pnv').value.trim()||document.getElementById('r-pru').value;var ec=esCampo(p);document.getElementById('bloque-tiempo').style.display=ec?'none':'block';document.getElementById('bloque-distancia').style.display=ec?'block':'none';}
 function toStr(s){var m=Math.floor(s/60),ss=Math.floor(s%60),c=Math.round((s%1)*100);return(m>0?m+':':'')+(ss<10?'0':'')+ss+'.'+(c<10?'0':'')+c;}
-function fmtVal(v,ec){return ec?v.toFixed(2)+' m':toStr(v);}
-function getValor(r){return r.valor!==undefined?r.valor:(r.tiempoSeg||0);}
-function getUnidad(r){return r.unidad||'tiempo';}
-function mostrarConn(ok){var e=document.getElementById('conn');e.textContent=ok?'En linea':'Sin conexion';e.style.cssText='position:fixed;top:0;right:0;padding:3px 8px;font-size:.68rem;z-index:999;border-radius:0 0 0 6px;background:'+(ok?'#1c4532':'#3d0a0a')+';color:'+(ok?'#68d391':'#fc8181');}
-function llenarSelect(id,items,ph){var sel=document.getElementById(id);if(!sel)return;var cur=sel.value;sel.innerHTML='<option value="">'+ph+'</option>';items.forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=x;sel.appendChild(o);});if(cur)sel.value=cur;}
-function actualizarSelects(){var deps=[],prus=PRUEBAS_LISTA.slice();RS.forEach(function(r){if(deps.indexOf(r.deportista)<0)deps.push(r.deportista);if(prus.indexOf(r.prueba)<0)prus.push(r.prueba);});DEPS.forEach(function(d){if(deps.indexOf(d)<0)deps.push(d);});PRUS.forEach(function(p){if(prus.indexOf(p)<0)prus.push(p);});deps.sort();prus.sort();llenarSelect('r-dep',deps,'Seleccionar');llenarSelect('r-pru',prus,'Seleccionar');llenarSelect('a-dep',deps,'Todos');llenarSelect('a-pru',prus,'Todas');llenarSelect('h-dep',deps,'Todos');llenarSelect('h-pru',prus,'Todas');}
-function calcularEdad(fnac){if(!fnac)return null;var hoy=new Date(),nac=new Date(fnac);var e=hoy.getFullYear()-nac.getFullYear();if(hoy.getMonth()<nac.getMonth()||(hoy.getMonth()===nac.getMonth()&&hoy.getDate()<nac.getDate()))e--;return e;}
-function categoriaPor(fnac){if(!fnac)return '';var diff=new Date().getFullYear()-new Date(fnac).getFullYear();if(diff<=9)return 'U10';if(diff<=11)return 'U12';if(diff<=13)return 'U14';if(diff<=15)return 'U16';if(diff<=17)return 'U18';if(diff<=19)return 'U20';if(diff<=22)return 'U23';return 'Mayores';}
-function calcularCategoria(){var fnac=document.getElementById('mp-fnac').value;var edad=calcularEdad(fnac);var cat=categoriaPor(fnac);document.getElementById('mp-cat').value=cat+(edad!==null?' ('+edad+' anos)':'');}
-function calcularIMC(){var est=parseFloat(document.getElementById('mp-est').value);var pes=parseFloat(document.getElementById('mp-pes').value);var box=document.getElementById('mp-imc-resultado');if(!est||!pes){box.style.display='none';return;}var imc=pes/((est/100)*(est/100));var cat,desc,col;if(imc<16){cat='Delgadez severa';desc='Muy por debajo del rango saludable';col='#90cdf4';}else if(imc<18.5){cat='Bajo peso';desc='Por debajo del rango saludable';col='#90cdf4';}else if(imc<25){cat='Peso normal';desc='Rango saludable';col='#68d391';}else if(imc<30){cat='Sobrepeso';desc='Por encima del rango saludable';col='#f6ad55';}else{cat='Obesidad';desc='Muy por encima del rango saludable';col='#fc8181';}document.getElementById('mp-imc-val').textContent=imc.toFixed(1);document.getElementById('mp-imc-val').style.color=col;document.getElementById('mp-imc-cat').textContent=cat;document.getElementById('mp-imc-cat').style.color=col;document.getElementById('mp-imc-desc').textContent=desc;box.style.display='block';}
-function abrirPerfil(dep){atletaActivo=dep;document.getElementById('mp-nombre').textContent=dep;document.getElementById('mp-msg').innerHTML='';document.getElementById('mp-fecha').value=new Date().toISOString().split('T')[0];var p=PERFILES[dep]||{};document.getElementById('mp-fnac').value=p.fnac||'';document.getElementById('mp-est').value=p.estatura||'';document.getElementById('mp-pes').value=p.peso||'';calcularCategoria();calcularIMC();var edad=calcularEdad(p.fnac),cat=categoriaPor(p.fnac);var imcV=p.estatura&&p.peso?(p.peso/((p.estatura/100)*(p.estatura/100))).toFixed(1):'--';var rsAtl=RS.filter(function(r){return r.deportista===dep;});var info='';info+='<div class="sb"><div class="v">'+(edad!==null?edad+' a':'--')+'</div><div class="l">Edad</div></div>';info+='<div class="sb"><div class="v" style="font-size:.85rem">'+(cat||'--')+'</div><div class="l">Categoria</div></div>';info+='<div class="sb"><div class="v">'+(p.estatura?p.estatura+' cm':'--')+'</div><div class="l">Estatura</div></div>';info+='<div class="sb"><div class="v">'+(p.peso?p.peso+' kg':'--')+'</div><div class="l">Peso</div></div>';info+='<div class="sb"><div class="v">'+imcV+'</div><div class="l">IMC</div></div>';info+='<div class="sb"><div class="v">'+rsAtl.length+'</div><div class="l">Resultados</div></div>';document.getElementById('mp-info').innerHTML=info;var meds=(p.mediciones||[]).slice().sort(function(a,b){return b.fecha.localeCompare(a.fecha);});var hmed=document.getElementById('mp-historial');if(meds.length){var rows='';meds.forEach(function(m){var iv=m.estatura&&m.peso?(m.peso/((m.estatura/100)*(m.estatura/100))).toFixed(1):'--';rows+='<tr><td>'+m.fecha+'</td><td>'+(m.estatura||'--')+' cm</td><td>'+(m.peso||'--')+' kg</td><td>'+iv+'</td></tr>';});hmed.innerHTML='<div style="font-size:.82rem;font-weight:600;color:#a0aec0;margin-bottom:8px">Historial de mediciones</div><div class="tw"><table><thead><tr><th>Fecha</th><th>Estatura</th><th>Peso</th><th>IMC</th></tr></thead><tbody>'+rows+'</tbody></table></div>';}else{hmed.innerHTML='<div style="font-size:.78rem;color:#4a5568;text-align:center;padding:8px">Sin mediciones registradas</div>';}document.getElementById('modal-perfil').style.display='flex';}
+function fmt(v,ec){return ec?v.toFixed(2)+' m':toStr(v);}
+function gVal(r){return r.valor!==undefined?r.valor:(r.tiempoSeg||0);}
+function gUnd(r){return r.unidad||'tiempo';}
+function edad(fnac){if(!fnac)return null;var h=new Date(),n=new Date(fnac),e=h.getFullYear()-n.getFullYear();if(h.getMonth()<n.getMonth()||(h.getMonth()===n.getMonth()&&h.getDate()<n.getDate()))e--;return e;}
+function categoria(fnac){if(!fnac)return '';var d=new Date().getFullYear()-new Date(fnac).getFullYear();if(d<=9)return 'U10';if(d<=11)return 'U12';if(d<=13)return 'U14';if(d<=15)return 'U16';if(d<=17)return 'U18';if(d<=19)return 'U20';if(d<=22)return 'U23';return 'Mayores';}
+function lunesDe(iso){var d=new Date(iso+'T12:00:00'),wd=d.getDay(),df=wd===0?-6:1-wd;d.setDate(d.getDate()+df);return d.toISOString().split('T')[0];}
+function addD(iso,n){var d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
+function fmtFecha(iso){var p=iso.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+
+// ====== CONN ======
+function conn(ok){var e=document.getElementById('conn');e.textContent=ok?'En linea':'Sin conexion';e.style.cssText='position:fixed;top:0;right:0;padding:3px 8px;font-size:.68rem;z-index:999;border-radius:0 0 0 6px;background:'+(ok?'#1c4532':'#3d0a0a')+';color:'+(ok?'#68d391':'#fc8181');}
+
+// ====== SELECTS ======
+function fillSel(id,items,ph){var s=document.getElementById(id);if(!s)return;var cv=s.value;s.innerHTML='<option value="">'+ph+'</option>';items.forEach(function(x){var o=document.createElement('option');o.value=x;o.textContent=x;s.appendChild(o);});if(cv)s.value=cv;}
+function updSelects(){var deps=[],prus=PRUEBAS.slice();RS.forEach(function(r){if(deps.indexOf(r.deportista)<0)deps.push(r.deportista);if(prus.indexOf(r.prueba)<0)prus.push(r.prueba);});DEPS.forEach(function(d){if(deps.indexOf(d)<0)deps.push(d);});PRUS.forEach(function(p){if(prus.indexOf(p)<0)prus.push(p);});deps.sort();prus.sort();fillSel('r-dep',deps,'Seleccionar');fillSel('r-pru',prus,'Seleccionar');fillSel('a-dep',deps,'Todos');fillSel('a-pru',prus,'Todas');fillSel('h-dep',deps,'Todos');fillSel('h-pru',prus,'Todas');fillSel('pl-dep',deps,'Seleccionar atleta');}
+
+// ====== FIREBASE ======
+function initFB(){try{firebase.initializeApp({apiKey:"AIzaSyBleRJWaDIwy4W1WOwPDY97xKYFVhD5Os8",authDomain:"club-team-running.firebaseapp.com",projectId:"club-team-running",storageBucket:"club-team-running.firebasestorage.app",messagingSenderId:"547439458357",appId:"1:547439458357:web:476d4bf7483a8fc814d97c"});}catch(e){}
+DB=firebase.firestore();
+DB.collection('resultados').onSnapshot(function(s){RS=[];s.forEach(function(d){var x=d.data();x.fid=d.id;RS.push(x);});updSelects();conn(true);if(tabN===1)verAtletas();if(tabN===2)verAnalisis();if(tabN===3)verHistorial();},function(){conn(false);});
+DB.collection('meta').doc('config').onSnapshot(function(s){if(s.exists){var d=s.data();DEPS=d.deportistas||[];PRUS=d.pruebas||[];updSelects();}});
+DB.collection('perfiles').onSnapshot(function(s){PERF={};s.forEach(function(d){PERF[d.id]=d.data();});if(tabN===1)verAtletas();});}
+
+// ====== TABS ======
+function tab(n){for(var i=0;i<5;i++){var p=document.getElementById('panel'+i),b=document.getElementById('btn'+i);if(p)p.classList.remove('active');if(b)b.classList.remove('active');}document.getElementById('panel'+n).classList.add('active');document.getElementById('btn'+n).classList.add('active');tabN=n;if(n===1)verAtletas();if(n===2)verAnalisis();if(n===3)verHistorial();if(n===4)plInit();}
+
+// ====== UNIDAD ======
+function updUnidad(){var p=document.getElementById('r-pnv').value.trim()||document.getElementById('r-pru').value;var ec=esCampo(p);document.getElementById('bl-tiempo').style.display=ec?'none':'block';document.getElementById('bl-dist').style.display=ec?'block':'none';}
+
+// ====== GUARDAR RESULTADO ======
+function guardar(){var dep=document.getElementById('r-nvo').value.trim()||document.getElementById('r-dep').value;var pru=document.getElementById('r-pnv').value.trim()||document.getElementById('r-pru').value;var tipo=document.getElementById('r-tip').value;var fecha=document.getElementById('r-fec').value;var lugar=document.getElementById('r-lug').value.trim();var notas=document.getElementById('r-not').value.trim();var msg=document.getElementById('msg');if(!dep){msg.innerHTML='<span style="color:#fc8181">Indica el deportista.</span>';return;}if(!pru){msg.innerHTML='<span style="color:#fc8181">Indica la prueba.</span>';return;}if(!fecha){msg.innerHTML='<span style="color:#fc8181">Selecciona la fecha.</span>';return;}if(!DB){msg.innerHTML='<span style="color:#fc8181">Sin conexion.</span>';return;}var ec=esCampo(pru);var valor,unidad;if(ec){valor=parseFloat(document.getElementById('r-met').value);if(!valor||valor<=0){msg.innerHTML='<span style="color:#fc8181">Ingresa la distancia.</span>';return;}unidad='metros';}else{var mn=parseFloat(document.getElementById('r-min').value)||0,sg=parseFloat(document.getElementById('r-seg').value)||0,cn=parseFloat(document.getElementById('r-cen').value)||0;if(mn===0&&sg===0&&cn===0){msg.innerHTML='<span style="color:#fc8181">Ingresa el tiempo.</span>';return;}valor=mn*60+sg+cn/100;unidad='tiempo';}msg.innerHTML='<span style="color:#9f7aea">Guardando...</span>';DB.collection('resultados').add({deportista:dep,prueba:pru,tipo:tipo,fecha:fecha,valor:valor,unidad:unidad,tiempoSeg:unidad==='tiempo'?valor:0,lugar:lugar,notas:notas}).then(function(){var nd=DEPS.slice();if(nd.indexOf(dep)<0)nd.push(dep);var np=PRUS.slice();var c=document.getElementById('r-pnv').value.trim();if(c&&np.indexOf(c)<0)np.push(c);return DB.collection('meta').doc('config').set({deportistas:nd,pruebas:np});}).then(function(){msg.innerHTML='<span style="color:#48bb78">Guardado: '+dep+' - '+pru+' - '+fmt(valor,ec)+'</span>';limpiar(true);}).catch(function(e){msg.innerHTML='<span style="color:#fc8181">Error: '+e.message+'</span>';});}
+function limpiar(k){['r-nvo','r-pnv','r-lug','r-not'].forEach(function(id){document.getElementById(id).value='';});['r-min','r-seg','r-cen'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('r-met').value='';document.getElementById('r-dep').value='';document.getElementById('r-pru').value='';document.getElementById('r-tip').value='test';document.getElementById('r-fec').value=new Date().toISOString().split('T')[0];document.getElementById('bl-tiempo').style.display='block';document.getElementById('bl-dist').style.display='none';if(!k)document.getElementById('msg').innerHTML='';}
+
+// ====== ATLETAS ======
+function verAtletas(){var deps=[];RS.forEach(function(r){if(deps.indexOf(r.deportista)<0)deps.push(r.deportista);});DEPS.forEach(function(d){if(deps.indexOf(d)<0)deps.push(d);});deps.sort();var c=document.getElementById('lst-atl');if(!deps.length){c.innerHTML='<div class="empty">No hay atletas aun.</div>';return;}var h='';deps.forEach(function(dep){var rs=[],ps=[];RS.forEach(function(r){if(r.deportista===dep){rs.push(r);if(ps.indexOf(r.prueba)<0)ps.push(r.prueba);}});var p=PERF[dep]||{};var ed=edad(p.fnac),cat=categoria(p.fnac);var imc=p.estatura&&p.peso?(p.peso/((p.estatura/100)*(p.estatura/100))).toFixed(1):'';h+='<div class="ath-item" data-dep="'+dep+'"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-weight:600;font-size:.95rem">'+dep+'</div><div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">'+(cat?'<span class="cat-badge">'+cat+'</span>':'')+(ed!==null?'<span style="font-size:.75rem;color:#a0aec0">'+ed+' anos</span>':'')+'</div><div style="font-size:.76rem;color:#a0aec0;margin-top:4px">'+(ps.join(' - ')||'Sin resultados')+'</div></div><div style="text-align:right">'+(p.estatura?'<div style="font-size:.78rem;color:#a0aec0">'+p.estatura+' cm</div>':'')+(p.peso?'<div style="font-size:.78rem;color:#a0aec0">'+p.peso+' kg</div>':'')+(imc?'<div style="font-size:.82rem;font-weight:700;color:'+(parseFloat(imc)<18.5?'#90cdf4':parseFloat(imc)<25?'#68d391':parseFloat(imc)<30?'#f6ad55':'#fc8181')+'">IMC '+imc+'</div>':'')+'<div style="font-size:.75rem;color:#a0aec0;margin-top:4px">'+rs.length+' resultado(s)</div></div></div></div>';});c.innerHTML=h;c.querySelectorAll('.ath-item').forEach(function(el){el.addEventListener('click',function(){abrirPerfil(this.getAttribute('data-dep'));});});}
+
+// ====== PERFIL MODAL ======
+function calcCat(){var f=document.getElementById('mp-fnac').value;document.getElementById('mp-cat').value=categoria(f)+(edad(f)!==null?' ('+edad(f)+' anos)':'');}
+function calcIMC(){var est=parseFloat(document.getElementById('mp-est').value),pes=parseFloat(document.getElementById('mp-pes').value),box=document.getElementById('mp-imc-box');if(!est||!pes){box.style.display='none';return;}var imc=pes/((est/100)*(est/100));var cat,desc,col;if(imc<16){cat='Delgadez severa';desc='Muy bajo';col='#90cdf4';}else if(imc<18.5){cat='Bajo peso';desc='Por debajo del rango saludable';col='#90cdf4';}else if(imc<25){cat='Peso normal';desc='Rango saludable';col='#68d391';}else if(imc<30){cat='Sobrepeso';desc='Por encima del rango saludable';col='#f6ad55';}else{cat='Obesidad';desc='Muy por encima del rango saludable';col='#fc8181';}document.getElementById('mp-imc-v').textContent=imc.toFixed(1);document.getElementById('mp-imc-v').style.color=col;document.getElementById('mp-imc-c').textContent=cat;document.getElementById('mp-imc-c').style.color=col;document.getElementById('mp-imc-d').textContent=desc;box.style.display='block';}
+function abrirPerfil(dep){atletaM=dep;document.getElementById('mp-nom').textContent=dep;document.getElementById('mp-msg').innerHTML='';document.getElementById('mp-fecha').value=new Date().toISOString().split('T')[0];var p=PERF[dep]||{};document.getElementById('mp-fnac').value=p.fnac||'';document.getElementById('mp-est').value=p.estatura||'';document.getElementById('mp-pes').value=p.peso||'';calcCat();calcIMC();var ed=edad(p.fnac),cat=categoria(p.fnac);var imcV=p.estatura&&p.peso?(p.peso/((p.estatura/100)*(p.estatura/100))).toFixed(1):'--';var rsA=RS.filter(function(r){return r.deportista===dep;});var info='';info+='<div class="sb"><div class="v">'+(ed!==null?ed+' a':'--')+'</div><div class="l">Edad</div></div>';info+='<div class="sb"><div class="v" style="font-size:.85rem">'+(cat||'--')+'</div><div class="l">Categoria</div></div>';info+='<div class="sb"><div class="v">'+(p.estatura?p.estatura+' cm':'--')+'</div><div class="l">Estatura</div></div>';info+='<div class="sb"><div class="v">'+(p.peso?p.peso+' kg':'--')+'</div><div class="l">Peso</div></div>';info+='<div class="sb"><div class="v">'+imcV+'</div><div class="l">IMC</div></div>';info+='<div class="sb"><div class="v">'+rsA.length+'</div><div class="l">Resultados</div></div>';document.getElementById('mp-info').innerHTML=info;var meds=(p.mediciones||[]).slice().sort(function(a,b){return b.fecha.localeCompare(a.fecha);});var hmed=document.getElementById('mp-hist');if(meds.length){var rows='';meds.forEach(function(m){var iv=m.estatura&&m.peso?(m.peso/((m.estatura/100)*(m.estatura/100))).toFixed(1):'--';rows+='<tr><td>'+m.fecha+'</td><td>'+(m.estatura||'--')+' cm</td><td>'+(m.peso||'--')+' kg</td><td>'+iv+'</td></tr>';});hmed.innerHTML='<div style="font-size:.82rem;font-weight:600;color:#a0aec0;margin-bottom:8px">Historial de mediciones</div><div class="tw"><table><thead><tr><th>Fecha</th><th>Estatura</th><th>Peso</th><th>IMC</th></tr></thead><tbody>'+rows+'</tbody></table></div>';}else{hmed.innerHTML='<div style="font-size:.78rem;color:#4a5568;text-align:center;padding:8px">Sin mediciones registradas</div>';}document.getElementById('modal-perfil').style.display='flex';}
 function cerrarModal(){document.getElementById('modal-perfil').style.display='none';}
-function guardarPerfil(){var dep=atletaActivo;var fnac=document.getElementById('mp-fnac').value;var est=parseFloat(document.getElementById('mp-est').value)||0;var pes=parseFloat(document.getElementById('mp-pes').value)||0;var fecha=document.getElementById('mp-fecha').value;var msg=document.getElementById('mp-msg');if(!DB){msg.innerHTML='<span style="color:#fc8181">Sin conexion.</span>';return;}if(!fnac&&!est&&!pes){msg.innerHTML='<span style="color:#fc8181">Ingresa al menos un dato.</span>';return;}var p=PERFILES[dep]||{};if(fnac)p.fnac=fnac;if(est)p.estatura=est;if(pes)p.peso=pes;if(est||pes){if(!p.mediciones)p.mediciones=[];var idx=-1;for(var i=0;i<p.mediciones.length;i++){if(p.mediciones[i].fecha===fecha){idx=i;break;}}var med={fecha:fecha};if(est)med.estatura=est;if(pes)med.peso=pes;if(idx>=0)p.mediciones[idx]=med;else p.mediciones.push(med);}msg.innerHTML='<span style="color:#9f7aea">Guardando...</span>';DB.collection('perfiles').doc(dep).set(p).then(function(){PERFILES[dep]=p;msg.innerHTML='<span style="color:#48bb78">Guardado.</span>';abrirPerfil(dep);mostrarAtletas();}).catch(function(e){msg.innerHTML='<span style="color:#fc8181">Error: '+e.message+'</span>';});}
-function cambiarTab(n){for(var i=0;i<4;i++){document.getElementById('panel'+i).classList.remove('active');document.getElementById('btn'+i).classList.remove('active');}document.getElementById('panel'+n).classList.add('active');document.getElementById('btn'+n).classList.add('active');tabActual=n;if(n===1)mostrarAtletas();if(n===2)mostrarAnalisis();if(n===3)mostrarHistorial();}
-function iniciarFirebase(){try{firebase.initializeApp({apiKey:"AIzaSyBleRJWaDIwy4W1WOwPDY97xKYFVhD5Os8",authDomain:"club-team-running.firebaseapp.com",projectId:"club-team-running",storageBucket:"club-team-running.firebasestorage.app",messagingSenderId:"547439458357",appId:"1:547439458357:web:476d4bf7483a8fc814d97c"});}catch(e){}DB=firebase.firestore();DB.collection('resultados').onSnapshot(function(snap){RS=[];snap.forEach(function(doc){var d=doc.data();d.fid=doc.id;RS.push(d);});actualizarSelects();mostrarConn(true);if(tabActual===1)mostrarAtletas();if(tabActual===2)mostrarAnalisis();if(tabActual===3)mostrarHistorial();},function(){mostrarConn(false);});DB.collection('meta').doc('config').onSnapshot(function(snap){if(snap.exists){var d=snap.data();DEPS=d.deportistas||[];PRUS=d.pruebas||[];actualizarSelects();}});DB.collection('perfiles').onSnapshot(function(snap){PERFILES={};snap.forEach(function(doc){PERFILES[doc.id]=doc.data();});if(tabActual===1)mostrarAtletas();});}
-function guardar(){var dep=document.getElementById('r-nvo').value.trim()||document.getElementById('r-dep').value;var pru=document.getElementById('r-pnv').value.trim()||document.getElementById('r-pru').value;var tipo=document.getElementById('r-tip').value;var fecha=document.getElementById('r-fec').value;var lugar=document.getElementById('r-lug').value.trim();var notas=document.getElementById('r-not').value.trim();var msg=document.getElementById('msg');if(!dep){msg.innerHTML='<span style="color:#fc8181">Indica el deportista.</span>';return;}if(!pru){msg.innerHTML='<span style="color:#fc8181">Indica la prueba.</span>';return;}if(!fecha){msg.innerHTML='<span style="color:#fc8181">Selecciona la fecha.</span>';return;}if(!DB){msg.innerHTML='<span style="color:#fc8181">Sin conexion.</span>';return;}var ec=esCampo(pru);var valor,unidad;if(ec){valor=parseFloat(document.getElementById('r-metros').value);if(!valor||valor<=0){msg.innerHTML='<span style="color:#fc8181">Ingresa la distancia.</span>';return;}unidad='metros';}else{var min=parseFloat(document.getElementById('r-min').value)||0;var seg=parseFloat(document.getElementById('r-seg').value)||0;var cen=parseFloat(document.getElementById('r-cen').value)||0;if(min===0&&seg===0&&cen===0){msg.innerHTML='<span style="color:#fc8181">Ingresa el tiempo.</span>';return;}valor=min*60+seg+cen/100;unidad='tiempo';}msg.innerHTML='<span style="color:#9f7aea">Guardando...</span>';DB.collection('resultados').add({deportista:dep,prueba:pru,tipo:tipo,fecha:fecha,valor:valor,unidad:unidad,tiempoSeg:unidad==='tiempo'?valor:0,lugar:lugar,notas:notas}).then(function(){var nd=DEPS.slice();if(nd.indexOf(dep)<0)nd.push(dep);var np=PRUS.slice();var c=document.getElementById('r-pnv').value.trim();if(c&&np.indexOf(c)<0)np.push(c);return DB.collection('meta').doc('config').set({deportistas:nd,pruebas:np});}).then(function(){msg.innerHTML='<span style="color:#48bb78">Guardado: '+dep+' - '+pru+' - '+fmtVal(valor,ec)+'</span>';limpiar(true);}).catch(function(e){msg.innerHTML='<span style="color:#fc8181">Error: '+e.message+'</span>';});}
-function limpiar(k){['r-nvo','r-pnv','r-lug','r-not'].forEach(function(id){document.getElementById(id).value='';});['r-min','r-seg','r-cen'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('r-metros').value='';document.getElementById('r-dep').value='';document.getElementById('r-pru').value='';document.getElementById('r-tip').value='test';document.getElementById('r-fec').value=new Date().toISOString().split('T')[0];document.getElementById('bloque-tiempo').style.display='block';document.getElementById('bloque-distancia').style.display='none';if(!k)document.getElementById('msg').innerHTML='';}
-function mostrarAtletas(){var deps=[];RS.forEach(function(r){if(deps.indexOf(r.deportista)<0)deps.push(r.deportista);});DEPS.forEach(function(d){if(deps.indexOf(d)<0)deps.push(d);});deps.sort();var c=document.getElementById('lst-atl');if(!deps.length){c.innerHTML='<div class="empty">No hay atletas aun.</div>';return;}var h='';deps.forEach(function(dep){var rs=[],ps=[];RS.forEach(function(r){if(r.deportista===dep){rs.push(r);if(ps.indexOf(r.prueba)<0)ps.push(r.prueba);}});var p=PERFILES[dep]||{};var edad=calcularEdad(p.fnac),cat=categoriaPor(p.fnac);var imc=p.estatura&&p.peso?(p.peso/((p.estatura/100)*(p.estatura/100))).toFixed(1):'';h+='<div class="ath-item" data-dep="'+dep+'"><div class="ath-header"><div><div style="font-weight:600;font-size:.95rem">'+dep+'</div><div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">'+(cat?'<span class="cat-badge">'+cat+'</span>':'')+(edad!==null?'<span style="font-size:.75rem;color:#a0aec0">'+edad+' anos</span>':'')+'</div><div style="font-size:.76rem;color:#a0aec0;margin-top:4px">'+(ps.join(' - ')||'Sin resultados')+'</div></div><div style="text-align:right">'+(p.estatura?'<div style="font-size:.78rem;color:#a0aec0">'+p.estatura+' cm</div>':'')+(p.peso?'<div style="font-size:.78rem;color:#a0aec0">'+p.peso+' kg</div>':'')+(imc?'<div style="font-size:.82rem;font-weight:700;color:'+(parseFloat(imc)<18.5?'#90cdf4':parseFloat(imc)<25?'#68d391':parseFloat(imc)<30?'#f6ad55':'#fc8181')+'">IMC '+imc+'</div>':'')+'<div style="font-size:.75rem;color:#a0aec0;margin-top:4px">'+rs.length+' resultado(s)</div></div></div></div>';});c.innerHTML=h;c.querySelectorAll('.ath-item').forEach(function(el){el.addEventListener('click',function(){abrirPerfil(this.getAttribute('data-dep'));});});}
-function mostrarAnalisis(){var df=document.getElementById('a-dep').value,pf=document.getElementById('a-pru').value;var rs=RS.filter(function(r){return(!df||r.deportista===df)&&(!pf||r.prueba===pf);});rs.sort(function(a,b){return a.fecha.localeCompare(b.fecha);});var sd=document.getElementById('stats'),dd=document.getElementById('delta'),iz=document.getElementById('iazone');iz.style.display='none';if(!rs.length){sd.innerHTML='';dd.innerHTML='<div class="empty">Sin datos.</div>';if(CHT){CHT.destroy();CHT=null;}return;}var ec=getUnidad(rs[0])==='metros';var vals=rs.map(function(r){return getValor(r);});var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);var peor=ec?Math.min.apply(null,vals):Math.max.apply(null,vals);var suma=0;vals.forEach(function(v){suma+=v;});var prom=suma/vals.length;var dif=ec?(vals[vals.length-1]-vals[0]):(vals[0]-vals[vals.length-1]);sd.innerHTML='<div class="sb g"><div class="v">'+fmtVal(mejor,ec)+'</div><div class="l">'+(ec?'Mayor':'Mejor')+'</div></div>'+'<div class="sb r"><div class="v">'+fmtVal(peor,ec)+'</div><div class="l">'+(ec?'Menor':'Peor')+'</div></div>'+'<div class="sb"><div class="v">'+fmtVal(prom,ec)+'</div><div class="l">Promedio</div></div>'+'<div class="sb '+(dif>0?'g':dif<0?'r':'')+'"><div class="v">'+(dif>0?'+':'')+fmtVal(Math.abs(dif),ec)+'</div><div class="l">'+(dif>0?'Mejora':'Variacion')+'</div></div>'+'<div class="sb"><div class="v">'+rs.length+'</div><div class="l">Registros</div></div>';if(CHT){CHT.destroy();CHT=null;}CHT=new Chart(document.getElementById('chart').getContext('2d'),{type:'line',data:{labels:rs.map(function(r){return r.fecha;}),datasets:[{label:'Resultado',data:vals,borderColor:'#e53e3e',backgroundColor:'rgba(229,62,62,.1)',borderWidth:2.5,pointRadius:6,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#a0aec0'},grid:{color:'#2d3748'}},y:{reverse:!ec,ticks:{color:'#a0aec0',callback:function(v){return fmtVal(v,ec);}},grid:{color:'#2d3748'}}}}});if(rs.length<2){dd.innerHTML='<div class="empty">Necesitas al menos 2 registros para el delta.</div>';IARS=rs;iz.style.display='block';return;}var rows='';for(var i=1;i<rs.length;i++){var p2=rs[i-1],c2=rs[i],vp=getValor(p2),vc=getValor(c2),d2=ec?(vc-vp):(vp-vc),pct=((Math.abs(d2)/vp)*100).toFixed(2),cl=d2>0?'dp':d2<0?'dn':'';rows+='<tr><td>'+p2.fecha+'</td><td>'+c2.fecha+'</td><td><span class="bg '+p2.tipo+'">'+p2.tipo+'</span></td><td><span class="bg '+c2.tipo+'">'+c2.tipo+'</span></td><td><b>'+fmtVal(vp,ec)+'</b></td><td><b>'+fmtVal(vc,ec)+'</b></td><td class="'+cl+'">'+(d2>0?'+':'')+fmtVal(Math.abs(d2),ec)+'</td><td class="'+cl+'">'+pct+'%</td><td class="'+cl+'">'+(d2>0?'Mejora':d2<0?'Retroceso':'Igual')+'</td></tr>';}dd.innerHTML='<p style="font-size:.82rem;color:#a0aec0;margin-bottom:7px">Delta entre registros</p><div class="tw"><table><thead><tr><th>Desde</th><th>Hasta</th><th>Tipo ant.</th><th>Tipo nvo.</th><th>Anterior</th><th>Nuevo</th><th>Diferencia</th><th>%</th><th>Resultado</th></tr></thead><tbody>'+rows+'</tbody></table></div>';IARS=rs;iz.style.display='block';document.getElementById('iaout').innerHTML='';document.getElementById('iabtn').textContent='Generar informe del entrenador';}
-function iaAnalisis(){if(!IARS.length)return;var btn=document.getElementById('iabtn'),out=document.getElementById('iaout');btn.disabled=true;btn.textContent='Generando...';out.innerHTML='<div style="color:#9f7aea;padding:10px">Calculando...</div>';try{var rs=IARS,dep=rs[0].deportista,pru=rs[0].prueba;var ec=getUnidad(rs[0])==='metros';var vals=rs.map(function(r){return getValor(r);});for(var i=0;i<vals.length;i++){if(isNaN(vals[i])||vals[i]<=0){out.innerHTML='<div class="iabox" style="border-color:#e53e3e;color:#fc8181">Valor invalido en uno de los registros.</div>';btn.disabled=false;btn.textContent='Generar informe del entrenador';return;}}var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);var peor=ec?Math.min.apply(null,vals):Math.max.apply(null,vals);var suma=0;vals.forEach(function(v){suma+=v;});var prom=suma/vals.length;var mejoraT=ec?(vals[vals.length-1]-vals[0]):(vals[0]-vals[vals.length-1]);var pctM=vals[0]>0?((Math.abs(mejoraT)/vals[0])*100).toFixed(1):'0';var mejoras=0,retrocesos=0;for(var i=1;i<vals.length;i++){var em=ec?(vals[i]>vals[i-1]):(vals[i]<vals[i-1]);if(em)mejoras++;else if(ec?(vals[i]<vals[i-1]):(vals[i]>vals[i-1]))retrocesos++;}var cons=vals.length>1?Math.round((mejoras/(vals.length-1))*100):0;var rachaMax=0,rachaA=0;for(var i=1;i<vals.length;i++){var em2=ec?(vals[i]>vals[i-1]):(vals[i]<vals[i-1]);if(em2){rachaA++;if(rachaA>rachaMax)rachaMax=rachaA;}else rachaA=0;}var variab=Math.abs(peor-mejor),varPct=prom>0?((variab/prom)*100).toFixed(1):'0';var nT=0,nE=0,nC=0;rs.forEach(function(r){if(r.tipo==='test')nT++;else if(r.tipo==='entrenamiento')nE++;else if(r.tipo==='competencia')nC++;});var proj='';if(vals.length>=3){var pend=(vals[vals.length-1]-vals[0])/(vals.length-1),pv=vals[vals.length-1]+pend*3;if(pv>0)proj=fmtVal(pv,ec);}var perfil=PERFILES[dep]||{};var edad=calcularEdad(perfil.fnac),cat=categoriaPor(perfil.fnac);var imcA=perfil.estatura&&perfil.peso?(perfil.peso/((perfil.estatura/100)*(perfil.estatura/100))).toFixed(1):'';var h='<div class="iabox">';h+='<div style="font-size:.8rem;color:#d4a017;font-weight:700;margin-bottom:4px">CLUB DE ATLETISMO TEAM RUNNING</div>';h+='<div style="font-size:.75rem;color:#718096;margin-bottom:14px;border-bottom:1px solid #2d3748;padding-bottom:10px">'+dep+(cat?' &mdash; <b style="color:#90cdf4">'+cat+'</b>':'')+' &mdash; '+pru+' &mdash; '+rs.length+' sesiones</div>';if(imcA||edad!==null){h+='<div class="ia-titulo">Perfil del atleta</div><div class="ia-texto">';if(edad!==null)h+='Edad: <b>'+edad+' anos</b>   ';if(cat)h+='Categoria: <b>'+cat+'</b>   ';if(perfil.estatura)h+='Estatura: <b>'+perfil.estatura+' cm</b>   ';if(perfil.peso)h+='Peso: <b>'+perfil.peso+' kg</b>   ';if(imcA){var in2=parseFloat(imcA);h+='IMC: <b>'+imcA+' ('+(in2<18.5?'Bajo peso':in2<25?'Peso normal':in2<30?'Sobrepeso':'Obesidad')+')</b>';}h+='</div>';}h+='<div class="ia-titulo">Resumen general</div>';if(mejoraT>0){h+='<div class="ia-texto">'+dep+' ha mostrado una <b>mejora solida</b> en '+pru+'. ';h+=ec?'Aumento su marca en <b>'+mejoraT.toFixed(2)+' m</b> ('+pctM+'%).':'Bajo <b>'+toStr(mejoraT)+'</b> ('+pctM+'%).';h+=cons>=70?' El '+cons+'% de sesiones mostraron mejora. <b>Progresion muy consistente.</b>':cons>=50?' El '+cons+'% de sesiones con mejora. Avance con altibajos normales.':' Solo el '+cons+'% de sesiones con mejora. Tendencia positiva pero irregular.';h+='</div>';}else if(mejoraT<0){h+='<div class="ia-texto"><span class="ia-mal">Tendencia negativa.</span> '+(ec?'Distancia bajo '+Math.abs(mejoraT).toFixed(2)+' m':'Tiempo aumento '+toStr(Math.abs(mejoraT)))+' ('+pctM+'%). Revisar planificacion y recuperacion.</div>';}else{h+='<div class="ia-texto">Rendimiento <b>estable</b>. Momento de introducir nuevos estimulos.</div>';}h+='<div class="ia-titulo">Mejor marca</div>';var idxM=vals.indexOf(mejor);if(mejor===vals[vals.length-1])h+='<div class="ia-texto">Mejor marca: <b>'+fmtVal(mejor,ec)+'</b> en la <b>ultima sesion</b>. El atleta esta en su mejor momento.</div>';else h+='<div class="ia-texto">Mejor marca: <b>'+fmtVal(mejor,ec)+'</b> ('+rs[idxM].fecha+'). Diferencia con ultimo registro: <b>'+fmtVal(Math.abs(vals[vals.length-1]-mejor),ec)+'</b>. Objetivo: recuperar y superar esa marca.</div>';h+='<div class="ia-titulo">Consistencia</div>';if(parseFloat(varPct)<3)h+='<div class="ia-texto"><span class="ia-bien">Muy consistente.</span> Variacion de solo '+fmtVal(variab,ec)+'. Excelente regularidad.</div>';else if(parseFloat(varPct)<8)h+='<div class="ia-texto"><span class="ia-bien">Aceptable.</span> Variacion de '+fmtVal(variab,ec)+'. Normal en proceso de mejora.</div>';else h+='<div class="ia-texto"><span class="ia-mal">Irregular.</span> Variacion de '+fmtVal(variab,ec)+'. Revisar descanso y carga entre sesiones.</div>';if(rachaMax>=2)h+='<div class="ia-texto"><span class="ia-bien">'+rachaMax+' sesiones consecutivas</span> de mejora. Mantener esa rutina.</div>';h+='<div class="ia-titulo">Sesiones</div>';var sa=[];if(nE)sa.push('<b>'+nE+'</b> entrenamiento(s)');if(nT)sa.push('<b>'+nT+'</b> test(s)');if(nC)sa.push('<b>'+nC+'</b> competencia(s)');h+='<div class="ia-texto">'+(sa.length?sa.join(', '):'Sin clasificar')+'.</div>';if(!nT&&rs.length>=3)h+='<div class="ia-texto"><span class="ia-mal">Sugerencia:</span> Sin tests. Incluir tests periodicos para medir el progreso real.</div>';h+='<div class="ia-titulo">Conclusion</div>';if(mejoraT>0&&cons>=60)h+='<div class="ia-texto">'+dep+' esta en una muy buena trayectoria. El trabajo esta funcionando. <b>Sigue asi.</b></div>';else if(mejoraT>0)h+='<div class="ia-texto">'+dep+' va mejorando. Con mas regularidad los resultados seran mas solidos.</div>';else if(mejoraT<0)h+='<div class="ia-texto">Momento de revisar el plan. Los retrocesos temporales son parte del proceso.</div>';else h+='<div class="ia-texto">Rendimiento estable. Para romper el estancamiento: nuevo estimulo o mas intensidad.</div>';h+='<div style="margin-top:14px;padding-top:10px;border-top:1px solid #2d3748;font-size:.72rem;color:#4a5568">Club de Atletismo Team Running &mdash; '+rs.length+' registros analizados</div></div>';out.innerHTML=h;}catch(err){out.innerHTML='<div class="iabox" style="border-color:#e53e3e;color:#fc8181">Error: '+err.message+'</div>';console.error(err);}btn.disabled=false;btn.textContent='Regenerar informe';}
-function mostrarHistorial(){var df=document.getElementById('h-dep').value,pf=document.getElementById('h-pru').value,tf=document.getElementById('h-tip').value;var rs=RS.filter(function(r){return(!df||r.deportista===df)&&(!pf||r.prueba===pf)&&(!tf||r.tipo===tf);});rs.sort(function(a,b){return b.fecha.localeCompare(a.fecha);});var c=document.getElementById('tbl-hist');if(!rs.length){c.innerHTML='<div class="empty">No hay resultados.</div>';return;}var rows='';rs.forEach(function(r){var ec=getUnidad(r)==='metros';rows+='<tr><td>'+r.fecha+'</td><td><b>'+r.deportista+'</b></td><td>'+r.prueba+'</td><td><span class="bg '+r.tipo+'">'+r.tipo+'</span></td><td><b>'+fmtVal(getValor(r),ec)+'</b></td><td style="color:#a0aec0">'+(r.lugar||'-')+'</td><td style="color:#718096;font-size:.78rem">'+(r.notas||'-')+'</td><td><button class="bdel" data-fid="'+r.fid+'">Eliminar</button></td></tr>';});c.innerHTML='<div class="tw"><table><thead><tr><th>Fecha</th><th>Atleta</th><th>Prueba</th><th>Tipo</th><th>Resultado</th><th>Lugar</th><th>Notas</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';c.querySelectorAll('.bdel').forEach(function(b){b.addEventListener('click',function(){eliminar(this.getAttribute('data-fid'));});});}
-function eliminar(fid){if(!confirm('Eliminar este registro?'))return;if(!DB){alert('Sin conexion.');return;}DB.collection('resultados').doc(fid).delete().catch(function(e){alert('Error: '+e.message);});}
-function exportarCSV(){if(!RS.length){alert('No hay datos para exportar.');return;}function fila(arr){return arr.map(function(c){var s=String(c===null||c===undefined?'':c);if(s.indexOf(',')>=0||s.indexOf('"')>=0||s.indexOf('\n')>=0)s='"'+s.replace(/"/g,'""')+'"';return s;}).join(',');}var lineas=['\uFEFF'];lineas.push(fila(['CLUB DE ATLETISMO TEAM RUNNING - RESULTADOS']));lineas.push('');lineas.push(fila(['Fecha','Deportista','Categoria','Prueba','Tipo','Resultado','Unidad','Lugar','Notas']));RS.slice().sort(function(a,b){return a.deportista.localeCompare(b.deportista)||a.fecha.localeCompare(b.fecha);}).forEach(function(r){var p=PERFILES[r.deportista]||{};var ec=getUnidad(r)==='metros';var val=getValor(r);lineas.push(fila([r.fecha,r.deportista,categoriaPor(p.fnac)||'Sin categoria',r.prueba,r.tipo,ec?val.toFixed(2):toStr(val),ec?'metros':'tiempo',r.lugar||'',r.notas||'']));});var blob=new Blob([lineas.join('\n')],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='TeamRunning_'+new Date().toISOString().split('T')[0]+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);var btn=document.getElementById('btnExcel');var to=btn.textContent;btn.textContent='Descargado!';setTimeout(function(){btn.textContent=to;},2000);}
-document.getElementById('btnGuardar').addEventListener('click',guardar);
-document.getElementById('btnLimpiar').addEventListener('click',function(){limpiar(false);});
+function guardarPerfil(){var dep=atletaM;var fnac=document.getElementById('mp-fnac').value;var est=parseFloat(document.getElementById('mp-est').value)||0;var pes=parseFloat(document.getElementById('mp-pes').value)||0;var fecha=document.getElementById('mp-fecha').value;var msg=document.getElementById('mp-msg');if(!DB){msg.innerHTML='<span style="color:#fc8181">Sin conexion.</span>';return;}if(!fnac&&!est&&!pes){msg.innerHTML='<span style="color:#fc8181">Ingresa al menos un dato.</span>';return;}var p=PERF[dep]||{};if(fnac)p.fnac=fnac;if(est)p.estatura=est;if(pes)p.peso=pes;if(est||pes){if(!p.mediciones)p.mediciones=[];var idx=-1;for(var i=0;i<p.mediciones.length;i++){if(p.mediciones[i].fecha===fecha){idx=i;break;}}var med={fecha:fecha};if(est)med.estatura=est;if(pes)med.peso=pes;if(idx>=0)p.mediciones[idx]=med;else p.mediciones.push(med);}msg.innerHTML='<span style="color:#9f7aea">Guardando...</span>';DB.collection('perfiles').doc(dep).set(p).then(function(){PERF[dep]=p;msg.innerHTML='<span style="color:#48bb78">Guardado.</span>';abrirPerfil(dep);verAtletas();}).catch(function(e){msg.innerHTML='<span style="color:#fc8181">Error: '+e.message+'</span>';});}
+
+// ====== ANALISIS ======
+function verAnalisis(){var df=document.getElementById('a-dep').value,pf=document.getElementById('a-pru').value;var rs=RS.filter(function(r){return(!df||r.deportista===df)&&(!pf||r.prueba===pf);});rs.sort(function(a,b){return a.fecha.localeCompare(b.fecha);});var sd=document.getElementById('stats'),dd=document.getElementById('delta'),iz=document.getElementById('iazone');iz.style.display='none';if(!rs.length){sd.innerHTML='';dd.innerHTML='<div class="empty">Sin datos. Selecciona deportista y prueba.</div>';if(CHT){CHT.destroy();CHT=null;}return;}var ec=gUnd(rs[0])==='metros';var vals=rs.map(function(r){return gVal(r);});var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);var peor=ec?Math.min.apply(null,vals):Math.max.apply(null,vals);var suma=0;vals.forEach(function(v){suma+=v;});var prom=suma/vals.length;var dif=ec?(vals[vals.length-1]-vals[0]):(vals[0]-vals[vals.length-1]);sd.innerHTML='<div class="sb g"><div class="v">'+fmt(mejor,ec)+'</div><div class="l">'+(ec?'Mayor':'Mejor')+'</div></div>'+'<div class="sb r"><div class="v">'+fmt(peor,ec)+'</div><div class="l">'+(ec?'Menor':'Peor')+'</div></div>'+'<div class="sb"><div class="v">'+fmt(prom,ec)+'</div><div class="l">Promedio</div></div>'+'<div class="sb '+(dif>0?'g':dif<0?'r':'')+'"><div class="v">'+(dif>0?'+':'')+fmt(Math.abs(dif),ec)+'</div><div class="l">'+(dif>0?'Mejora':'Variacion')+'</div></div>'+'<div class="sb"><div class="v">'+rs.length+'</div><div class="l">Registros</div></div>';if(CHT){CHT.destroy();CHT=null;}CHT=new Chart(document.getElementById('chart').getContext('2d'),{type:'line',data:{labels:rs.map(function(r){return r.fecha;}),datasets:[{label:'Resultado',data:vals,borderColor:'#e53e3e',backgroundColor:'rgba(229,62,62,.1)',borderWidth:2.5,pointRadius:6,tension:.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#a0aec0'},grid:{color:'#2d3748'}},y:{reverse:!ec,ticks:{color:'#a0aec0',callback:function(v){return fmt(v,ec);}},grid:{color:'#2d3748'}}}}});if(rs.length<2){dd.innerHTML='<div class="empty">Necesitas al menos 2 registros para el delta.</div>';IARS=rs;iz.style.display='block';return;}var rows='';for(var i=1;i<rs.length;i++){var p2=rs[i-1],c2=rs[i],vp=gVal(p2),vc=gVal(c2),d2=ec?(vc-vp):(vp-vc),pct=((Math.abs(d2)/vp)*100).toFixed(2),cl=d2>0?'dp':d2<0?'dn':'';rows+='<tr><td>'+p2.fecha+'</td><td>'+c2.fecha+'</td><td><span class="bg '+p2.tipo+'">'+p2.tipo+'</span></td><td><span class="bg '+c2.tipo+'">'+c2.tipo+'</span></td><td><b>'+fmt(vp,ec)+'</b></td><td><b>'+fmt(vc,ec)+'</b></td><td class="'+cl+'">'+(d2>0?'+':'')+fmt(Math.abs(d2),ec)+'</td><td class="'+cl+'">'+pct+'%</td><td class="'+cl+'">'+(d2>0?'Mejora':d2<0?'Retroceso':'Igual')+'</td></tr>';}dd.innerHTML='<p style="font-size:.82rem;color:#a0aec0;margin-bottom:7px">Delta entre registros</p><div class="tw"><table><thead><tr><th>Desde</th><th>Hasta</th><th>T.ant</th><th>T.nvo</th><th>Anterior</th><th>Nuevo</th><th>Diferencia</th><th>%</th><th>Resultado</th></tr></thead><tbody>'+rows+'</tbody></table></div>';IARS=rs;iz.style.display='block';document.getElementById('iaout').innerHTML='';document.getElementById('iabtn').textContent='Generar informe del entrenador';}
+
+// ====== INFORME IA ======
+function iaAnalisis(){if(!IARS.length)return;var btn=document.getElementById('iabtn'),out=document.getElementById('iaout');btn.disabled=true;btn.textContent='Generando...';out.innerHTML='<div style="color:#9f7aea;padding:10px">Calculando...</div>';try{var rs=IARS,dep=rs[0].deportista,pru=rs[0].prueba;var ec=gUnd(rs[0])==='metros';var vals=rs.map(function(r){return gVal(r);});for(var i=0;i<vals.length;i++){if(isNaN(vals[i])||vals[i]<=0){out.innerHTML='<div class="iabox" style="border-color:#e53e3e;color:#fc8181">Valor invalido en uno de los registros.</div>';btn.disabled=false;btn.textContent='Generar informe';return;}}var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);var peor=ec?Math.min.apply(null,vals):Math.max.apply(null,vals);var suma=0;vals.forEach(function(v){suma+=v;});var prom=suma/vals.length;var mejT=ec?(vals[vals.length-1]-vals[0]):(vals[0]-vals[vals.length-1]);var pctM=vals[0]>0?((Math.abs(mejT)/vals[0])*100).toFixed(1):'0';var mej=0,ret=0;for(var i=1;i<vals.length;i++){var em=ec?(vals[i]>vals[i-1]):(vals[i]<vals[i-1]);if(em)mej++;else if(ec?(vals[i]<vals[i-1]):(vals[i]>vals[i-1]))ret++;}var cons=vals.length>1?Math.round((mej/(vals.length-1))*100):0;var rMax=0,rA=0;for(var i=1;i<vals.length;i++){var em2=ec?(vals[i]>vals[i-1]):(vals[i]<vals[i-1]);if(em2){rA++;if(rA>rMax)rMax=rA;}else rA=0;}var vari=Math.abs(peor-mejor),varP=prom>0?((vari/prom)*100).toFixed(1):'0';var nT=0,nE=0,nC=0;rs.forEach(function(r){if(r.tipo==='test')nT++;else if(r.tipo==='entrenamiento')nE++;else if(r.tipo==='competencia')nC++;});var proj='';if(vals.length>=3){var pnd=(vals[vals.length-1]-vals[0])/(vals.length-1),pv=vals[vals.length-1]+pnd*3;if(pv>0)proj=fmt(pv,ec);}var perf=PERF[dep]||{};var ed=edad(perf.fnac),cat=categoria(perf.fnac);var imcA=perf.estatura&&perf.peso?(perf.peso/((perf.estatura/100)*(perf.estatura/100))).toFixed(1):'';var metas=perf.metas||{};var metaPru=metas[pru];var h='<div class="iabox">';h+='<div style="font-size:.8rem;color:#d4a017;font-weight:700;margin-bottom:4px">CLUB DE ATLETISMO TEAM RUNNING</div>';h+='<div style="font-size:.75rem;color:#718096;margin-bottom:14px;border-bottom:1px solid #2d3748;padding-bottom:10px">'+dep+(cat?' &mdash; <b style="color:#90cdf4">'+cat+'</b>':'')+' &mdash; '+pru+' &mdash; '+rs.length+' sesiones</div>';if(ed!==null||imcA){h+='<div class="ia-titulo">Perfil</div><div class="ia-texto">';if(ed!==null)h+='Edad: <b>'+ed+' anos</b>  ';if(cat)h+='Categoria: <b>'+cat+'</b>  ';if(perf.estatura)h+='Estatura: <b>'+perf.estatura+' cm</b>  ';if(perf.peso)h+='Peso: <b>'+perf.peso+' kg</b>  ';if(imcA){var in2=parseFloat(imcA);h+='IMC: <b>'+imcA+' ('+(in2<18.5?'Bajo peso':in2<25?'Peso normal':in2<30?'Sobrepeso':'Obesidad')+')</b>';}h+='</div>';}if(metaPru){var metaV=metaPru.unidad==='metros'?metaPru.valor.toFixed(2)+' m':toStr(metaPru.valor);var difMeta=ec?(metaPru.valor-mejor):(mejor-metaPru.valor);var pctMeta=Math.abs((difMeta/mejor)*100).toFixed(1);h+='<div class="ia-titulo">Meta en '+pru+'</div>';h+='<div class="ia-texto">Meta: <b>'+metaV+'</b> &mdash; Mejor marca actual: <b>'+fmt(mejor,ec)+'</b>';if(difMeta>0)h+=' &mdash; <span class="ia-mal">Faltan '+fmt(difMeta,ec)+' ('+pctMeta+'%)</span>';else h+=' &mdash; <span class="ia-bien">Meta alcanzada o superada</span>';h+='</div>';}h+='<div class="ia-titulo">Evolucion</div>';if(mejT>0){h+='<div class="ia-texto"><b>Mejora solida.</b> ';h+=ec?'Aumento su marca en <b>'+mejT.toFixed(2)+' m</b> ('+pctM+'%).':'Bajo <b>'+toStr(mejT)+'</b> ('+pctM+'%).';h+=' '+cons+'% de sesiones con mejora.</div>';}else if(mejT<0){h+='<div class="ia-texto"><span class="ia-mal">Tendencia negativa.</span> '+(ec?'Distancia bajo '+Math.abs(mejT).toFixed(2)+' m':'Tiempo aumento '+toStr(Math.abs(mejT)))+' ('+pctM+'%). Revisar planificacion.</div>';}else{h+='<div class="ia-texto">Rendimiento estable. Introducir nuevos estimulos.</div>';}h+='<div class="ia-titulo">Mejor marca</div>';var idxM=vals.indexOf(mejor);if(mejor===vals[vals.length-1])h+='<div class="ia-texto"><b>'+fmt(mejor,ec)+'</b> en la ultima sesion. El atleta esta en su mejor momento.</div>';else h+='<div class="ia-texto"><b>'+fmt(mejor,ec)+'</b> ('+rs[idxM].fecha+'). Diferencia con ultimo: <b>'+fmt(Math.abs(vals[vals.length-1]-mejor),ec)+'</b>. Objetivo: recuperar y superar.</div>';h+='<div class="ia-titulo">Consistencia</div>';if(parseFloat(varP)<3)h+='<div class="ia-texto"><span class="ia-bien">Muy consistente.</span> Variacion de solo '+fmt(vari,ec)+'.</div>';else if(parseFloat(varP)<8)h+='<div class="ia-texto"><span class="ia-bien">Aceptable.</span> Variacion de '+fmt(vari,ec)+'.</div>';else h+='<div class="ia-texto"><span class="ia-mal">Irregular.</span> Variacion de '+fmt(vari,ec)+'. Revisar descanso y carga.</div>';if(rMax>=2)h+='<div class="ia-texto"><span class="ia-bien">'+rMax+' sesiones consecutivas</span> de mejora. Mantener esa rutina.</div>';if(!nT&&rs.length>=3)h+='<div class="ia-texto"><span class="ia-mal">Sin tests registrados.</span> Incluir tests periodicos.</div>';h+='<div class="ia-titulo">Areas de trabajo</div>';var pn=pru.toLowerCase();if(pn.indexOf('lanzamiento')>=0||pn.indexOf('disco')>=0||pn.indexOf('bala')>=0||pn.indexOf('martillo')>=0||pn.indexOf('jabalina')>=0){h+='<div class="ia-texto"><b>1. Fuerza maxima:</b> Sentadilla, press, peso muerto.</div><div class="ia-texto"><b>2. Potencia explosiva:</b> Saltos con carga, balon medicinal.</div><div class="ia-texto"><b>3. Tecnica:</b> Grabar en video para analizar giro y punto de suelta.</div><div class="ia-texto"><b>4. Movilidad:</b> Hombros, cadera, munecas.</div><div class="ia-texto"><b>5. Calidad:</b> 3-5 min entre series. 6 lanzamientos al 100%.</div>';}else if(pn.indexOf('salto')>=0||pn.indexOf('pertiga')>=0){h+='<div class="ia-texto"><b>1. Fuerza:</b> Sentadillas, lunges, prensa.</div><div class="ia-texto"><b>2. Pliometria:</b> Saltos al cajon, multisaltos.</div><div class="ia-texto"><b>3. Aproximacion:</b> Velocidad y ritmo de pasos hasta la batida.</div><div class="ia-texto"><b>4. Batida:</b> Rigidez, brazos y rodilla libre.</div><div class="ia-texto"><b>5. Vuelo:</b> Posicion correcta para maximizar.</div>';}else if(pn.indexOf('valla')>=0||pn.indexOf('obstaculo')>=0){h+='<div class="ia-texto"><b>1. Tecnica de paso:</b> Ataque, arrastre, tronco. Trabajar lento.</div><div class="ia-texto"><b>2. Ritmo:</b> Constancia en pasos entre vallas.</div><div class="ia-texto"><b>3. Velocidad de base:</b> Series cortas en recta.</div><div class="ia-texto"><b>4. Flexibilidad de cadera:</b> Estiramientos diarios.</div>';}else if(pn.indexOf('1500')>=0||pn.indexOf('3000')>=0||pn.indexOf('5000')>=0||pn.indexOf('10000')>=0||pn.indexOf('marato')>=0){h+='<div class="ia-texto"><b>1. Volumen aerobico:</b> Rodajes suaves 45-70 min, 3-4 veces/semana.</div><div class="ia-texto"><b>2. Umbral:</b> 20-30 min a ritmo de competencia.</div><div class="ia-texto"><b>3. Series:</b> 4-6x1000m al ritmo objetivo, 90 seg recuperacion.</div><div class="ia-texto"><b>4. Economia:</b> Postura, zancada, cadencia 170-180 pasos/min.</div><div class="ia-texto"><b>5. Fuerza especifica:</b> Core y tren inferior 2 veces/semana.</div>';}else if((pn.indexOf('100m')>=0||pn.indexOf('200m')>=0)&&pn.indexOf('1500')<0){h+='<div class="ia-texto"><b>1. Fuerza:</b> Sentadillas, peso muerto. 2 sesiones semanales.</div><div class="ia-texto"><b>2. Salidas:</b> Series de 20-30m enfocadas en reaccion.</div><div class="ia-texto"><b>3. Velocidad maxima:</b> 60-80m al 95-100% con 4-5 min recuperacion.</div><div class="ia-texto"><b>4. Tecnica:</b> Postura, rodillas altas, brazos en 90 grados.</div><div class="ia-texto"><b>5. Pliometria:</b> Multisaltos para reactividad.</div>';}else if(pn.indexOf('800')>=0||pn.indexOf('600')>=0||pn.indexOf('400')>=0){h+='<div class="ia-texto"><b>1. Base aerobica:</b> Rodajes 30-45 min, 3 veces/semana.</div><div class="ia-texto"><b>2. Series:</b> 6x400m mas rapido que el objetivo. 90 seg recuperacion.</div><div class="ia-texto"><b>3. Ritmo especifico:</b> Series de 200m al ritmo objetivo.</div><div class="ia-texto"><b>4. Velocidad:</b> 1-2 sesiones de 60-100m para el sprint final.</div><div class="ia-texto"><b>5. Fuerza:</b> Sentadillas y lunges para sprint final.</div>';}else{h+='<div class="ia-texto"><b>1. Base aerobica:</b> Rodajes a ritmo comodo.</div><div class="ia-texto"><b>2. Series especificas:</b> Repeticiones a ritmo de competencia.</div><div class="ia-texto"><b>3. Fuerza:</b> Core y tren inferior.</div><div class="ia-texto"><b>4. Tecnica:</b> Ejercicios especificos de la prueba.</div><div class="ia-texto"><b>5. Pliometria:</b> Multisaltos para potencia.</div>';}h+='<div class="ia-texto"><b>6. Recuperacion:</b> 8h sueno, hidratacion, 1 dia descanso/semana.</div>';h+='<div class="ia-texto"><b>7. Periodizacion:</b> Semanas de carga y descarga cada 3-4 semanas.</div>';if(proj&&mejT>0)h+='<div class="ia-titulo">Proyeccion</div><div class="ia-texto">Manteniendo la tendencia: <b>'+proj+'</b> en las proximas 3 sesiones.</div>';h+='<div class="ia-titulo">Conclusion</div>';if(mejT>0&&cons>=60)h+='<div class="ia-texto">'+dep+' va por muy buen camino. El trabajo esta funcionando. <b>Sigue asi.</b></div>';else if(mejT>0)h+='<div class="ia-texto">'+dep+' mejora con altibajos normales. Mas regularidad solidificara los resultados.</div>';else if(mejT<0)h+='<div class="ia-texto">Momento de ajustar el plan. El retroceso es temporal y parte del proceso.</div>';else h+='<div class="ia-texto">Rendimiento estable. Necesita nuevo estimulo para avanzar.</div>';h+='<div style="margin-top:14px;padding-top:10px;border-top:1px solid #2d3748;font-size:.72rem;color:#4a5568">Club de Atletismo Team Running &mdash; '+rs.length+' registros analizados</div></div>';out.innerHTML=h;}catch(err){out.innerHTML='<div class="iabox" style="border-color:#e53e3e;color:#fc8181">Error: '+err.message+'</div>';console.error(err);}btn.disabled=false;btn.textContent='Regenerar informe';}
+
+// ====== HISTORIAL ======
+function verHistorial(){var df=document.getElementById('h-dep').value,pf=document.getElementById('h-pru').value,tf=document.getElementById('h-tip').value;var rs=RS.filter(function(r){return(!df||r.deportista===df)&&(!pf||r.prueba===pf)&&(!tf||r.tipo===tf);});rs.sort(function(a,b){return b.fecha.localeCompare(a.fecha);});var c=document.getElementById('tbl-hist');if(!rs.length){c.innerHTML='<div class="empty">No hay resultados.</div>';return;}var rows='';rs.forEach(function(r){var ec=gUnd(r)==='metros';rows+='<tr><td>'+r.fecha+'</td><td><b>'+r.deportista+'</b></td><td>'+r.prueba+'</td><td><span class="bg '+r.tipo+'">'+r.tipo+'</span></td><td><b>'+fmt(gVal(r),ec)+'</b></td><td style="color:#a0aec0">'+(r.lugar||'-')+'</td><td style="color:#718096;font-size:.78rem">'+(r.notas||'-')+'</td><td><button class="bdel" data-fid="'+r.fid+'">Eliminar</button></td></tr>';});c.innerHTML='<div class="tw"><table><thead><tr><th>Fecha</th><th>Atleta</th><th>Prueba</th><th>Tipo</th><th>Resultado</th><th>Lugar</th><th>Notas</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';c.querySelectorAll('.bdel').forEach(function(b){b.addEventListener('click',function(){eliminar(this.getAttribute('data-fid'));});});}
+function eliminar(fid){if(!confirm('Eliminar?'))return;if(!DB)return;DB.collection('resultados').doc(fid).delete().catch(function(e){alert('Error: '+e.message);});}
+
+// ====== EXPORTAR CSV ======
+function exportCSV(){if(!RS.length){alert('No hay datos.');return;}function row(arr){return arr.map(function(c){var s=String(c===null||c===undefined?'':c);if(s.indexOf(',')>=0||s.indexOf('"')>=0)s='"'+s.replace(/"/g,'""')+'"';return s;}).join(',');}var L=['﻿'];L.push(row(['CLUB DE ATLETISMO TEAM RUNNING - RESULTADOS']));L.push('');L.push(row(['Fecha','Deportista','Categoria','Prueba','Tipo','Resultado','Unidad','Lugar','Notas']));RS.slice().sort(function(a,b){return a.deportista.localeCompare(b.deportista)||a.fecha.localeCompare(b.fecha);}).forEach(function(r){var p=PERF[r.deportista]||{};var ec=gUnd(r)==='metros';var v=gVal(r);L.push(row([r.fecha,r.deportista,categoria(p.fnac)||'Sin categoria',r.prueba,r.tipo,ec?v.toFixed(2):toStr(v),ec?'metros':'tiempo',r.lugar||'',r.notas||'']));});var blob=new Blob([L.join('
+')],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='TeamRunning_'+new Date().toISOString().split('T')[0]+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);var btn=document.getElementById('btnXL');var t=btn.textContent;btn.textContent='Descargado!';setTimeout(function(){btn.textContent=t;},2000);}
+
+// ====== PLAN ======
+function plInit(){if(!plSemana){plSemana=lunesDe(new Date().toISOString().split('T')[0]);}document.getElementById('pl-sem').value=plSemana;if(plAtleta)plCargarAtleta();}
+
+function plCargarAtleta(){plAtleta=document.getElementById('pl-dep').value;if(!plAtleta){document.getElementById('pl-metas-sec').style.display='none';document.getElementById('pl-semana-sec').style.display='none';return;}document.getElementById('pl-metas-sec').style.display='block';document.getElementById('pl-semana-sec').style.display='block';var prus=[];RS.forEach(function(r){if(r.deportista===plAtleta&&prus.indexOf(r.prueba)<0)prus.push(r.prueba);});fillSel('pl-mpru',prus,'Seleccionar prueba');var perf=PERF[plAtleta]||{};plMetas=perf.metas||{};plRenderMetas();plCargarPlanFB();}
+
+function plCambiarSemana(){var v=document.getElementById('pl-sem').value;if(v){plSemana=lunesDe(v);plCargarPlanFB();}}
+function plSemAnt(){plSemana=addD(plSemana,-7);document.getElementById('pl-sem').value=plSemana;plCargarPlanFB();}
+function plSemSig(){plSemana=addD(plSemana,7);document.getElementById('pl-sem').value=plSemana;plCargarPlanFB();}
+
+function plRenderSemana(){if(!plSemana)return;document.getElementById('pl-titulo').textContent='Semana: '+fmtFecha(plSemana)+' al '+fmtFecha(addD(plSemana,5));var h='';DIAS.forEach(function(dia,idx){var key=dia.toLowerCase();var d=plPlan[key]||{};var tipo=d.tipo||'Descanso';h+='<div class="dia-box"><div class="dia-hdr" onclick="plTogDia(''+key+'')"><span class="dia-nombre">'+dia+' <span style="color:#a0aec0;font-weight:400;font-size:.78rem">'+fmtFecha(addD(plSemana,idx))+'</span></span><div style="display:flex;align-items:center;gap:8px"><span class="tipo-pill">'+tipo+'</span><span style="color:#a0aec0">&#9660;</span></div></div>';h+='<div class="dia-body" id="db-'+key+'"><div class="campo"><label>Tipo de sesion</label><select id="ti-'+key+'" onchange="plUpdTipo(''+key+'')">';TIPOS.forEach(function(t){h+='<option'+(tipo===t?' selected':'')+'>'+t+'</option>';});h+='</select></div>';h+='<div class="campo"><label>Calentamiento</label><textarea id="ca-'+key+'" placeholder="Ej: 15 min trote suave + movilidad articular + 4x80m progresivos">'+(d.cal||'')+'</textarea></div>';h+='<div class="campo"><label>Trabajo principal</label><textarea id="pr-'+key+'" style="min-height:90px" placeholder="Ej: 6x400m al ritmo objetivo (1:55/400m) con 90 seg de recuperacion activa">'+(d.prin||'')+'</textarea></div>';h+='<div class="campo"><label>Vuelta a la calma</label><textarea id="vu-'+key+'" placeholder="Ej: 10 min trote muy suave + estiramientos de isquiotibiales y gemelos">'+(d.vuelta||'')+'</textarea></div>';h+='<div class="campo"><label>Observaciones / Carga</label><textarea id="ob-'+key+'" placeholder="Ej: FC max esperada 85%, RPE 7/10">'+(d.obs||'')+'</textarea></div></div></div>';});document.getElementById('pl-dias').innerHTML=h;var primer=document.getElementById('db-lunes');if(primer)primer.classList.add('open');}
+
+function plTogDia(k){var b=document.getElementById('db-'+k);if(b)b.classList.toggle('open');}
+function plUpdTipo(k){var t=document.getElementById('ti-'+k).value;var pill=document.getElementById('db-'+k).previousSibling.querySelector('.tipo-pill');if(pill)pill.textContent=t;}
+
+function plRecoger(){var p={};DIAS.forEach(function(dia){var k=dia.toLowerCase();var ti=document.getElementById('ti-'+k);if(ti)p[k]={tipo:ti.value,cal:(document.getElementById('ca-'+k)||{}).value||'',prin:(document.getElementById('pr-'+k)||{}).value||'',vuelta:(document.getElementById('vu-'+k)||{}).value||'',obs:(document.getElementById('ob-'+k)||{}).value||''};});return p;}
+
+function plGuardar(){if(!plAtleta||!plSemana){alert('Selecciona atleta y semana.');return;}if(!DB){alert('Sin conexion.');return;}var plan=plRecoger();var msg=document.getElementById('pl-msg');msg.innerHTML='<span style="color:#9f7aea">Guardando...</span>';DB.collection('planes').doc(plAtleta+'_'+plSemana).set({atleta:plAtleta,semana:plSemana,plan:plan,compFecha:document.getElementById('pl-comp').value||'',upd:new Date().toISOString()}).then(function(){plPlan=plan;msg.innerHTML='<span style="color:#48bb78">Plan guardado.</span>';}).catch(function(e){msg.innerHTML='<span style="color:#fc8181">Error: '+e.message+'</span>';});}
+
+function plCargarPlanFB(){if(!plAtleta||!plSemana||!DB)return;DB.collection('planes').doc(plAtleta+'_'+plSemana).get().then(function(doc){if(doc.exists){var d=doc.data();plPlan=d.plan||{};if(d.compFecha)document.getElementById('pl-comp').value=d.compFecha;}else{plPlan={};}plRenderSemana();}).catch(function(){plPlan={};plRenderSemana();});}
+
+function plLimpiar(){if(!confirm('Limpiar semana?'))return;plPlan={};plRenderSemana();}
+
+function plRenderMetas(){var lista=document.getElementById('pl-metas-lista');var keys=Object.keys(plMetas);if(!keys.length){lista.innerHTML='<div style="font-size:.8rem;color:#4a5568;margin-bottom:8px">Sin metas aun.</div>';return;}var h='';keys.forEach(function(pru){var m=plMetas[pru];var val=m.unidad==='metros'?m.valor.toFixed(2)+' m':toStr(m.valor);var rsA=RS.filter(function(r){return r.deportista===plAtleta&&r.prueba===pru;});var actual='';if(rsA.length){var ec=m.unidad==='metros';var vals=rsA.map(function(r){return gVal(r);});var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);var diff=ec?(m.valor-mejor):(mejor-m.valor);actual=fmt(mejor,ec)+' <span style="font-size:.72rem;color:'+(diff>0?'#fc8181':'#68d391')+'">'+(diff>0?'Faltan '+fmt(Math.abs(diff),ec):'Meta superada')+'</span>';}h+='<div class="meta-item"><div><div style="font-size:.82rem;font-weight:600;color:#fff">'+pru+'</div><div style="font-size:.75rem;color:#d4a017">Meta: <b>'+val+'</b>'+(actual?' &mdash; Actual: '+actual:'')+'</div></div><button onclick="plElimMeta(''+pru+'')" class="bdel">x</button></div>';});lista.innerHTML=h;}
+
+function plGuardarMeta(){var pru=document.getElementById('pl-mpru').value;var msg=document.getElementById('pl-meta-msg');if(!pru){msg.innerHTML='<span style="color:#fc8181">Selecciona la prueba.</span>';return;}if(!plAtleta||!DB){msg.innerHTML='<span style="color:#fc8181">Selecciona el atleta primero.</span>';return;}var ec=esCampo(pru);var valor;if(ec){valor=parseFloat(document.getElementById('pl-mmet').value);if(!valor||valor<=0){msg.innerHTML='<span style="color:#fc8181">Ingresa los metros.</span>';return;}}else{var mn=parseFloat(document.getElementById('pl-mmin').value)||0,sg=parseFloat(document.getElementById('pl-mseg').value)||0,cn=parseFloat(document.getElementById('pl-mcen').value)||0;if(mn===0&&sg===0&&cn===0){msg.innerHTML='<span style="color:#fc8181">Ingresa el tiempo meta.</span>';return;}valor=mn*60+sg+cn/100;}plMetas[pru]={valor:valor,unidad:ec?'metros':'tiempo'};var perf=PERF[plAtleta]||{};perf.metas=plMetas;msg.innerHTML='<span style="color:#9f7aea">Guardando...</span>';DB.collection('perfiles').doc(plAtleta).set(perf).then(function(){PERF[plAtleta]=perf;plRenderMetas();msg.innerHTML='<span style="color:#48bb78">Meta guardada.</span>';['pl-mmin','pl-mseg','pl-mcen','pl-mmet'].forEach(function(id){document.getElementById(id).value='';});}).catch(function(e){msg.innerHTML='<span style="color:#fc8181">Error: '+e.message+'</span>';});}
+
+function plElimMeta(pru){if(!confirm('Eliminar meta de '+pru+'?'))return;delete plMetas[pru];var perf=PERF[plAtleta]||{};perf.metas=plMetas;DB.collection('perfiles').doc(plAtleta).set(perf).then(function(){PERF[plAtleta]=perf;plRenderMetas();});}
+
+function plPreviewImg(event){var file=event.target.files[0];if(!file)return;var r=new FileReader();r.onload=function(e){plImg=e.target.result.split(',')[1];var prev=document.getElementById('pl-preview');prev.src=e.target.result;prev.style.display='block';document.getElementById('pl-btn-img').style.display='inline-block';};r.readAsDataURL(file);}
+
+function plAnalizarIA(usarImg){if(!plAtleta){alert('Selecciona un atleta.');return;}var btn=usarImg?document.getElementById('pl-btn-img'):document.getElementById('pl-btn-plan');var out=document.getElementById('pl-ia-out');var prog=document.getElementById('pl-prog');var fill=document.getElementById('pl-prog-fill');btn.disabled=true;btn.textContent='Analizando...';out.innerHTML='';prog.style.display='block';fill.style.width='15%';var perf=PERF[plAtleta]||{};var ed=edad(perf.fnac),cat=categoria(perf.fnac);var imc=perf.estatura&&perf.peso?(perf.peso/((perf.estatura/100)*(perf.estatura/100))).toFixed(1):'';var metas=perf.metas||{};var compFecha=document.getElementById('pl-comp').value;var ctx=document.getElementById('pl-ctx').value.trim();var rsA=RS.filter(function(r){return r.deportista===plAtleta;});rsA.sort(function(a,b){return b.fecha.localeCompare(a.fecha);});var histPru={};rsA.forEach(function(r){if(!histPru[r.prueba])histPru[r.prueba]=[];if(histPru[r.prueba].length<6)histPru[r.prueba].push(r);});var histTxt='';Object.keys(histPru).forEach(function(pru){var rs2=histPru[pru].slice().reverse();var ec=gUnd(rs2[0])==='metros';var vals=rs2.map(function(r){return gVal(r);});var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);var ultimo=vals[vals.length-1];var tend=ec?(ultimo>vals[0]?'mejorando':'retroceso'):(ultimo<vals[0]?'mejorando':'retroceso');var metaP=metas[pru];var metaTxt=metaP?(metaP.unidad==='metros'?metaP.valor.toFixed(2)+' m':toStr(metaP.valor)):'sin meta';histTxt+=pru+': mejor='+fmt(mejor,ec)+', ultimo='+fmt(ultimo,ec)+', tendencia='+tend+', meta='+metaTxt+'
+';histTxt+='  Sesiones: '+rs2.map(function(r){return r.fecha+' '+fmt(gVal(r),ec)+' ('+r.tipo+')';}).join(' | ')+'
+';});var plan=usarImg?plPlan:plRecoger();var planTxt='';DIAS.forEach(function(dia){var k=dia.toLowerCase();var d=plan[k]||{};if(d.tipo&&d.tipo!=='Descanso'){planTxt+=dia+' ('+d.tipo+'):
+';if(d.cal)planTxt+='  Calentamiento: '+d.cal+'
+';if(d.prin)planTxt+='  Principal: '+d.prin+'
+';if(d.vuelta)planTxt+='  Vuelta calma: '+d.vuelta+'
+';if(d.obs)planTxt+='  Obs: '+d.obs+'
+';}else{planTxt+=dia+': Descanso
+';}});var diasComp='';if(compFecha){var dc=Math.round((new Date(compFecha)-new Date())/(1000*60*60*24));diasComp=dc>0?dc+' dias hasta la competencia ('+compFecha+')':'Competencia hoy o ya paso';}fill.style.width='35%';var prompt='Eres el mejor entrenador de atletismo del mundo con 25 anos de experiencia en alto rendimiento. Analiza el plan de entrenamiento y los datos del atleta y genera un informe exhaustivo y profesional en espanol.
+
+';prompt+='ATLETA: '+plAtleta+'
+';if(ed!==null)prompt+='Edad: '+ed+' anos | Categoria: '+cat+'
+';if(perf.estatura)prompt+='Estatura: '+perf.estatura+' cm | Peso: '+perf.peso+' kg | IMC: '+imc+'
+';if(diasComp)prompt+='COMPETENCIA: '+diasComp+'
+';if(ctx)prompt+='CONTEXTO ADICIONAL DEL ENTRENADOR: '+ctx+'
+';prompt+='
+HISTORIAL DE RENDIMIENTO POR PRUEBA:
+'+(histTxt||'Sin registros')+'
+';if(!usarImg)prompt+='
+PLAN SEMANAL (semana del '+plSemana+'):
+'+(planTxt||'Plan vacio')+'
+';prompt+='
+Genera un informe COMPLETO Y DETALLADO que incluya:
+
+';prompt+='1. EVALUACION DEL ATLETA: estado actual, fortalezas, debilidades basadas en los datos reales
+';prompt+='2. ANALISIS DEL PLAN DIA A DIA: evalua cada sesion, la carga, la intensidad y si es adecuada para el nivel del atleta
+';prompt+='3. PROGRESION HACIA LA META: cuanto le falta, si el plan actual lleva al objetivo, tiempo estimado para alcanzarlo
+';prompt+='4. DISTRIBUCION DE CARGAS: si hay buena periodizacion, descanso adecuado, riesgo de sobreentrenamiento
+';if(diasComp)prompt+='5. PREPARACION PARA LA COMPETENCIA: con '+diasComp+', indica si la carga es correcta, cuando debe empezar el tapering y como debe ser
+';prompt+='6. SUGERENCIAS CONCRETAS: cambios especificos al plan con tiempos, distancias y recuperaciones exactas
+';prompt+='7. PLAN AJUSTADO: si recomiendas cambios, escribe el plan corregido dia por dia completo
+';prompt+='8. ALERTAS: cualquier riesgo de lesion, sobreentrenamiento o error en la planificacion
+
+';prompt+='Se muy especifico. El entrenador tomara decisiones reales basadas en este analisis.';if(usarImg&&plImg)prompt+='
+
+Ademais analiza la imagen del plan adjunta e integra su contenido completo al analisis.';var msgs=usarImg&&plImg?[{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:plImg}},{type:'text',text:prompt}]}]:[{role:'user',content:prompt}];fill.style.width='55%';fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:msgs})}).then(function(r){fill.style.width='80%';return r.json();}).then(function(data){fill.style.width='100%';setTimeout(function(){prog.style.display='none';},600);var txt=data.content&&data.content[0]&&data.content[0].text;if(!txt)throw new Error(data.error?data.error.message:'Sin respuesta');var h='<div class="iabox">';h+='<div style="font-size:.8rem;color:#d4a017;font-weight:700;margin-bottom:4px">CLUB DE ATLETISMO TEAM RUNNING &mdash; ANALISIS IA DEL PLAN</div>';h+='<div style="font-size:.72rem;color:#718096;margin-bottom:14px;border-bottom:1px solid #2d3748;padding-bottom:8px">'+plAtleta+(cat?' &mdash; '+cat:'')+' &mdash; Semana '+plSemana+(diasComp?' &mdash; '+diasComp:'')+'</div>';txt.split('
+').forEach(function(l){l=l.trim();if(!l){h+='<br>';return;}if(l.match(/^#+\s/)||l.match(/^\d+\.\s[A-Z]/)||l.match(/^[A-Z]{4,}/)){h+='<div class="ia-titulo">'+l.replace(/^#+\s*/,'').replace(/\*\*/g,'')+'</div>';}else if(l.startsWith('- ')||l.startsWith('* ')){h+='<div class="ia-texto" style="padding-left:10px">&#8226; '+l.substring(2).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>')+'</div>';}else{h+='<div class="ia-texto">'+l.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>')+'</div>';}});h+='<div style="margin-top:14px;padding-top:8px;border-top:1px solid #2d3748;font-size:.7rem;color:#4a5568">Generado con IA &mdash; Revisar y validar antes de aplicar</div></div>';out.innerHTML=h;}).catch(function(e){prog.style.display='none';out.innerHTML='<div class="iabox" style="border-color:#e53e3e"><div style="color:#fc8181;font-weight:600">Error al conectar con la IA</div><div style="color:#a0aec0;font-size:.82rem;margin-top:6px">'+e.message+'<br><br>Si usas imagen, prueba desde Chrome en escritorio. El analisis del plan escrito siempre funciona.</div></div>';}).finally(function(){btn.disabled=false;btn.textContent=usarImg?'Analizar imagen con IA':'Analizar plan escrito con IA';});}
+
+// ====== EVENTOS ======
+document.getElementById('btnG').addEventListener('click',guardar);
+document.getElementById('btnL').addEventListener('click',function(){limpiar(false);});
 document.getElementById('iabtn').addEventListener('click',iaAnalisis);
-document.getElementById('a-dep').addEventListener('change',mostrarAnalisis);
-document.getElementById('a-pru').addEventListener('change',mostrarAnalisis);
-document.getElementById('h-dep').addEventListener('change',mostrarHistorial);
-document.getElementById('h-pru').addEventListener('change',mostrarHistorial);
-document.getElementById('h-tip').addEventListener('change',mostrarHistorial);
+document.getElementById('a-dep').addEventListener('change',verAnalisis);
+document.getElementById('a-pru').addEventListener('change',verAnalisis);
+document.getElementById('h-dep').addEventListener('change',verHistorial);
+document.getElementById('h-pru').addEventListener('change',verHistorial);
+document.getElementById('h-tip').addEventListener('change',verHistorial);
+document.getElementById('pl-dep').addEventListener('change',plCargarAtleta);
+document.getElementById('pl-img-inp').addEventListener('change',plPreviewImg);
 document.getElementById('modal-perfil').addEventListener('click',function(e){if(e.target===this)cerrarModal();});
 document.getElementById('r-fec').value=new Date().toISOString().split('T')[0];
-actualizarSelects();
-iniciarFirebase();
+updSelects();
+initFB();
 </script>
 </body>
 </html>
