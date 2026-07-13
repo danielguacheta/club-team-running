@@ -243,6 +243,18 @@ td{padding:7px 9px;border-bottom:1px solid #1e2535;vertical-align:middle}
         <div><div id="mp-imc-c" style="font-size:.85rem;font-weight:600"></div><div id="mp-imc-d" style="font-size:.72rem;color:#a0aec0;margin-top:2px"></div></div>
       </div>
     </div>
+    <div style="margin-top:10px">
+      <label>Nivel deportivo</label>
+      <select id="mp-nivel">
+        <option value="">Sin clasificar</option>
+        <option value="principiante">Principiante</option>
+        <option value="formacion">Atleta en formacion</option>
+        <option value="intermedio">Nivel intermedio</option>
+        <option value="avanzado">Nivel avanzado</option>
+        <option value="alto">Alto rendimiento</option>
+        <option value="elite">Elite</option>
+      </select>
+    </div>
     <div style="margin-top:10px"><label>Fecha de la medicion</label><input id="mp-fecha" type="date"></div>
     <button class="btnr" style="margin-top:10px;width:100%" onclick="guardarPerfil()">Guardar datos</button>
     <div id="mp-msg" style="margin-top:6px;font-size:.82rem"></div>
@@ -370,6 +382,7 @@ function abrirPerfil(dep){
   document.getElementById('mp-fnac').value=p.fnac||'';
   document.getElementById('mp-est').value=p.estatura||'';
   document.getElementById('mp-pes').value=p.peso||'';
+  document.getElementById('mp-nivel').value=p.nivel||'';
   calcCat();calcIMC();
   var ed=calcEdad(p.fnac),cat=calcCat2(p.fnac);
   var imcV=p.estatura&&p.peso?(p.peso/((p.estatura/100)*(p.estatura/100))).toFixed(1):'--';
@@ -379,6 +392,8 @@ function abrirPerfil(dep){
   info+='<div class="sb"><div class="v" style="font-size:.85rem">'+(cat||'--')+'</div><div class="l">Categoria</div></div>';
   info+='<div class="sb"><div class="v">'+(p.estatura?p.estatura+' cm':'--')+'</div><div class="l">Estatura</div></div>';
   info+='<div class="sb"><div class="v">'+(p.peso?p.peso+' kg':'--')+'</div><div class="l">Peso</div></div>';
+  var nivelTexto={'principiante':'Principiante','formacion':'En formacion','intermedio':'Intermedio','avanzado':'Avanzado','alto':'Alto Rend.','elite':'Elite'};
+  info+='<div class="sb"><div class="v" style="font-size:.75rem">'+(nivelTexto[p.nivel]||'--')+'</div><div class="l">Nivel</div></div>';
   info+='<div class="sb"><div class="v">'+imcV+'</div><div class="l">IMC</div></div>';
   info+='<div class="sb"><div class="v">'+rsA.length+'</div><div class="l">Resultados</div></div>';
   document.getElementById('mp-info').innerHTML=info;
@@ -404,6 +419,7 @@ function guardarPerfil(){
   if(!fnac&&!est&&!pes){msg.innerHTML='<span style="color:#fc8181">Ingresa al menos un dato.</span>';return;}
   var p=PERF[dep]||{};
   if(fnac)p.fnac=fnac;if(est)p.estatura=est;if(pes)p.peso=pes;
+  var nivel=document.getElementById('mp-nivel').value;if(nivel)p.nivel=nivel;
   if(est||pes){
     if(!p.mediciones)p.mediciones=[];
     var idx=-1;
@@ -826,30 +842,82 @@ function plAnalizarIA(usarImg){
   var tieneRodaje=tiposSemana.indexOf('Rodaje suave')>=0;
   var tieneComp=tiposSemana.indexOf('Competencia')>=0;
 
-  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">';
+  // Datos de nivel
+  var nivel=perf.nivel||'';
+  var nivelLabel={'principiante':'Principiante','formacion':'Atleta en formacion','intermedio':'Nivel intermedio','avanzado':'Nivel avanzado','alto':'Alto rendimiento','elite':'Elite'}[nivel]||'Sin clasificar';
+  var diasMaxRecomendados={'principiante':4,'formacion':5,'intermedio':5,'avanzado':6,'alto':6,'elite':7}[nivel]||5;
+  var sesionesCalidadRecomendadas={'principiante':1,'formacion':1,'intermedio':2,'avanzado':2,'alto':3,'elite':3}[nivel]||2;
+  var necesitaFuerza={'principiante':true,'formacion':true,'intermedio':true,'avanzado':true,'alto':true,'elite':true}[nivel]!==false;
+
+  h+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px">';
   h+='<div class="sb"><div class="v">'+diasConTrabajo+'/7</div><div class="l">Dias trabajo</div></div>';
   h+='<div class="sb"><div class="v">'+diasDescanso+'</div><div class="l">Dias descanso</div></div>';
   h+='<div class="sb '+(tieneSeriesOUmbral?'g':'r')+'"><div class="v">'+(tieneSeriesOUmbral?'Si':'No')+'</div><div class="l">Sesion calidad</div></div>';
+  if(nivel)h+='<div class="sb" style="border-color:#6b46c1"><div class="v" style="font-size:.75rem;color:#d6bcfa">'+nivelLabel.split(' ')[0]+'</div><div class="l">Nivel</div></div>';
   h+='</div>';
 
-  // Evaluaciones de carga
-  if(diasConTrabajo>=7){h+='<div class="ia-texto"><span class="ia-mal">Carga maxima:</span> 7 dias de trabajo seguidos sin ningun dia de descanso. Hay riesgo alto de sobreentrenamiento y lesion. Se recomienda incluir al menos 1 dia de recuperacion total, preferiblemente el domingo.</div>';}
-  else if(diasConTrabajo>=6){h+='<div class="ia-texto"><span class="ia-mal">Carga muy alta:</span> '+diasConTrabajo+' dias de trabajo. Si el atleta es principiante o intermedio, reducir a 5 dias y garantizar recuperacion adecuada.</div>';}
-  else if(diasConTrabajo<=2&&diasConTrabajo>0){h+='<div class="ia-texto"><span class="ia-mal">Carga baja:</span> Solo '+diasConTrabajo+' dias de trabajo. A menos que sea semana de tapering o recuperacion post-competencia, considerar aumentar el volumen.</div>';}
-  else if(diasConTrabajo===0){h+='<div class="ia-texto">Semana de descanso total. Util para recuperacion post-competencia o lesion.</div>';}
-  else{h+='<div class="ia-texto"><span class="ia-bien">Distribucion adecuada:</span> '+diasConTrabajo+' dias de trabajo y '+diasDescanso+' de descanso/recuperacion. Buena relacion carga-recuperacion.</div>';}
+  // Evaluacion de carga SEGUN NIVEL
+  if(nivel){
+    h+='<div style="background:#160d2e;border:1px solid #6b46c1;border-radius:8px;padding:10px;margin-bottom:10px">';
+    h+='<div style="font-size:.75rem;color:#d6bcfa;font-weight:700;margin-bottom:6px">Evaluacion para nivel: '+nivelLabel+'</div>';
 
-  if(diasConTrabajo>0){
-    if(!tieneSeriesOUmbral){h+='<div class="ia-texto"><span class="ia-mal">Sin sesion de calidad:</span> No hay series ni trabajo de umbral. Sin estimulos de intensidad el atleta no puede mejorar su marca. Incluir al menos 1 sesion de calidad por semana.</div>';}
-    else{h+='<div class="ia-texto"><span class="ia-bien">Incluye sesion de calidad.</span> El trabajo de series o umbral es el estimulo principal para mejorar la marca.</div>';}
+    if(diasConTrabajo>diasMaxRecomendados){
+      h+='<div class="ia-texto"><span class="ia-mal">Carga elevada para este nivel:</span> '+diasConTrabajo+' dias de trabajo. Para un atleta de '+nivelLabel+' se recomiendan maximo '+diasMaxRecomendados+' dias de trabajo por semana. ';
+      if(nivel==='principiante')h+='Los principiantes necesitan mas tiempo de recuperacion para adaptarse al entrenamiento sin riesgo de lesion.</div>';
+      else if(nivel==='formacion')h+='En la etapa de formacion es clave consolidar los habitos sin sobrecargar el cuerpo en desarrollo.</div>';
+      else if(nivel==='intermedio')h+='Un dia extra de descanso activo (trote suave o natacion) mejorara la calidad de las sesiones siguientes.</div>';
+      else h+='Aunque el atleta tiene capacidad para absorber esta carga, verificar que la recuperacion entre sesiones sea optima.</div>';
+    } else if(diasConTrabajo<diasMaxRecomendados-2&&diasConTrabajo>0){
+      h+='<div class="ia-texto"><span class="ia-mal">Carga baja para este nivel:</span> Un atleta de '+nivelLabel+' puede y debe trabajar mas dias para seguir progresando. Considerar agregar '+(diasMaxRecomendados-diasConTrabajo)+' dia(s) mas de entrenamiento.</div>';
+    } else if(diasConTrabajo===0){
+      h+='<div class="ia-texto">Semana de descanso total. Util post-competencia o en recuperacion de lesion.</div>';
+    } else {
+      h+='<div class="ia-texto"><span class="ia-bien">Carga adecuada para '+nivelLabel+'.</span> '+diasConTrabajo+' dias de trabajo es apropiado para este nivel, con '+diasDescanso+' dias de recuperacion.</div>';
+    }
 
-    if(!tieneFuerza){h+='<div class="ia-texto"><span class="ia-mal">Sin trabajo de fuerza:</span> La fuerza especifica previene lesiones y mejora la economia de carrera. Incluir al menos 1 sesion de fuerza o pliometria por semana.</div>';}
-    else{h+='<div class="ia-texto"><span class="ia-bien">Incluye trabajo de fuerza o pliometria.</span> Fundamental para el rendimiento y la prevencion de lesiones.</div>';}
+    // Calidad segun nivel
+    if(!tieneSeriesOUmbral&&diasConTrabajo>0){
+      h+='<div class="ia-texto"><span class="ia-mal">Sin sesion de calidad:</span> ';
+      if(nivel==='principiante')h+='Para principiantes incluir al menos 1 sesion de series cortas (4-6x200m) a ritmo comodo para aprender el concepto de velocidad controlada.</div>';
+      else if(nivel==='formacion')h+='En formacion es clave incluir 1 sesion semanal de series para desarrollar la capacidad anaerobica desde temprano.</div>';
+      else if(nivel==='intermedio')h+='Un atleta intermedio necesita 1-2 sesiones de calidad por semana para seguir mejorando su marca. Sin ellas el progreso se estanca.</div>';
+      else h+='Un atleta de '+nivelLabel+' necesita al menos '+sesionesCalidadRecomendadas+' sesiones de alta calidad por semana. Sin ellas no se puede mejorar en este nivel.</div>';
+    } else if(tieneSeriesOUmbral){
+      h+='<div class="ia-texto"><span class="ia-bien">Incluye sesion de calidad.</span> ';
+      if(nivel==='principiante'||nivel==='formacion')h+='Asegurarse de que la intensidad sea progresiva y no maxima para evitar lesiones en atletas en desarrollo.</div>';
+      else if(nivel==='intermedio')h+='Verificar que haya suficiente recuperacion entre series para mantener la calidad del esfuerzo.</div>';
+      else h+='Para este nivel verificar que los ritmos objetivo esten alineados con las marcas recientes del atleta.</div>';
+    }
 
-    if(!tieneRodaje&&diasConTrabajo>=4){h+='<div class="ia-texto"><span class="ia-mal">Sin rodaje suave:</span> El trabajo aerobico de baja intensidad es esencial para la recuperacion entre sesiones de calidad y construye la base aerobica.</div>';}
+    // Fuerza segun nivel
+    if(!tieneFuerza&&diasConTrabajo>0){
+      h+='<div class="ia-texto"><span class="ia-mal">Sin trabajo de fuerza:</span> ';
+      if(nivel==='principiante')h+='Para principiantes: ejercicios con peso corporal (sentadillas, lunges, plancha) 1 vez por semana son suficientes y muy beneficiosos.</div>';
+      else if(nivel==='formacion')h+='En formacion la fuerza especifica es critica para el desarrollo atletico. Incluir 1-2 sesiones de fuerza funcional.</div>';
+      else h+='Para un atleta de '+nivelLabel+' la fuerza es fundamental. Incluir al menos 1-2 sesiones de fuerza especifica para atletismo.</div>';
+    } else if(tieneFuerza){
+      h+='<div class="ia-texto"><span class="ia-bien">Incluye trabajo de fuerza.</span> ';
+      if(nivel==='avanzado'||nivel==='alto'||nivel==='elite')h+='Para este nivel asegurarse de que los ejercicios sean especificos de atletismo y progresivos en carga.</div>';
+      else h+='Mantener la fuerza como pilar del plan para prevenir lesiones y mejorar la economia de movimiento.</div>';
+    }
+    h+='</div>';
+  } else {
+    // Sin nivel definido - evaluacion generica
+    if(diasConTrabajo>=7){h+='<div class="ia-texto"><span class="ia-mal">Carga maxima:</span> 7 dias sin descanso. Riesgo alto de sobreentrenamiento. Incluir al menos 1 dia de recuperacion. <b>Define el nivel del atleta en su perfil para una evaluacion mas precisa.</b></div>';}
+    else if(diasConTrabajo>=6){h+='<div class="ia-texto"><span class="ia-mal">Carga alta:</span> '+diasConTrabajo+' dias de trabajo. Adecuado solo para atletas avanzados o de alto rendimiento. <b>Define el nivel en el perfil del atleta.</b></div>';}
+    else if(diasConTrabajo<=2&&diasConTrabajo>0){h+='<div class="ia-texto"><span class="ia-mal">Carga baja:</span> Solo '+diasConTrabajo+' dias. <b>Define el nivel del atleta en su perfil para evaluar si es adecuado.</b></div>';}
+    else if(diasConTrabajo===0){h+='<div class="ia-texto">Semana sin trabajo programado.</div>';}
+    else{h+='<div class="ia-texto"><span class="ia-bien">'+diasConTrabajo+' dias de trabajo</span> con '+diasDescanso+' de descanso. <b>Define el nivel del atleta en su perfil para una evaluacion personalizada.</b></div>';}
 
-    if(tieneComp){h+='<div class="ia-texto"><span style="color:#d4a017;font-weight:600">Competencia en el plan.</span> Verificar que los dias previos sean de activacion ligera y que el atleta llegue descansado y confiado al evento.</div>';}
+    if(!tieneSeriesOUmbral&&diasConTrabajo>0){h+='<div class="ia-texto"><span class="ia-mal">Sin sesion de calidad.</span> Incluir al menos 1 sesion de series o umbral por semana.</div>';}
+    else if(tieneSeriesOUmbral){h+='<div class="ia-texto"><span class="ia-bien">Incluye sesion de calidad.</span> Fundamental para mejorar la marca.</div>';}
+    if(!tieneFuerza&&diasConTrabajo>0){h+='<div class="ia-texto"><span class="ia-mal">Sin trabajo de fuerza.</span> Incluir al menos 1 sesion por semana.</div>';}
+    else if(tieneFuerza){h+='<div class="ia-texto"><span class="ia-bien">Incluye trabajo de fuerza.</span> Excelente para prevenir lesiones.</div>';}
+    if(!tieneRodaje&&diasConTrabajo>=4){h+='<div class="ia-texto"><span class="ia-mal">Sin rodaje suave.</span> El trabajo aerobico base es necesario entre sesiones de calidad.</div>';}
   }
+
+  if(!tieneRodaje&&diasConTrabajo>=4&&nivel&&nivel!=='principiante'){h+='<div class="ia-texto"><span class="ia-mal">Sin rodaje suave:</span> El trabajo aerobico de baja intensidad es esencial para la recuperacion entre sesiones de calidad. Para un atleta de '+nivelLabel+' es importante incluirlo.</div>';}
+  if(tieneComp){h+='<div class="ia-texto"><span style="color:#d4a017;font-weight:600">Competencia en el plan.</span> Verificar que los dias previos sean de activacion ligera.</div>';}
 
   // Alertas de dias
   if(alertasDias.length){
@@ -905,17 +973,32 @@ function plAnalizarIA(usarImg){
   h+='<div class="ia-titulo">Recomendacion final del entrenador</div>';
   h+='<div style="background:#0f1a2e;border-radius:8px;padding:12px;border:1px solid #d4a017">';
   if(diasConTrabajo===0){
-    h+='<div class="ia-texto">Semana de descanso o sin planificar. Aprovecha para recuperar, hacer estiramientos y preparar la proxima semana de trabajo.</div>';
+    h+='<div class="ia-texto">Semana de descanso total. Ideal para recuperacion post-competencia o lesion. Aprovechar para estiramientos, hidratacion y preparar mentalmente la proxima semana.</div>';
   } else if(diasComp>=0&&diasComp<=3){
     h+='<div class="ia-texto">La prioridad absoluta es llegar fresco y confiado a la competencia. Todo el trabajo ya esta hecho. Descansar, hidratarse bien y dormir 8-9 horas estos dias. El cuerpo sabe lo que tiene que hacer.</div>';
-  } else if(diasConTrabajo>=6){
-    h+='<div class="ia-texto">Carga alta esta semana. El atleta debe escuchar su cuerpo. Si hay signos de fatiga excesiva (sueno interrumpido, irritabilidad, rendimiento que baja), reducir la intensidad sin dudar. Un dia de descanso extra nunca arruina una temporada, pero una lesion si puede hacerlo.</div>';
-  } else if(tieneSeriesOUmbral&&tieneFuerza&&diasDescanso>=2){
-    h+='<div class="ia-texto">Plan bien estructurado con buena variedad de estimulos y descanso adecuado. Ejecutar con disciplina y registrar los tiempos de cada sesion para ajustar la proxima semana. La consistencia a lo largo del tiempo es lo que produce resultados reales.</div>';
-  } else if(!tieneSeriesOUmbral){
-    h+='<div class="ia-texto">Esta semana le falta intensidad. Sin sesiones de calidad el atleta mantiene la forma pero no la mejora. Para la proxima semana incluir al menos 1 sesion de series o trabajo de umbral.</div>';
+  } else if(nivel==='principiante'){
+    if(diasConTrabajo<=4&&tieneSeriesOUmbral){h+='<div class="ia-texto">Plan adecuado para principiante. Lo mas importante en esta etapa es la <b>consistencia y la progresion gradual</b>. No apresurarse en aumentar la carga. Cada sesion completada es un avance. Enfocarse en aprender la tecnica correcta y disfrutar el proceso. Los resultados llegaran con la constancia.</div>';}
+    else if(diasConTrabajo>4){h+='<div class="ia-texto">Para un principiante, '+diasConTrabajo+' dias de trabajo es demasiado. El cuerpo de un principiante necesita mas tiempo para adaptarse. <b>Reducir a 3-4 dias</b>, descansar bien y dejar que el cuerpo asimile el entrenamiento. La paciencia en esta etapa evita lesiones y garantiza el progreso a largo plazo.</div>';}
+    else{h+='<div class="ia-texto">Para un principiante lo fundamental es establecer el <b>habito de entrenar</b>. Completar las sesiones planeadas, escuchar el cuerpo y no compararse con atletas de mayor experiencia. Cada semana que se entrena bien es una inversion en el futuro deportivo.</div>';}
+  } else if(nivel==='formacion'){
+    if(tieneSeriesOUmbral&&tieneFuerza){h+='<div class="ia-texto">Plan bien estructurado para un atleta en formacion. En esta etapa es clave desarrollar <b>todas las capacidades fisicas</b> de forma equilibrada: velocidad, resistencia, fuerza y tecnica. No especializarse demasiado pronto. Registrar cada sesion y observar como responde el cuerpo para ir ajustando la carga progresivamente.</div>';}
+    else{h+='<div class="ia-texto">En la etapa de formacion el atleta debe trabajar todos los aspectos del rendimiento. Esta semana le falta algun componente clave. Complementar el plan con lo que falte para garantizar un desarrollo atletico completo y solido.</div>';}
+  } else if(nivel==='intermedio'){
+    if(tieneSeriesOUmbral&&tieneFuerza&&diasConTrabajo>=4&&diasDescanso>=2){h+='<div class="ia-texto">Plan equilibrado para nivel intermedio. En esta etapa el atleta ya sabe entrenar y la clave es la <b>consistencia y la progresion inteligente</b>. Ejecutar el plan con disciplina, anotar los tiempos de cada sesion y ajustar semana a semana. El progreso en este nivel es mas lento que al inicio pero mas solido. Cada mejora pequena cuenta.</div>';}
+    else if(!tieneSeriesOUmbral){h+='<div class="ia-texto">Un atleta de nivel intermedio que no incluye sesiones de calidad en su semana se estanca. El cuerpo ya esta adaptado al volumen basico y necesita estimulos de intensidad para seguir progresando. Agregar series o trabajo de umbral la proxima semana.</div>';}
+    else{h+='<div class="ia-texto">Ejecutar el plan con atencion a los tiempos y sensaciones. Un atleta de nivel intermedio debe empezar a ser mas preciso en sus ritmos de entrenamiento para maximizar el efecto de cada sesion.</div>';}
+  } else if(nivel==='avanzado'){
+    if(diasConTrabajo>=5&&tieneSeriesOUmbral&&tieneFuerza){h+='<div class="ia-texto">Plan adecuado para el nivel avanzado. En este nivel <b>los detalles marcan la diferencia</b>: los ritmos exactos en las series, la calidad del sueno, la nutricion pre y post-entrenamiento y la recuperacion activa. Ser muy preciso en la ejecucion del plan. Si en alguna sesion el cuerpo no responde bien, mejor bajar la intensidad ese dia que forzar y arriesgar una lesion.</div>';}
+    else if(diasConTrabajo>=6){h+='<div class="ia-texto">Para un atleta avanzado, '+diasConTrabajo+' dias de trabajo es una carga exigente pero manejable si la recuperacion es optima. Monitorear la frecuencia cardiaca en reposo cada manana: si sube mas de 5-7 ppm sobre lo normal, es senal de que el cuerpo necesita un dia extra de descanso.</div>';}
+    else{h+='<div class="ia-texto">Un atleta avanzado puede absorber mas carga que la planeada esta semana. Considerar si hay una razon especifica para la carga reducida (tapering, recuperacion). Si no, aumentar el volumen o la intensidad de las sesiones para seguir progresando.</div>';}
+  } else if(nivel==='alto'||nivel==='elite'){
+    if(diasConTrabajo>=6&&tieneSeriesOUmbral&&tieneFuerza){h+='<div class="ia-texto">Plan exigente acorde al nivel de '+nivelLabel+'. En este nivel el entrenamiento es una ciencia. <b>Cada sesion tiene un proposito especifico</b> y debe ejecutarse con maxima precision. Controlar los ritmos al segundo, monitorear la recuperacion con datos objetivos (FC, HRV, calidad del sueno) y no improvisar. La diferencia entre el exito y el fracaso en este nivel esta en los detalles de la recuperacion y la nutricion.</div>';}
+    else if(!tieneSeriesOUmbral){h+='<div class="ia-texto">Para un atleta de '+nivelLabel+' es inaceptable una semana sin trabajo de calidad salvo que sea tapering planificado o recuperacion de lesion. El estimulo de alta intensidad es lo que define el rendimiento en este nivel. Revisar si esta semana tiene un proposito especifico dentro de la periodizacion anual.</div>';}
+    else{h+='<div class="ia-texto">Para un atleta de '+nivelLabel+' cada semana debe tener un lugar claro dentro de la periodizacion. Verificar que este plan este alineado con los objetivos de la temporada y con las cargas de las semanas anteriores y posteriores.</div>';}
   } else {
-    h+='<div class="ia-texto">Ejecutar el plan con atencion a las sensaciones del atleta. Registrar cada sesion para tener datos reales y poder ajustar el plan de las proximas semanas con base en la respuesta del cuerpo.</div>';
+    if(diasConTrabajo>=6){h+='<div class="ia-texto">Carga alta esta semana. El atleta debe escuchar su cuerpo. Si hay signos de fatiga excesiva, reducir la intensidad. <b>Define el nivel del atleta en su perfil</b> para obtener recomendaciones personalizadas.</div>';}
+    else if(tieneSeriesOUmbral&&tieneFuerza&&diasDescanso>=2){h+='<div class="ia-texto">Plan bien estructurado. Ejecutar con disciplina y registrar los resultados. <b>Define el nivel del atleta en su perfil</b> para obtener recomendaciones mas especificas.</div>';}
+    else{h+='<div class="ia-texto">Ejecutar el plan con atencion a las sensaciones del atleta. <b>Define el nivel del atleta en su perfil</b> para obtener un analisis personalizado segun su etapa deportiva.</div>';}
   }
   h+='</div>';
 
