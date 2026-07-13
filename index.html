@@ -702,89 +702,185 @@ function plPreviewImg(event){
 
 function plAnalizarIA(usarImg){
   if(!plAtleta){alert('Selecciona un atleta.');return;}
-  var btn=usarImg?document.getElementById('pl-btn-img'):document.getElementById('pl-btn-plan');
+  var btn=document.getElementById('pl-btn-plan');
   var out=document.getElementById('pl-ia-out');
   var prog=document.getElementById('pl-prog'),fill=document.getElementById('pl-prog-fill');
   btn.disabled=true;btn.textContent='Analizando...';
-  out.innerHTML='';prog.style.display='block';fill.style.width='15%';
+  out.innerHTML='';prog.style.display='block';fill.style.width='40%';
+
   var perf=PERF[plAtleta]||{};
   var ed=calcEdad(perf.fnac),cat=calcCat2(perf.fnac);
   var imc=perf.estatura&&perf.peso?(perf.peso/((perf.estatura/100)*(perf.estatura/100))).toFixed(1):'';
   var metas=perf.metas||{};
   var compFecha=document.getElementById('pl-comp').value;
   var ctx=document.getElementById('pl-ctx').value.trim();
+  var plan=plRecoger();
+
+  // Recopilar historial por prueba
   var rsA=RS.filter(function(r){return r.deportista===plAtleta;});
-  rsA.sort(function(a,b){return b.fecha.localeCompare(a.fecha);});
+  rsA.sort(function(a,b){return a.fecha.localeCompare(b.fecha);});
   var histPru={};
-  rsA.forEach(function(r){if(!histPru[r.prueba])histPru[r.prueba]=[];if(histPru[r.prueba].length<6)histPru[r.prueba].push(r);});
-  var histTxt='';
-  Object.keys(histPru).forEach(function(pru){
-    var rs2=histPru[pru].slice().reverse();
-    var ec=gUnd(rs2[0])==='metros';
-    var vals=rs2.map(function(r){return gVal(r);});
-    var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);
-    var ultimo=vals[vals.length-1];
-    var tend=ec?(ultimo>vals[0]?'mejorando':'retroceso'):(ultimo<vals[0]?'mejorando':'retroceso');
-    var metaP=metas[pru];
-    var metaTxt=metaP?(metaP.unidad==='metros'?metaP.valor.toFixed(2)+' m':toStr(metaP.valor)):'sin meta';
-    histTxt+=pru+': mejor='+fmtVal(mejor,ec)+', ultimo='+fmtVal(ultimo,ec)+', tendencia='+tend+', meta='+metaTxt+'\n';
-    histTxt+='  Sesiones: '+rs2.map(function(r){return r.fecha+' '+fmtVal(gVal(r),ec)+' ('+r.tipo+')';}).join(' | ')+'\n';
-  });
-  var plan=usarImg?plPlan:plRecoger();
-  var planTxt='';
-  DIAS.forEach(function(dia){
-    var k=dia.toLowerCase();var d=plan[k]||{};
-    if(d.tipo&&d.tipo!=='Descanso'){
-      planTxt+=dia+' ('+d.tipo+'):\n';
-      if(d.cal)planTxt+='  Calentamiento: '+d.cal+'\n';
-      if(d.prin)planTxt+='  Principal: '+d.prin+'\n';
-      if(d.vuelta)planTxt+='  Vuelta calma: '+d.vuelta+'\n';
-      if(d.obs)planTxt+='  Obs: '+d.obs+'\n';
-    }else{planTxt+=dia+': Descanso\n';}
-  });
-  var diasComp='';
-  if(compFecha){var dc=Math.round((new Date(compFecha)-new Date())/(1000*60*60*24));diasComp=dc>0?dc+' dias hasta la competencia ('+compFecha+')':'Competencia hoy o ya paso';}
-  fill.style.width='35%';
-  var prompt='Eres el mejor entrenador de atletismo del mundo con 25 anos de experiencia. Analiza el plan y los datos del atleta. Responde en espanol.\n\n';
-  prompt+='ATLETA: '+plAtleta+'\n';
-  if(ed!==null)prompt+='Edad: '+ed+' anos | Categoria: '+cat+'\n';
-  if(perf.estatura)prompt+='Estatura: '+perf.estatura+' cm | Peso: '+perf.peso+' kg | IMC: '+imc+'\n';
-  if(diasComp)prompt+='COMPETENCIA: '+diasComp+'\n';
-  if(ctx)prompt+='CONTEXTO: '+ctx+'\n';
-  prompt+='\nHISTORIAL:\n'+(histTxt||'Sin registros')+'\n';
-  if(!usarImg)prompt+='\nPLAN SEMANA '+plSemana+':\n'+(planTxt||'Plan vacio')+'\n';
-  prompt+='\nGenera un informe EXHAUSTIVO con:\n1. EVALUACION DEL ATLETA\n2. ANALISIS DIA A DIA del plan\n3. PROGRESION HACIA LA META\n4. DISTRIBUCION DE CARGAS\n5. PREPARACION PARA LA COMPETENCIA (si aplica)\n6. SUGERENCIAS CONCRETAS con tiempos y distancias exactas\n7. PLAN AJUSTADO dia por dia si recomiendas cambios\n8. ALERTAS de riesgo de lesion o sobreentrenamiento';
-  if(usarImg&&plImg)prompt+='\n\nAnaliza tambien la imagen del plan adjunta e integra su contenido al analisis.';
-  var msgs=usarImg&&plImg?[{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:plImg}},{type:'text',text:prompt}]}]:[{role:'user',content:prompt}];
-  fill.style.width='55%';
-  fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:msgs})
-  }).then(function(r){fill.style.width='80%';return r.json();})
-  .then(function(data){
-    fill.style.width='100%';
-    setTimeout(function(){prog.style.display='none';},600);
-    var txt=data.content&&data.content[0]&&data.content[0].text;
-    if(!txt)throw new Error(data.error?data.error.message:'Sin respuesta');
-    var h='<div class="iabox">';
-    h+='<div style="font-size:.8rem;color:#d4a017;font-weight:700;margin-bottom:4px">CLUB DE ATLETISMO TEAM RUNNING - ANALISIS IA DEL PLAN</div>';
-    h+='<div style="font-size:.72rem;color:#718096;margin-bottom:14px;border-bottom:1px solid #2d3748;padding-bottom:8px">'+plAtleta+(cat?' &mdash; '+cat:'')+' &mdash; Semana '+plSemana+(diasComp?' &mdash; '+diasComp:'')+'</div>';
-    txt.split('\n').forEach(function(l){
-      l=l.trim();if(!l){h+='<br>';return;}
-      if(l.match(/^#+\s/)||l.match(/^\d+\.\s[A-Z]/)||l.match(/^[A-Z]{4,}/)){h+='<div class="ia-titulo">'+l.replace(/^#+\s*/,'').replace(/\*\*/g,'')+'</div>';}
-      else if(l.startsWith('- ')||l.startsWith('* ')){h+='<div class="ia-texto" style="padding-left:10px">&#8226; '+l.substring(2).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>')+'</div>';}
-      else{h+='<div class="ia-texto">'+l.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>')+'</div>';}
+  rsA.forEach(function(r){if(!histPru[r.prueba])histPru[r.prueba]=[];histPru[r.prueba].push(r);});
+
+  var diasComp=-1;
+  if(compFecha){
+    var dc=Math.round((new Date(compFecha)-new Date())/(1000*60*60*24));
+    diasComp=dc;
+  }
+
+  fill.style.width='70%';
+
+  // Construir informe local detallado
+  var h='<div class="iabox">';
+  h+='<div style="font-size:.8rem;color:#d4a017;font-weight:700;margin-bottom:4px">CLUB DE ATLETISMO TEAM RUNNING - ANALISIS DEL PLAN</div>';
+  h+='<div style="font-size:.72rem;color:#718096;margin-bottom:14px;border-bottom:1px solid #2d3748;padding-bottom:8px">'+plAtleta+(cat?' &mdash; '+cat:'')+(plSemana?' &mdash; Semana '+plSemana:'')+(diasComp>=0?' &mdash; '+diasComp+' dias para competencia':'')+'</div>';
+
+  // PERFIL
+  if(ed!==null||imc){
+    h+='<div class="ia-titulo">Perfil del atleta</div><div class="ia-texto">';
+    if(ed!==null)h+='Edad: <b>'+ed+' anos</b>  ';
+    if(cat)h+='Categoria: <b>'+cat+'</b>  ';
+    if(perf.estatura)h+='Estatura: <b>'+perf.estatura+' cm</b>  ';
+    if(perf.peso)h+='Peso: <b>'+perf.peso+' kg</b>  ';
+    if(imc){var imcN=parseFloat(imc);h+='IMC: <b>'+imc+' ('+(imcN<18.5?'Bajo peso':imcN<25?'Peso normal':imcN<30?'Sobrepeso':'Obesidad')+')</b>';}
+    h+='</div>';
+  }
+
+  // METAS
+  var metaKeys=Object.keys(metas);
+  if(metaKeys.length){
+    h+='<div class="ia-titulo">Metas definidas</div>';
+    metaKeys.forEach(function(pru){
+      var m=metas[pru];
+      var metaV=m.unidad==='metros'?m.valor.toFixed(2)+' m':toStr(m.valor);
+      var rsP=histPru[pru]||[];
+      if(rsP.length){
+        var ec=m.unidad==='metros';
+        var vals=rsP.map(function(r){return gVal(r);});
+        var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);
+        var ultimo=vals[vals.length-1];
+        var difMeta=ec?(m.valor-mejor):(mejor-m.valor);
+        var pctMeta=Math.abs((difMeta/mejor)*100).toFixed(1);
+        h+='<div class="ia-texto"><b>'+pru+'</b> &mdash; Meta: <b>'+metaV+'</b> &mdash; Mejor marca: <b>'+fmtVal(mejor,ec)+'</b> &mdash; Ultimo: <b>'+fmtVal(ultimo,ec)+'</b>';
+        if(difMeta>0)h+=' &mdash; <span class="ia-mal">Faltan '+fmtVal(Math.abs(difMeta),ec)+' ('+pctMeta+'%)</span>';
+        else h+=' &mdash; <span class="ia-bien">Meta alcanzada o superada</span>';
+        h+='</div>';
+      } else {
+        h+='<div class="ia-texto"><b>'+pru+'</b> &mdash; Meta: <b>'+metaV+'</b> &mdash; Sin registros aun</div>';
+      }
     });
-    h+='<div style="margin-top:14px;padding-top:8px;border-top:1px solid #2d3748;font-size:.7rem;color:#4a5568">Generado con IA - Revisar antes de aplicar</div></div>';
-    out.innerHTML=h;
-  }).catch(function(e){
-    prog.style.display='none';
-    out.innerHTML='<div class="iabox" style="border-color:#e53e3e"><div style="color:#fc8181;font-weight:600">Error al conectar con la IA</div><div style="color:#a0aec0;font-size:.82rem;margin-top:6px">'+e.message+'<br><br>El analisis del plan escrito siempre funciona. La imagen puede fallar por restricciones del navegador.</div></div>';
-  }).finally(function(){
-    btn.disabled=false;
-    btn.textContent=usarImg?'Analizar imagen con IA':'Analizar plan escrito con IA';
+  }
+
+  // ANALISIS DEL HISTORIAL
+  h+='<div class="ia-titulo">Estado de rendimiento actual</div>';
+  var pruebasConDatos=Object.keys(histPru);
+  if(!pruebasConDatos.length){
+    h+='<div class="ia-texto">No hay registros de rendimiento para este atleta. Registra resultados en la pestana Registrar para obtener un analisis mas completo.</div>';
+  } else {
+    pruebasConDatos.forEach(function(pru){
+      var rs2=histPru[pru];
+      var ec=gUnd(rs2[0])==='metros';
+      var vals=rs2.map(function(r){return gVal(r);});
+      var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);
+      var ultimo=vals[vals.length-1];
+      var primero=vals[0];
+      var mejT=ec?(ultimo-primero):(primero-ultimo);
+      var tend=mejT>0?'mejorando':'estancado o en retroceso';
+      h+='<div class="ia-texto"><b>'+pru+'</b> ('+rs2.length+' registros): Mejor <b>'+fmtVal(mejor,ec)+'</b>, ultimo <b>'+fmtVal(ultimo,ec)+'</b> &mdash; <span class="'+(mejT>0?'ia-bien':'ia-mal')+'">'+tend+'</span></div>';
+    });
+  }
+
+  // ANALISIS DEL PLAN DIA A DIA
+  h+='<div class="ia-titulo">Analisis del plan semana a semana</div>';
+  var diasConTrabajo=0;
+  var tiposSemana=[];
+  var cargaTotal=0;
+  DIAS.forEach(function(dia){
+    var key=dia.toLowerCase();
+    var d=plan[key]||{};
+    var tipo=d.tipo||'Descanso';
+    if(tipo!=='Descanso'){
+      diasConTrabajo++;
+      if(tiposSemana.indexOf(tipo)<0)tiposSemana.push(tipo);
+    }
+    var tieneContenido=d.cal||d.prin||d.vuelta;
+    var icono=tipo==='Descanso'?'&#9898;':tipo==='Series'||tipo==='Umbral'?'&#128308;':tipo==='Fuerza'||tipo==='Pliometria'?'&#128992;':'&#128994;';
+    h+='<div style="margin-bottom:10px;padding:10px;background:#0f1117;border-radius:8px;border-left:3px solid '+(tipo==='Descanso'?'#2d3748':tipo==='Series'||tipo==='Umbral'?'#e53e3e':tipo==='Fuerza'||tipo==='Pliometria'?'#d69e2e':'#38a169')+';">';
+    h+='<div style="font-weight:700;color:#d4a017;margin-bottom:4px">'+icono+' '+dia+' &mdash; '+tipo+'</div>';
+    if(d.cal)h+='<div style="font-size:.82rem;margin-bottom:3px"><span style="color:#a0aec0">Calentamiento:</span> '+d.cal+'</div>';
+    if(d.prin)h+='<div style="font-size:.82rem;margin-bottom:3px"><span style="color:#a0aec0">Principal:</span> '+d.prin+'</div>';
+    if(d.vuelta)h+='<div style="font-size:.82rem;margin-bottom:3px"><span style="color:#a0aec0">Vuelta a la calma:</span> '+d.vuelta+'</div>';
+    if(d.obs)h+='<div style="font-size:.82rem;color:#718096"><span style="color:#a0aec0">Obs:</span> '+d.obs+'</div>';
+    if(!tieneContenido&&tipo==='Descanso')h+='<div style="font-size:.82rem;color:#4a5568">Dia de recuperacion</div>';
+    if(!tieneContenido&&tipo!=='Descanso')h+='<div style="font-size:.82rem;color:#fc8181">Sin contenido cargado para este dia</div>';
+    h+='</div>';
   });
+
+  // EVALUACION DE LA CARGA
+  h+='<div class="ia-titulo">Evaluacion de la carga semanal</div>';
+  var tieneSeriesOUmbral=tiposSemana.indexOf('Series')>=0||tiposSemana.indexOf('Umbral')>=0;
+  var tieneFuerza=tiposSemana.indexOf('Fuerza')>=0||tiposSemana.indexOf('Pliometria')>=0;
+  var tieneRodaje=tiposSemana.indexOf('Rodaje suave')>=0;
+  var diasDescanso=6-diasConTrabajo;
+
+  h+='<div class="ia-texto">Dias de trabajo: <b>'+diasConTrabajo+'/6</b> &mdash; Dias de descanso: <b>'+diasDescanso+'</b></div>';
+
+  if(diasConTrabajo>=6)h+='<div class="ia-texto"><span class="ia-mal">Atencion:</span> 6 dias de trabajo sin descanso es una carga muy alta. Considerar al menos 1 dia de recuperacion total.</div>';
+  else if(diasConTrabajo<=2)h+='<div class="ia-texto"><span class="ia-mal">Carga baja:</span> Solo '+diasConTrabajo+' dias de trabajo. Considerar aumentar el volumen si el atleta esta en buenas condiciones.</div>';
+  else h+='<div class="ia-texto"><span class="ia-bien">Distribucion adecuada</span> de '+diasConTrabajo+' dias de trabajo y '+diasDescanso+' de descanso/recuperacion.</div>';
+
+  if(!tieneSeriesOUmbral&&diasConTrabajo>=3)h+='<div class="ia-texto"><span class="ia-mal">Sugerencia:</span> No hay trabajo de series ni umbral en la semana. Incluir al menos 1 sesion de calidad para estimular la mejora.</div>';
+  if(!tieneFuerza&&diasConTrabajo>=3)h+='<div class="ia-texto"><span class="ia-mal">Sugerencia:</span> Sin trabajo de fuerza esta semana. La fuerza especifica es fundamental para la prevencion de lesiones y la economia de carrera.</div>';
+  if(!tieneRodaje&&diasConTrabajo>=3)h+='<div class="ia-texto"><span class="ia-mal">Sugerencia:</span> Sin rodaje suave. El trabajo aerobico de base es necesario para la recuperacion entre sesiones de calidad.</div>';
+  if(tieneSeriesOUmbral&&tieneFuerza&&tieneRodaje)h+='<div class="ia-texto"><span class="ia-bien">Excelente variedad:</span> La semana tiene trabajo aerobico, de calidad y de fuerza. Buena distribucion de estimulos.</div>';
+
+  // PREPARACION PARA COMPETENCIA
+  if(diasComp>=0){
+    h+='<div class="ia-titulo">Preparacion para la competencia ('+diasComp+' dias)</div>';
+    if(diasComp<=3){
+      h+='<div class="ia-texto"><span class="ia-mal">Competencia inminente ('+diasComp+' dias).</span> Esta semana debe ser de <b>tapering total</b>: solo activacion ligera, tecnica suave y descanso. Nada de series ni carga alta. El cuerpo necesita llegar fresco.</div>';
+      if(tieneSeriesOUmbral)h+='<div class="ia-texto"><span class="ia-mal">Alerta:</span> Hay series o trabajo de umbral programado. Con '+diasComp+' dias para la competencia, esas sesiones deben eliminarse o reemplazarse por activacion muy suave.</div>';
+    } else if(diasComp<=7){
+      h+='<div class="ia-texto">Ultima semana antes de la competencia. Reducir el volumen al 60-70% de lo normal. Mantener la intensidad pero con pocas repeticiones. Ultimas series cortas y rapidas el martes o miercoles, luego solo activacion.</div>';
+    } else if(diasComp<=14){
+      h+='<div class="ia-texto">Dos semanas para la competencia. Esta semana puede tener carga normal o ligeramente reducida. La proxima semana debe ser de tapering. Asegurarse de que el atleta llegue bien recuperado.</div>';
+    } else {
+      h+='<div class="ia-texto">Hay '+diasComp+' dias para la competencia. Buena margen para trabajar. Mantener la planificacion normal y empezar a reducir la carga 10-14 dias antes del evento.</div>';
+    }
+  }
+
+  // CONTEXTO ADICIONAL
+  if(ctx){
+    h+='<div class="ia-titulo">Consideraciones especiales</div>';
+    h+='<div class="ia-texto">El entrenador indica: <i>'+ctx+'</i></div>';
+    if(ctx.toLowerCase().indexOf('lesion')>=0||ctx.toLowerCase().indexOf('dolor')>=0||ctx.toLowerCase().indexOf('molestia')>=0){
+      h+='<div class="ia-texto"><span class="ia-mal">Alerta por posible lesion:</span> Ante cualquier dolor o molestia, reducir la intensidad y consultar al medico deportologo antes de continuar con el plan. La prevencion es prioritaria.</div>';
+    }
+  }
+
+  // RECOMENDACION FINAL
+  h+='<div class="ia-titulo">Recomendacion del entrenador</div>';
+  var planVacio=diasConTrabajo===0;
+  if(planVacio){
+    h+='<div class="ia-texto">El plan de esta semana esta vacio. Completa las sesiones en los dias correspondientes para obtener un analisis completo.</div>';
+  } else if(diasComp>=0&&diasComp<=3){
+    h+='<div class="ia-texto">Con la competencia tan cerca, la prioridad es llegar fresco y confiado. Descansa, hidratate bien, duerme 8 horas y haz solo activacion ligera. La preparacion ya esta hecha.</div>';
+  } else if(tieneSeriesOUmbral&&tieneFuerza&&diasConTrabajo>=4&&diasConTrabajo<=5){
+    h+='<div class="ia-texto">El plan esta bien estructurado. Tiene la mezcla correcta de trabajo aerobico, calidad y fuerza con descanso adecuado. Ejecutar con disciplina y registrar los resultados de cada sesion para ajustar en las proximas semanas.</div>';
+  } else if(diasConTrabajo>=6){
+    h+='<div class="ia-texto">La carga es muy alta. Revisar si el atleta tiene capacidad para sostener 6 dias de trabajo consecutivos. Si hay signos de fatiga, agregar un dia de descanso activo (trote muy suave o natacion).</div>';
+  } else {
+    h+='<div class="ia-texto">Ejecutar el plan con atencion a las sensaciones del atleta. Si hay fatiga acumulada, no dudar en reducir la intensidad de las sesiones. La consistencia a largo plazo vale mas que una semana de maximo esfuerzo.</div>';
+  }
+
+  h+='<div style="margin-top:14px;padding-top:8px;border-top:1px solid #2d3748;font-size:.7rem;color:#4a5568">Analisis generado automaticamente con los datos del aplicativo &mdash; Club de Atletismo Team Running</div>';
+  h+='</div>';
+
+  fill.style.width='100%';
+  setTimeout(function(){prog.style.display='none';},500);
+  out.innerHTML=h;
+  btn.disabled=false;
+  btn.textContent='Regenerar analisis';
 }
 
 // ====== EVENTOS ======
