@@ -256,7 +256,7 @@ td{padding:7px 9px;border-bottom:1px solid #1e2535;vertical-align:middle}
 <script>
 var RS=[],DEPS=[],PRUS=[],PERF={},DB=null,CHT=null,IARS=[],tabN=0,atletaM='';
 var plAtleta='',plSemana='',plPlan={},plMetas={},plImg='';
-var DIAS=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+var DIAS=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
 var TIPOS=['Descanso','Rodaje suave','Series','Umbral','Fuerza','Tecnica','Pliometria','Competencia','Evaluacion','Otro'];
 var PRUEBAS=['100m planos','200m planos','400m planos','800m planos','1500m planos','3000m','5000m','10000m','Medio maraton','Maraton','110m vallas','400m vallas','3000m obstaculos','Salto largo','Salto triple','Salto alto','Salto con pertiga','Lanzamiento de disco','Lanzamiento de bala','Lanzamiento de martillo','Lanzamiento de jabalina','Posta 4x100m','Posta 4x400m'];
 
@@ -588,7 +588,7 @@ function plSemSig(){plSemana=addD(plSemana,7);document.getElementById('pl-sem').
 
 function plRender(){
   if(!plSemana)return;
-  document.getElementById('pl-titulo').textContent='Semana: '+fmtF(plSemana)+' al '+fmtF(addD(plSemana,5));
+  document.getElementById('pl-titulo').textContent='Semana: '+fmtF(plSemana)+' al '+fmtF(addD(plSemana,6));
   var h='';
   DIAS.forEach(function(dia,idx){
     var key=dia.toLowerCase();
@@ -706,7 +706,7 @@ function plAnalizarIA(usarImg){
   var out=document.getElementById('pl-ia-out');
   var prog=document.getElementById('pl-prog'),fill=document.getElementById('pl-prog-fill');
   btn.disabled=true;btn.textContent='Analizando...';
-  out.innerHTML='';prog.style.display='block';fill.style.width='40%';
+  out.innerHTML='';prog.style.display='block';fill.style.width='30%';
 
   var perf=PERF[plAtleta]||{};
   var ed=calcEdad(perf.fnac),cat=calcCat2(perf.fnac);
@@ -716,66 +716,47 @@ function plAnalizarIA(usarImg){
   var ctx=document.getElementById('pl-ctx').value.trim();
   var plan=plRecoger();
 
-  // Recopilar historial por prueba
   var rsA=RS.filter(function(r){return r.deportista===plAtleta;});
   rsA.sort(function(a,b){return a.fecha.localeCompare(b.fecha);});
   var histPru={};
   rsA.forEach(function(r){if(!histPru[r.prueba])histPru[r.prueba]=[];histPru[r.prueba].push(r);});
 
   var diasComp=-1;
-  if(compFecha){
-    var dc=Math.round((new Date(compFecha)-new Date())/(1000*60*60*24));
-    diasComp=dc;
-  }
+  if(compFecha){diasComp=Math.round((new Date(compFecha)-new Date())/(1000*60*60*24));}
 
-  fill.style.width='70%';
+  fill.style.width='60%';
 
-  // Construir informe local detallado
   var h='<div class="iabox">';
-  h+='<div style="font-size:.8rem;color:#d4a017;font-weight:700;margin-bottom:4px">CLUB DE ATLETISMO TEAM RUNNING - ANALISIS DEL PLAN</div>';
-  h+='<div style="font-size:.72rem;color:#718096;margin-bottom:14px;border-bottom:1px solid #2d3748;padding-bottom:8px">'+plAtleta+(cat?' &mdash; '+cat:'')+(plSemana?' &mdash; Semana '+plSemana:'')+(diasComp>=0?' &mdash; '+diasComp+' dias para competencia':'')+'</div>';
+  h+='<div style="font-size:.82rem;color:#d4a017;font-weight:700;margin-bottom:2px">CLUB DE ATLETISMO TEAM RUNNING</div>';
+  h+='<div style="font-size:.78rem;font-weight:600;color:#fff;margin-bottom:4px">Informe de Plan de Entrenamiento &mdash; '+plAtleta+'</div>';
+  h+='<div style="font-size:.72rem;color:#718096;margin-bottom:14px;border-bottom:1px solid #2d3748;padding-bottom:8px">';
+  if(cat)h+=cat+'  |  ';
+  if(plSemana)h+='Semana del '+fmtF(plSemana)+'  |  ';
+  if(diasComp>=0)h+='<span style="color:'+(diasComp<=7?'#fc8181':diasComp<=14?'#f6ad55':'#68d391')+'">'+diasComp+' dias para competencia</span>';
+  h+='</div>';
 
-  // PERFIL
+  // ---- PERFIL ----
   if(ed!==null||imc){
-    h+='<div class="ia-titulo">Perfil del atleta</div><div class="ia-texto">';
-    if(ed!==null)h+='Edad: <b>'+ed+' anos</b>  ';
-    if(cat)h+='Categoria: <b>'+cat+'</b>  ';
-    if(perf.estatura)h+='Estatura: <b>'+perf.estatura+' cm</b>  ';
-    if(perf.peso)h+='Peso: <b>'+perf.peso+' kg</b>  ';
-    if(imc){var imcN=parseFloat(imc);h+='IMC: <b>'+imc+' ('+(imcN<18.5?'Bajo peso':imcN<25?'Peso normal':imcN<30?'Sobrepeso':'Obesidad')+')</b>';}
+    h+='<div class="ia-titulo">Perfil del atleta</div>';
+    h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px">';
+    if(ed!==null)h+='<div class="sb"><div class="v">'+ed+'</div><div class="l">Anos</div></div>';
+    if(cat)h+='<div class="sb"><div class="v" style="font-size:.82rem">'+cat+'</div><div class="l">Categoria</div></div>';
+    if(perf.estatura)h+='<div class="sb"><div class="v">'+perf.estatura+' cm</div><div class="l">Estatura</div></div>';
+    if(perf.peso)h+='<div class="sb"><div class="v">'+perf.peso+' kg</div><div class="l">Peso</div></div>';
+    if(imc){var imcN=parseFloat(imc);h+='<div class="sb '+(imcN<18.5?'':'imcN<25?g:r')+'">'+'<div class="v" style="color:'+(imcN<18.5?'#90cdf4':imcN<25?'#68d391':imcN<30?'#f6ad55':'#fc8181')+'">'+imc+'</div><div class="l">IMC</div></div>';}
     h+='</div>';
+    if(imc){var imcN2=parseFloat(imc);
+      if(imcN2<18.5)h+='<div class="ia-texto"><span class="ia-mal">Atencion:</span> IMC bajo ('+imc+'). El bajo peso puede afectar la recuperacion y el rendimiento. Revisar la alimentacion e hidratacion con un especialista.</div>';
+      else if(imcN2>=25)h+='<div class="ia-texto"><span class="ia-mal">Atencion:</span> IMC elevado ('+imc+'). Trabajar en la composicion corporal junto al entrenamiento puede mejorar el rendimiento.</div>';
+      else h+='<div class="ia-texto"><span class="ia-bien">IMC en rango saludable ('+imc+').</span> Mantener buenos habitos de alimentacion e hidratacion.</div>';
+    }
   }
 
-  // METAS
-  var metaKeys=Object.keys(metas);
-  if(metaKeys.length){
-    h+='<div class="ia-titulo">Metas definidas</div>';
-    metaKeys.forEach(function(pru){
-      var m=metas[pru];
-      var metaV=m.unidad==='metros'?m.valor.toFixed(2)+' m':toStr(m.valor);
-      var rsP=histPru[pru]||[];
-      if(rsP.length){
-        var ec=m.unidad==='metros';
-        var vals=rsP.map(function(r){return gVal(r);});
-        var mejor=ec?Math.max.apply(null,vals):Math.min.apply(null,vals);
-        var ultimo=vals[vals.length-1];
-        var difMeta=ec?(m.valor-mejor):(mejor-m.valor);
-        var pctMeta=Math.abs((difMeta/mejor)*100).toFixed(1);
-        h+='<div class="ia-texto"><b>'+pru+'</b> &mdash; Meta: <b>'+metaV+'</b> &mdash; Mejor marca: <b>'+fmtVal(mejor,ec)+'</b> &mdash; Ultimo: <b>'+fmtVal(ultimo,ec)+'</b>';
-        if(difMeta>0)h+=' &mdash; <span class="ia-mal">Faltan '+fmtVal(Math.abs(difMeta),ec)+' ('+pctMeta+'%)</span>';
-        else h+=' &mdash; <span class="ia-bien">Meta alcanzada o superada</span>';
-        h+='</div>';
-      } else {
-        h+='<div class="ia-texto"><b>'+pru+'</b> &mdash; Meta: <b>'+metaV+'</b> &mdash; Sin registros aun</div>';
-      }
-    });
-  }
-
-  // ANALISIS DEL HISTORIAL
-  h+='<div class="ia-titulo">Estado de rendimiento actual</div>';
+  // ---- RENDIMIENTO ACTUAL ----
   var pruebasConDatos=Object.keys(histPru);
+  h+='<div class="ia-titulo">Rendimiento actual del atleta</div>';
   if(!pruebasConDatos.length){
-    h+='<div class="ia-texto">No hay registros de rendimiento para este atleta. Registra resultados en la pestana Registrar para obtener un analisis mas completo.</div>';
+    h+='<div class="ia-texto">No hay registros de rendimiento. Ingresa resultados en la pestana Registrar para obtener un analisis completo del progreso.</div>';
   } else {
     pruebasConDatos.forEach(function(pru){
       var rs2=histPru[pru];
@@ -785,95 +766,160 @@ function plAnalizarIA(usarImg){
       var ultimo=vals[vals.length-1];
       var primero=vals[0];
       var mejT=ec?(ultimo-primero):(primero-ultimo);
-      var tend=mejT>0?'mejorando':'estancado o en retroceso';
-      h+='<div class="ia-texto"><b>'+pru+'</b> ('+rs2.length+' registros): Mejor <b>'+fmtVal(mejor,ec)+'</b>, ultimo <b>'+fmtVal(ultimo,ec)+'</b> &mdash; <span class="'+(mejT>0?'ia-bien':'ia-mal')+'">'+tend+'</span></div>';
+      var pctMejora=Math.abs((mejT/primero)*100).toFixed(1);
+      var metaPru=metas[pru];
+      h+='<div style="background:#0f1117;border-radius:8px;padding:10px;margin-bottom:8px;border-left:3px solid '+(mejT>0?'#38a169':mejT<0?'#e53e3e':'#718096')+'">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+      h+='<span style="font-weight:700;color:#fff">'+pru+'</span>';
+      h+='<span style="font-size:.75rem;color:'+(mejT>0?'#68d391':mejT<0?'#fc8181':'#a0aec0')+'">'+(mejT>0?'Mejorando +'+pctMejora+'%':mejT<0?'Retroceso -'+pctMejora+'%':'Estable')+' ('+rs2.length+' registros)</span>';
+      h+='</div>';
+      h+='<div style="display:flex;gap:16px;font-size:.8rem">';
+      h+='<span>Mejor: <b>'+fmtVal(mejor,ec)+'</b></span>';
+      h+='<span>Ultimo: <b>'+fmtVal(ultimo,ec)+'</b></span>';
+      if(metaPru){
+        var metaV=metaPru.unidad==='metros'?metaPru.valor.toFixed(2)+' m':toStr(metaPru.valor);
+        var difMeta=ec?(metaPru.valor-mejor):(mejor-metaPru.valor);
+        h+='<span>Meta: <b>'+metaV+'</b> <span style="color:'+(difMeta>0?'#fc8181':'#68d391')+'">'+(difMeta>0?'(faltan '+fmtVal(Math.abs(difMeta),ec)+')':'(superada)')+'</span></span>';
+      }
+      h+='</div></div>';
     });
   }
 
-  // ANALISIS DEL PLAN DIA A DIA
-  h+='<div class="ia-titulo">Analisis del plan semana a semana</div>';
-  var diasConTrabajo=0;
-  var tiposSemana=[];
-  var cargaTotal=0;
-  DIAS.forEach(function(dia){
+  // ---- PLAN DIA A DIA ----
+  h+='<div class="ia-titulo">Plan semana del '+fmtF(plSemana)+' al '+fmtF(addD(plSemana,6))+'</div>';
+  var diasConTrabajo=0,tiposSemana=[],alertasDias=[];
+  DIAS.forEach(function(dia,idx){
     var key=dia.toLowerCase();
     var d=plan[key]||{};
     var tipo=d.tipo||'Descanso';
-    if(tipo!=='Descanso'){
-      diasConTrabajo++;
-      if(tiposSemana.indexOf(tipo)<0)tiposSemana.push(tipo);
-    }
-    var tieneContenido=d.cal||d.prin||d.vuelta;
-    var icono=tipo==='Descanso'?'&#9898;':tipo==='Series'||tipo==='Umbral'?'&#128308;':tipo==='Fuerza'||tipo==='Pliometria'?'&#128992;':'&#128994;';
-    h+='<div style="margin-bottom:10px;padding:10px;background:#0f1117;border-radius:8px;border-left:3px solid '+(tipo==='Descanso'?'#2d3748':tipo==='Series'||tipo==='Umbral'?'#e53e3e':tipo==='Fuerza'||tipo==='Pliometria'?'#d69e2e':'#38a169')+';">';
-    h+='<div style="font-weight:700;color:#d4a017;margin-bottom:4px">'+icono+' '+dia+' &mdash; '+tipo+'</div>';
-    if(d.cal)h+='<div style="font-size:.82rem;margin-bottom:3px"><span style="color:#a0aec0">Calentamiento:</span> '+d.cal+'</div>';
-    if(d.prin)h+='<div style="font-size:.82rem;margin-bottom:3px"><span style="color:#a0aec0">Principal:</span> '+d.prin+'</div>';
-    if(d.vuelta)h+='<div style="font-size:.82rem;margin-bottom:3px"><span style="color:#a0aec0">Vuelta a la calma:</span> '+d.vuelta+'</div>';
-    if(d.obs)h+='<div style="font-size:.82rem;color:#718096"><span style="color:#a0aec0">Obs:</span> '+d.obs+'</div>';
-    if(!tieneContenido&&tipo==='Descanso')h+='<div style="font-size:.82rem;color:#4a5568">Dia de recuperacion</div>';
-    if(!tieneContenido&&tipo!=='Descanso')h+='<div style="font-size:.82rem;color:#fc8181">Sin contenido cargado para este dia</div>';
+    var esDomingo=dia==='Domingo';
+    if(tipo!=='Descanso'){diasConTrabajo++;if(tiposSemana.indexOf(tipo)<0)tiposSemana.push(tipo);}
+    var colorBorde=tipo==='Descanso'?'#2d3748':tipo==='Series'||tipo==='Umbral'?'#e53e3e':tipo==='Fuerza'||tipo==='Pliometria'?'#d69e2e':tipo==='Competencia'?'#fc8181':'#38a169';
+    var icono=tipo==='Descanso'?'&#9898;':tipo==='Series'?'&#9889;':tipo==='Umbral'?'&#128308;':tipo==='Fuerza'?'&#128170;':tipo==='Pliometria'?'&#128640;':tipo==='Competencia'?'&#127942;':tipo==='Tecnica'?'&#127919;':'&#128994;';
+    h+='<div style="margin-bottom:10px;border-radius:10px;overflow:hidden;border:1px solid #2d3748">';
+    h+='<div style="padding:9px 14px;background:#16213e;display:flex;justify-content:space-between;align-items:center">';
+    h+='<span style="font-weight:700;color:#d4a017">'+icono+' '+dia+(esDomingo?' <span style="font-size:.7rem;color:#718096">(descanso recomendado)</span>':'')+'</span>';
+    h+='<span style="display:inline-block;padding:2px 10px;border-radius:10px;font-size:.72rem;font-weight:600;background:'+(tipo==='Descanso'?'#2d3748':colorBorde+'22')+';color:'+(tipo==='Descanso'?'#718096':colorBorde)+';border:1px solid '+(tipo==='Descanso'?'#2d3748':colorBorde)+'">'+tipo+'</span>';
     h+='</div>';
+    if(tipo!=='Descanso'){
+      h+='<div style="padding:10px 14px;background:#0f1117">';
+      if(d.cal){h+='<div style="margin-bottom:6px"><span style="font-size:.72rem;text-transform:uppercase;color:#d4a017;font-weight:600;letter-spacing:.4px">Calentamiento</span><div style="font-size:.83rem;color:#e2e8f0;margin-top:2px">'+d.cal+'</div></div>';}
+      if(d.prin){h+='<div style="margin-bottom:6px;padding:8px;background:#16213e;border-radius:6px;border-left:2px solid '+colorBorde+'"><span style="font-size:.72rem;text-transform:uppercase;color:'+colorBorde+';font-weight:600;letter-spacing:.4px">Trabajo principal</span><div style="font-size:.83rem;color:#e2e8f0;margin-top:2px">'+d.prin+'</div></div>';}
+      if(d.vuelta){h+='<div style="margin-bottom:6px"><span style="font-size:.72rem;text-transform:uppercase;color:#d4a017;font-weight:600;letter-spacing:.4px">Vuelta a la calma</span><div style="font-size:.83rem;color:#e2e8f0;margin-top:2px">'+d.vuelta+'</div></div>';}
+      if(d.obs){h+='<div style="font-size:.78rem;color:#718096;font-style:italic;border-top:1px solid #2d3748;padding-top:6px;margin-top:4px">'+d.obs+'</div>';}
+      if(!d.cal&&!d.prin&&!d.vuelta){h+='<div style="font-size:.82rem;color:#4a5568;padding:4px 0">Sesion sin contenido detallado. Completa el plan para obtener un analisis mas preciso.</div>';}
+      h+='</div>';
+    } else {
+      var msgDescanso=esDomingo?'Domingo de recuperacion total. Ideal para descanso activo: caminata suave, estiramientos o natacion recreativa.':'Dia de descanso. Aprovechar para recuperacion, estiramientos y buena alimentacion.';
+      h+='<div style="padding:8px 14px;background:#0f1117;font-size:.8rem;color:#4a5568">'+msgDescanso+'</div>';
+    }
+    h+='</div>';
+    // Alertas
+    if(esDomingo&&tipo!=='Descanso'){alertasDias.push('Domingo programado como '+tipo+'. Considerar si el atleta necesita recuperacion total al cierre de la semana.');}
   });
 
-  // EVALUACION DE LA CARGA
+  // ---- EVALUACION DE CARGA ----
   h+='<div class="ia-titulo">Evaluacion de la carga semanal</div>';
+  var diasDescanso=7-diasConTrabajo;
   var tieneSeriesOUmbral=tiposSemana.indexOf('Series')>=0||tiposSemana.indexOf('Umbral')>=0;
   var tieneFuerza=tiposSemana.indexOf('Fuerza')>=0||tiposSemana.indexOf('Pliometria')>=0;
   var tieneRodaje=tiposSemana.indexOf('Rodaje suave')>=0;
-  var diasDescanso=6-diasConTrabajo;
+  var tieneComp=tiposSemana.indexOf('Competencia')>=0;
 
-  h+='<div class="ia-texto">Dias de trabajo: <b>'+diasConTrabajo+'/6</b> &mdash; Dias de descanso: <b>'+diasDescanso+'</b></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px">';
+  h+='<div class="sb"><div class="v">'+diasConTrabajo+'/7</div><div class="l">Dias trabajo</div></div>';
+  h+='<div class="sb"><div class="v">'+diasDescanso+'</div><div class="l">Dias descanso</div></div>';
+  h+='<div class="sb '+(tieneSeriesOUmbral?'g':'r')+'"><div class="v">'+(tieneSeriesOUmbral?'Si':'No')+'</div><div class="l">Sesion calidad</div></div>';
+  h+='</div>';
 
-  if(diasConTrabajo>=6)h+='<div class="ia-texto"><span class="ia-mal">Atencion:</span> 6 dias de trabajo sin descanso es una carga muy alta. Considerar al menos 1 dia de recuperacion total.</div>';
-  else if(diasConTrabajo<=2)h+='<div class="ia-texto"><span class="ia-mal">Carga baja:</span> Solo '+diasConTrabajo+' dias de trabajo. Considerar aumentar el volumen si el atleta esta en buenas condiciones.</div>';
-  else h+='<div class="ia-texto"><span class="ia-bien">Distribucion adecuada</span> de '+diasConTrabajo+' dias de trabajo y '+diasDescanso+' de descanso/recuperacion.</div>';
+  // Evaluaciones de carga
+  if(diasConTrabajo>=7){h+='<div class="ia-texto"><span class="ia-mal">Carga maxima:</span> 7 dias de trabajo seguidos sin ningun dia de descanso. Hay riesgo alto de sobreentrenamiento y lesion. Se recomienda incluir al menos 1 dia de recuperacion total, preferiblemente el domingo.</div>';}
+  else if(diasConTrabajo>=6){h+='<div class="ia-texto"><span class="ia-mal">Carga muy alta:</span> '+diasConTrabajo+' dias de trabajo. Si el atleta es principiante o intermedio, reducir a 5 dias y garantizar recuperacion adecuada.</div>';}
+  else if(diasConTrabajo<=2&&diasConTrabajo>0){h+='<div class="ia-texto"><span class="ia-mal">Carga baja:</span> Solo '+diasConTrabajo+' dias de trabajo. A menos que sea semana de tapering o recuperacion post-competencia, considerar aumentar el volumen.</div>';}
+  else if(diasConTrabajo===0){h+='<div class="ia-texto">Semana de descanso total. Util para recuperacion post-competencia o lesion.</div>';}
+  else{h+='<div class="ia-texto"><span class="ia-bien">Distribucion adecuada:</span> '+diasConTrabajo+' dias de trabajo y '+diasDescanso+' de descanso/recuperacion. Buena relacion carga-recuperacion.</div>';}
 
-  if(!tieneSeriesOUmbral&&diasConTrabajo>=3)h+='<div class="ia-texto"><span class="ia-mal">Sugerencia:</span> No hay trabajo de series ni umbral en la semana. Incluir al menos 1 sesion de calidad para estimular la mejora.</div>';
-  if(!tieneFuerza&&diasConTrabajo>=3)h+='<div class="ia-texto"><span class="ia-mal">Sugerencia:</span> Sin trabajo de fuerza esta semana. La fuerza especifica es fundamental para la prevencion de lesiones y la economia de carrera.</div>';
-  if(!tieneRodaje&&diasConTrabajo>=3)h+='<div class="ia-texto"><span class="ia-mal">Sugerencia:</span> Sin rodaje suave. El trabajo aerobico de base es necesario para la recuperacion entre sesiones de calidad.</div>';
-  if(tieneSeriesOUmbral&&tieneFuerza&&tieneRodaje)h+='<div class="ia-texto"><span class="ia-bien">Excelente variedad:</span> La semana tiene trabajo aerobico, de calidad y de fuerza. Buena distribucion de estimulos.</div>';
+  if(diasConTrabajo>0){
+    if(!tieneSeriesOUmbral){h+='<div class="ia-texto"><span class="ia-mal">Sin sesion de calidad:</span> No hay series ni trabajo de umbral. Sin estimulos de intensidad el atleta no puede mejorar su marca. Incluir al menos 1 sesion de calidad por semana.</div>';}
+    else{h+='<div class="ia-texto"><span class="ia-bien">Incluye sesion de calidad.</span> El trabajo de series o umbral es el estimulo principal para mejorar la marca.</div>';}
 
-  // PREPARACION PARA COMPETENCIA
+    if(!tieneFuerza){h+='<div class="ia-texto"><span class="ia-mal">Sin trabajo de fuerza:</span> La fuerza especifica previene lesiones y mejora la economia de carrera. Incluir al menos 1 sesion de fuerza o pliometria por semana.</div>';}
+    else{h+='<div class="ia-texto"><span class="ia-bien">Incluye trabajo de fuerza o pliometria.</span> Fundamental para el rendimiento y la prevencion de lesiones.</div>';}
+
+    if(!tieneRodaje&&diasConTrabajo>=4){h+='<div class="ia-texto"><span class="ia-mal">Sin rodaje suave:</span> El trabajo aerobico de baja intensidad es esencial para la recuperacion entre sesiones de calidad y construye la base aerobica.</div>';}
+
+    if(tieneComp){h+='<div class="ia-texto"><span style="color:#d4a017;font-weight:600">Competencia en el plan.</span> Verificar que los dias previos sean de activacion ligera y que el atleta llegue descansado y confiado al evento.</div>';}
+  }
+
+  // Alertas de dias
+  if(alertasDias.length){
+    h+='<div class="ia-titulo">Alertas del plan</div>';
+    alertasDias.forEach(function(a){h+='<div class="ia-texto"><span class="ia-mal">Alerta:</span> '+a+'</div>';});
+  }
+
+  // ---- COMPETENCIA ----
   if(diasComp>=0){
-    h+='<div class="ia-titulo">Preparacion para la competencia ('+diasComp+' dias)</div>';
+    h+='<div class="ia-titulo">Preparacion para la competencia</div>';
+    h+='<div style="background:#0f1117;border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid '+(diasComp<=7?'#e53e3e':diasComp<=14?'#d69e2e':'#38a169')+'">';
+    h+='<div style="font-size:.88rem;font-weight:700;color:'+(diasComp<=7?'#fc8181':diasComp<=14?'#f6ad55':'#68d391')+';margin-bottom:8px">';
+    if(diasComp<=3)h+='COMPETENCIA INMINENTE: '+diasComp+' dias';
+    else if(diasComp<=7)h+='ULTIMA SEMANA: '+diasComp+' dias';
+    else if(diasComp<=14)h+='DOS SEMANAS: '+diasComp+' dias';
+    else h+='PREPARACION: '+diasComp+' dias';
+    h+='</div>';
+
     if(diasComp<=3){
-      h+='<div class="ia-texto"><span class="ia-mal">Competencia inminente ('+diasComp+' dias).</span> Esta semana debe ser de <b>tapering total</b>: solo activacion ligera, tecnica suave y descanso. Nada de series ni carga alta. El cuerpo necesita llegar fresco.</div>';
-      if(tieneSeriesOUmbral)h+='<div class="ia-texto"><span class="ia-mal">Alerta:</span> Hay series o trabajo de umbral programado. Con '+diasComp+' dias para la competencia, esas sesiones deben eliminarse o reemplazarse por activacion muy suave.</div>';
+      h+='<div class="ia-texto">Con '+diasComp+' dias para la competencia, esta semana es de <b>tapering total</b>. El trabajo duro ya esta hecho.</div>';
+      h+='<div class="ia-texto"><b>Lunes-Miercoles:</b> Solo activacion ligera 20-30 min, ejercicios de tecnica suaves, 3-4 progresivos de 60-80m. Nada de series ni carga alta.</div>';
+      h+='<div class="ia-texto"><b>Jueves-Viernes:</b> Descanso total o caminata suave. Dormir bien, hidratacion optima, preparacion mental.</div>';
+      h+='<div class="ia-texto"><b>Dia de competencia:</b> Calentamiento progresivo 30-40 min, aceleraciones cortas, entrada en calor especifica de la prueba.</div>';
+      if(tieneSeriesOUmbral){h+='<div class="ia-texto"><span class="ia-mal">Alerta critica:</span> El plan tiene sesiones de alta intensidad con la competencia tan cerca. Eliminar o reemplazar por activacion muy suave para no llegar fatigado al evento.</div>';}
     } else if(diasComp<=7){
-      h+='<div class="ia-texto">Ultima semana antes de la competencia. Reducir el volumen al 60-70% de lo normal. Mantener la intensidad pero con pocas repeticiones. Ultimas series cortas y rapidas el martes o miercoles, luego solo activacion.</div>';
+      h+='<div class="ia-texto">Ultima semana completa antes de la competencia. Reducir el volumen al <b>60-70%</b> de lo habitual. Mantener algo de intensidad pero con pocas repeticiones y buena recuperacion.</div>';
+      h+='<div class="ia-texto"><b>Inicio de semana:</b> Ultima sesion de calidad corta (2-3 series rapidas). Sirve para mantener la velocidad sin acumular fatiga.</div>';
+      h+='<div class="ia-texto"><b>Mitad de semana:</b> Activacion ligera, tecnica, progresivos. El cuerpo empieza a cargar energias.</div>';
+      h+='<div class="ia-texto"><b>Final de semana:</b> Descanso total. Confianza, hidratacion, sueno de calidad.</div>';
     } else if(diasComp<=14){
-      h+='<div class="ia-texto">Dos semanas para la competencia. Esta semana puede tener carga normal o ligeramente reducida. La proxima semana debe ser de tapering. Asegurarse de que el atleta llegue bien recuperado.</div>';
+      h+='<div class="ia-texto">Dos semanas para la competencia. Esta semana puede ser de carga normal o ligeramente reducida. La proxima semana debe ser de tapering progresivo.</div>';
+      h+='<div class="ia-texto">Asegurarse de completar las sesiones clave (calidad + fuerza) esta semana. La semana siguiente reducir al 60-70% del volumen actual.</div>';
     } else {
-      h+='<div class="ia-texto">Hay '+diasComp+' dias para la competencia. Buena margen para trabajar. Mantener la planificacion normal y empezar a reducir la carga 10-14 dias antes del evento.</div>';
+      h+='<div class="ia-texto">Hay '+diasComp+' dias para la competencia. Amplio margen para trabajar. Mantener la planificacion normal y empezar el tapering 10-14 dias antes del evento.</div>';
+      h+='<div class="ia-texto">Objetivo de estas semanas: construir la forma fisica, consolidar la tecnica y llegar a la fase de tapering en el mejor estado posible.</div>';
     }
+    h+='</div>';
   }
 
-  // CONTEXTO ADICIONAL
+  // ---- CONTEXTO ADICIONAL ----
   if(ctx){
-    h+='<div class="ia-titulo">Consideraciones especiales</div>';
-    h+='<div class="ia-texto">El entrenador indica: <i>'+ctx+'</i></div>';
-    if(ctx.toLowerCase().indexOf('lesion')>=0||ctx.toLowerCase().indexOf('dolor')>=0||ctx.toLowerCase().indexOf('molestia')>=0){
-      h+='<div class="ia-texto"><span class="ia-mal">Alerta por posible lesion:</span> Ante cualquier dolor o molestia, reducir la intensidad y consultar al medico deportologo antes de continuar con el plan. La prevencion es prioritaria.</div>';
-    }
+    h+='<div class="ia-titulo">Consideraciones del entrenador</div>';
+    h+='<div style="background:#0f1117;border-radius:8px;padding:10px;margin-bottom:8px;border-left:3px solid #6b46c1">';
+    h+='<div style="font-size:.82rem;color:#d6bcfa;font-style:italic">'+ctx+'</div>';
+    h+='</div>';
+    var ctxL=ctx.toLowerCase();
+    if(ctxL.indexOf('lesion')>=0||ctxL.indexOf('dolor')>=0||ctxL.indexOf('molestia')>=0){h+='<div class="ia-texto"><span class="ia-mal">Protocolo de lesion:</span> Reducir la intensidad a lo que no genere dolor. No forzar. Consultar al medico deportologo antes de retomar la carga normal. La prevencion siempre es prioritaria.</div>';}
+    if(ctxL.indexOf('cansado')>=0||ctxL.indexOf('fatiga')>=0||ctxL.indexOf('agotado')>=0){h+='<div class="ia-texto"><span class="ia-mal">Signos de fatiga:</span> Reducir la carga esta semana al 70%. Priorizar el sueno, la hidratacion y la alimentacion. Si la fatiga persiste mas de 2 semanas, revisar el plan completo.</div>';}
+    if(ctxL.indexOf('doble jornada')>=0||ctxL.indexOf('doble sesion')>=0){h+='<div class="ia-texto"><span class="ia-mal">Doble jornada:</span> Asegurar al menos 6 horas entre sesiones. La segunda sesion siempre de menor intensidad que la primera. Hidratacion y alimentacion entre sesiones son criticas.</div>';}
   }
 
-  // RECOMENDACION FINAL
-  h+='<div class="ia-titulo">Recomendacion del entrenador</div>';
-  var planVacio=diasConTrabajo===0;
-  if(planVacio){
-    h+='<div class="ia-texto">El plan de esta semana esta vacio. Completa las sesiones en los dias correspondientes para obtener un analisis completo.</div>';
+  // ---- RECOMENDACION FINAL ----
+  h+='<div class="ia-titulo">Recomendacion final del entrenador</div>';
+  h+='<div style="background:#0f1a2e;border-radius:8px;padding:12px;border:1px solid #d4a017">';
+  if(diasConTrabajo===0){
+    h+='<div class="ia-texto">Semana de descanso o sin planificar. Aprovecha para recuperar, hacer estiramientos y preparar la proxima semana de trabajo.</div>';
   } else if(diasComp>=0&&diasComp<=3){
-    h+='<div class="ia-texto">Con la competencia tan cerca, la prioridad es llegar fresco y confiado. Descansa, hidratate bien, duerme 8 horas y haz solo activacion ligera. La preparacion ya esta hecha.</div>';
-  } else if(tieneSeriesOUmbral&&tieneFuerza&&diasConTrabajo>=4&&diasConTrabajo<=5){
-    h+='<div class="ia-texto">El plan esta bien estructurado. Tiene la mezcla correcta de trabajo aerobico, calidad y fuerza con descanso adecuado. Ejecutar con disciplina y registrar los resultados de cada sesion para ajustar en las proximas semanas.</div>';
+    h+='<div class="ia-texto">La prioridad absoluta es llegar fresco y confiado a la competencia. Todo el trabajo ya esta hecho. Descansar, hidratarse bien y dormir 8-9 horas estos dias. El cuerpo sabe lo que tiene que hacer.</div>';
   } else if(diasConTrabajo>=6){
-    h+='<div class="ia-texto">La carga es muy alta. Revisar si el atleta tiene capacidad para sostener 6 dias de trabajo consecutivos. Si hay signos de fatiga, agregar un dia de descanso activo (trote muy suave o natacion).</div>';
+    h+='<div class="ia-texto">Carga alta esta semana. El atleta debe escuchar su cuerpo. Si hay signos de fatiga excesiva (sueno interrumpido, irritabilidad, rendimiento que baja), reducir la intensidad sin dudar. Un dia de descanso extra nunca arruina una temporada, pero una lesion si puede hacerlo.</div>';
+  } else if(tieneSeriesOUmbral&&tieneFuerza&&diasDescanso>=2){
+    h+='<div class="ia-texto">Plan bien estructurado con buena variedad de estimulos y descanso adecuado. Ejecutar con disciplina y registrar los tiempos de cada sesion para ajustar la proxima semana. La consistencia a lo largo del tiempo es lo que produce resultados reales.</div>';
+  } else if(!tieneSeriesOUmbral){
+    h+='<div class="ia-texto">Esta semana le falta intensidad. Sin sesiones de calidad el atleta mantiene la forma pero no la mejora. Para la proxima semana incluir al menos 1 sesion de series o trabajo de umbral.</div>';
   } else {
-    h+='<div class="ia-texto">Ejecutar el plan con atencion a las sensaciones del atleta. Si hay fatiga acumulada, no dudar en reducir la intensidad de las sesiones. La consistencia a largo plazo vale mas que una semana de maximo esfuerzo.</div>';
+    h+='<div class="ia-texto">Ejecutar el plan con atencion a las sensaciones del atleta. Registrar cada sesion para tener datos reales y poder ajustar el plan de las proximas semanas con base en la respuesta del cuerpo.</div>';
   }
+  h+='</div>';
 
-  h+='<div style="margin-top:14px;padding-top:8px;border-top:1px solid #2d3748;font-size:.7rem;color:#4a5568">Analisis generado automaticamente con los datos del aplicativo &mdash; Club de Atletismo Team Running</div>';
+  h+='<div style="margin-top:14px;padding-top:8px;border-top:1px solid #2d3748;font-size:.7rem;color:#4a5568">Analisis generado con los datos del aplicativo &mdash; Club de Atletismo Team Running &mdash; El entrenador debe validar y ajustar segun su criterio profesional</div>';
   h+='</div>';
 
   fill.style.width='100%';
